@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 
+import "./index.css";
+
 import PosRouter from './Pages/PosRouter';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
