@@ -12,9 +12,10 @@ function PosRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />}/>
-        <Route path="/dashboard" element={<Layout />}>
+          <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Dashboard />}/>
           <Route path="/dashboard/category/:name" element={<CategoryList />}/>
+          <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
