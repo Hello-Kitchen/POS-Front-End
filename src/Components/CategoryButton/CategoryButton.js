@@ -6,7 +6,7 @@ function CategoryButton({id, name, color, route}) {
         navigate(route + id, {id: id})
     }
     return (
-        <div className="h-pos-button w-2/4">
+        <div className="col-span-1">
             <button 
                 className="h-full w-full"
                 style={{ backgroundColor: color }}

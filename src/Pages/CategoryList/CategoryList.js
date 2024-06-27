@@ -7,16 +7,13 @@ function CategoryList() {
     const [elems, setElems] = useState([]);
 
     useEffect(() => {
-      async function fetchData(id) {
-        fetch(`http://localhost:4000/api/food?category=${id}`).then(response => {
-          response.json().then(data => {
-            setElems(data);
-          });
-        }).catch(error => {
-          console.log(error);
+      fetch(`http://localhost:4000/api/food?category=${id}`).then(response => {
+        response.json().then(data => {
+          setElems(data);
         });
-      } 
-      fetchData(id);
+      }).catch(error => {
+        console.log(error);
+      });
     }, [id]);
 
     const foods = elems.map((food) =>

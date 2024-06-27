@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./Dashboard.css";
 
 import CategoryButton from '../../Components/CategoryButton/CategoryButton';
 
@@ -7,16 +6,13 @@ function Dashboard() {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-      async function fetchData() {
-        fetch("http://localhost:4000/api/food_category/").then(response => {
-          response.json().then(data => {
-            setCategories(data);
-          });
-        }).catch(error => {
-          console.log(error);
+      fetch("http://localhost:4000/api/food_category/").then(response => {
+        response.json().then(data => {
+          setCategories(data);
         });
-      } 
-      fetchData();
+      }).catch(error => {
+        console.log(error);
+      });
     }, []);
 
     const buttons = categories.map((category) =>
@@ -25,7 +21,7 @@ function Dashboard() {
 
 
   return (
-    <div className="Dashboard-block">
+    <div className="h-full w-3/4 grid grid-cols-2 content-start gap-1">
         {buttons}
     </div>
   );

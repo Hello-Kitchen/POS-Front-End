@@ -1,9 +1,0 @@
-.Dashboard-block {
-    height: 100%;
-    width: 75%;
-    display: flex;
-    flex: 2;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: flex-start;
-}
