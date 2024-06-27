@@ -10,7 +10,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:3000/api/login/', {username, password})
+        await axios.post(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/login/`, {username, password})
         .then((res) => {
             navigate('/dashboard');
         })

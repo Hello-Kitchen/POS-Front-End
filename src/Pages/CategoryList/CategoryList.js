@@ -7,7 +7,7 @@ function CategoryList() {
     const [elems, setElems] = useState([]);
 
     useEffect(() => {
-      fetch(`http://localhost:4000/api/food?category=${id}`).then(response => {
+      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/food?category=${id}`).then(response => {
         response.json().then(data => {
           setElems(data);
         });
