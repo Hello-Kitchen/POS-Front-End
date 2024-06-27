@@ -1,10 +1,28 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function CategoryList() {
-    const params = useParams();
+
+    const {id} = useParams();
+    const [elems, setElems] = useState([]);
+
+    useEffect(() => {
+      fetch(`http://localhost:4000/api/food?category=${id}`).then(response => {
+        response.json().then(data => {
+          setElems(data);
+        });
+      }).catch(error => {
+        console.log(error);
+      });
+    }, [id]);
+
+    const foods = elems.map((food) =>
+        <h1 key={food.id}>{food.name}</h1>
+    );
+
     return (
         <div>
-            <h1> page des {params.name}</h1>
+            {foods}
         </div>
     )
 

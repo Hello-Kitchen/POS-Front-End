@@ -1,17 +1,22 @@
 import React, { useState } from "react"
 import "./Login.css"
-import logo from "../Logo_Hello_Kitchen.png"
+import logo from "./Logo_Hello_Kitchen.png"
 import axios from "axios"
 
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
+
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:3000/api/login/', {username, password})
+        await axios.post('http://localhost:4000/api/login/', {username, password})
         .then((res) => {
             console.log("GOOD", res)
+            navigate("/dashboard")
         })
         .catch((err) => {
             console.log("ERROR", err)
