@@ -6,7 +6,7 @@ function Dashboard() {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-      fetch("http://localhost:4000/api/food_category/").then(response => {
+      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/food_category/`).then(response => {
         response.json().then(data => {
           setCategories(data);
         });
