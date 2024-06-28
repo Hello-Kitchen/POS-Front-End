@@ -6,7 +6,7 @@ function CenterText({text}) {
 
 function SideText({text}) {
     return (
-        <p className='text-white font-thin text-2xl'>{text}</p>
+        <p className='text-white font-normal text-2xl'>{text}</p>
     );
 }
 
