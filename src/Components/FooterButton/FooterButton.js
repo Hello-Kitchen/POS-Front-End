@@ -8,7 +8,7 @@ const ButtonTables = () => (
             </defs>
             <circle r="10" cx="12" cy="12" fill="url(#imageTables)" />
         </svg>
-        <div className='text-4xl font-bold text-white flex justify-center items-center overflow-hidden w-full'>TABLES</div>
+        <div className='text-24px font-bold text-white flex justify-center items-center overflow-hidden w-full'>TABLES</div>
     </div>
 );
 
@@ -22,7 +22,7 @@ const ButtonCommandes = () => (
             </defs>
             <circle r="10" cx="12" cy="12" fill="url(#imageCommandes)" />
         </svg>
-        <div className='text-4xl font-bold text-white flex justify-center items-center overflow-hidden w-full'>COMMANDES</div>
+        <div className='text-24px font-bold text-white flex justify-center items-center overflow-hidden w-full'>COMMANDES</div>
     </div>
 );
 
@@ -36,7 +36,7 @@ const ButtonTransactions = () => (
             </defs>
             <circle r="10" cx="12" cy="12" fill="url(#imageTransactions)" />
         </svg>
-        <div className='text-4xl font-bold text-white flex justify-center items-center truncate w-full'>TRANSACTIONS</div>
+        <div className='text-24px font-bold text-white flex justify-center items-center truncate w-full'>TRANSACTIONS</div>
     </div>
 );
 
@@ -50,7 +50,7 @@ const ButtonManager = () => (
             </defs>
             <circle r="10" cx="12" cy="12" fill="url(#imageManager)" />
         </svg>
-        <div className='text-4xl font-bold text-white flex justify-center items-center overflow-hidden w-full'>MANAGER</div>
+        <div className='text-24px font-bold text-white flex justify-center items-center overflow-hidden w-full'>MANAGER</div>
     </div>
 );
 
