@@ -16,6 +16,13 @@ module.exports = {
         'lh': '7%',
         'lf': '13%',
         'pos-button': '11%',
+      },
+      width: {
+        '1/10': '10%',
+        '9/10': '90%',
+      },
+      boxShadow: {
+        
       }
     },
   },
