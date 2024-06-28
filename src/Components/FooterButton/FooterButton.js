@@ -1,5 +1,5 @@
 const ButtonTables = () => (
-    <div className='w-1/4 bg-[#499CA6] p-0.5 flex flex-col justify-center items-center gap-1.5'>
+    <div className='w-1/4 bg-kitchen-blue p-0.5 flex flex-col justify-center items-center gap-1.5'>
         <svg viewBox="0 0 24 24" height="60" width="60" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="imageTables" patternUnits="userSpaceOnUse" width="24" height="24">
@@ -13,7 +13,7 @@ const ButtonTables = () => (
 );
 
 const ButtonCommandes = () => (
-    <div className='w-1/4 bg-[#499CA6] p-0.5 flex flex-col justify-center items-center gap-1.5'>
+    <div className='w-1/4 bg-kitchen-blue p-0.5 flex flex-col justify-center items-center gap-1.5'>
         <svg viewBox="0 0 24 24" height="60" width="60" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="imageCommandes" patternUnits="userSpaceOnUse" width="24" height="24">
@@ -27,7 +27,7 @@ const ButtonCommandes = () => (
 );
 
 const ButtonTransactions = () => (
-    <div className='w-1/4 bg-[#499CA6] p-0.5 flex flex-col justify-center items-center gap-1.5'>
+    <div className='w-1/4 bg-kitchen-blue p-0.5 flex flex-col justify-center items-center gap-1.5'>
         <svg viewBox="0 0 24 24" height="60" width="60" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="imageTransactions" patternUnits="userSpaceOnUse" width="24" height="24">
@@ -41,7 +41,7 @@ const ButtonTransactions = () => (
 );
 
 const ButtonManager = () => (
-    <div className='w-1/4 bg-[#499CA6] p-0.5 flex flex-col justify-center items-center gap-1.5'>
+    <div className='w-1/4 bg-kitchen-blue p-0.5 flex flex-col justify-center items-center gap-1.5'>
         <svg viewBox="0 0 24 24" height="60" width="60" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="imageManager" patternUnits="userSpaceOnUse" width="24" height="24">

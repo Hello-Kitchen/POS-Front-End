@@ -33,7 +33,7 @@ function Footer({ buttons, price }) {
                 </div>
             </div>
             <div className='w-1/4 h-full bg-kitchen-yellow flex justify-center items-center p-3 shadow-[inset_0_10px_50px_-20px_rgba(0,0,0,0.7)]'>
-                <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-[#499CA6]'>Encaisser {price}€</div>
+                <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue'>Encaisser {price}€</div>
             </div>
         </div>
     );
