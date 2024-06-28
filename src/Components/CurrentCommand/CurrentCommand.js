@@ -30,7 +30,7 @@ const Note = ({ text }) => (
     </div>
 )
 
-const Stop = ({ }) => (
+const Stop = () => (
     <div className='w-full h-5 gap-2 flex flex-row items-center'>
         <div className='w-1/3 h-2/3 bg-kitchen-yellow'></div>
         <div className='w-1/3 h-full flex items-center justify-center font-bold text-kitchen-yellow text-4xl'>STOP</div>
@@ -38,8 +38,8 @@ const Stop = ({ }) => (
     </div>
 )
 
-const Order = ({ order }) => (
-    <div className='w-full h-auto p-2'>
+const Order = ({ order, border }) => (
+    <div className={`w-full h-auto p-2 ${border ? 'border-t-2 border-t-kitchen-yellow' : ''}`}>
         {order.plat && order.price && <Food name={order.plat} price={order.price} />}
         {order.details && order.details.map((detail, index) => (
             <Detail key={index} text={detail} />
@@ -52,11 +52,25 @@ const Order = ({ order }) => (
     </div>
 )
 
-const Content = ({ orders }) => (
-    <div className='w-full h-95 flex flex-col scroll-smooth' >
+const Content = ({ orders, stop }) => (
+    <div className='w-full h-95 flex flex-col overflow-auto scrollbar-hide'>
         {
             orders.map((order, index) => {
-            return <Order key={index} order={order} />
+                if (index === 0) {
+                    return <Order key={index} order={order} border={false} />
+                }
+                if (order.stop === true) {
+                    stop = true;
+                    return <Order key={index} order={order} border={false} />
+                }
+                if (stop === true) {
+                    stop = false;
+                    return <Order key={index} order={order} border={false} />
+                }
+                else {
+                    stop = false;
+                    return <Order key={index} order={order} border={true} />
+                }
         })}
     </div>
 )
@@ -66,7 +80,7 @@ function Currentcommand({ orders }) {
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right p-2 gap-3 flex flex-col'>
             <Header cmd={`Table ${orders[0].nb}`} />
-            <Content orders={orders[1]} />
+            <Content orders={orders[1]} stop={false} />
         </div>
     )
 }
