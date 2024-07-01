@@ -20,16 +20,20 @@ module.exports = {
         'lh': '7%',
         'lf': '13%',
         'pos-button': '11%',
+        '95': '95%',
       },
       width: {
         '1/10': '10%',
         '9/10': '90%',
       },
-      boxShadow: {
-        
-      }
+      fontSize: {
+        '24px': '24px',
+        '20px': '20px',
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ],
 }
 

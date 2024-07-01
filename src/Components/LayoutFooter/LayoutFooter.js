@@ -1,4 +1,7 @@
+import React from 'react';
+
 import buttonComponents from '../FooterButton/FooterButton';
+import PropTypes from 'prop-types';
 
 const ButtonEmpty = () => (
     <div className='w-4 h-10 bg-[#F2E5A2]'>
@@ -24,7 +27,7 @@ function Footer({ buttons, price }) {
             <div className='w-3/4 h-full bg-kitchen-yellow flex flex-row gap-0.5'>
                 <div className='w-9/10 h-full bg-kitchen-yellow flex flex-row justify-between gap-0.5'>
                     {buttons.map(buttonKey => {
-                        const ButtonComponent = buttonComponents.hasOwnProperty(buttonKey) ? buttonComponents[buttonKey] : ButtonEmpty;
+                        const ButtonComponent = Object.prototype.hasOwnProperty.call(buttonComponents, buttonKey) ? buttonComponents[buttonKey] : ButtonEmpty;
                         return <ButtonComponent key={buttonKey} />;
                     })}
                 </div>
@@ -37,6 +40,11 @@ function Footer({ buttons, price }) {
             </div>
         </div>
     );
+}
+
+Footer.propTypes = {
+    buttons: PropTypes.array.isRequired,
+    price: PropTypes.number.isRequired,
 }
 
 export default Footer;

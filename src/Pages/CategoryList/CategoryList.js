@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 
 import FoodButton from "../../Components/FoodButton/FoodButton";
+//import React from "react";
 
 function CategoryList() {
 

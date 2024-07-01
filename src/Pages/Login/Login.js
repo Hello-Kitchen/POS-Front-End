@@ -25,7 +25,7 @@ const Login = () => {
             <div className="bg-white bg-opacity-80 p-8 rounded-lg shadow-md w-80 text-center">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label htmlFor="username" className="block mb-2">Nom d'utilisateur</label>
+                        <label htmlFor="username" className="block mb-2">Nom d&#39;utilisateur</label>
                         <input
                             type="text"
                             id="username"
