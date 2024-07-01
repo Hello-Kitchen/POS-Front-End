@@ -15,7 +15,7 @@ const removeSpaces = (num) => num.toString().replace(/\s/g, "");
 
 function Screen({ value }) {
     return (
-        <div className='w-full bg-[#4357692d] h-ls mb-2.5 px-2.5 rounded-lg flex items-center justify-end text-white font-bold box-border'>{value}</div>
+        <div className='w-full bg-[#0a0b0b2d] h-ls mb-2.5 px-2.5 rounded-lg flex items-center justify-end text-white font-bold box-border'>{value}</div>
     )
 }
 
@@ -136,7 +136,7 @@ function Calculator() {
     };
 
     return (
-        <div className='h-1/2 w-full bg-[#485461] p-5 flex flex-col gap-4'>
+        <div className='h-full w-1/2 bg-[#485461] p-5 flex flex-col gap-4 rounded-lg'>
             <Screen value={calc.num ? calc.num : calc.res} ></Screen>
             <ButtonBox>
                 {

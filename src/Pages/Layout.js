@@ -28,6 +28,7 @@ const formatDate = (date) => {
 
 const Layout = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [config, setConfig] = useState({payement: false});
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -44,7 +45,7 @@ const Layout = () => {
                 <Currentcommand orders={data}/>
                 <Outlet />
             </div>
-            <LayoutFooter buttons={["tables", "commandes", "transactions", "manager"]} price="44.90" />
+            <LayoutFooter buttons={["tables", "commandes", "transactions", "manager"]} price="44.90" config={config} setConfig={setConfig} />
         </div>
     )
 };
