@@ -10,6 +10,10 @@ module.exports = {
       'kitchen-orange': '#F2762E',
       'kitchen-red': '#D91604',
       'kitchen-beige': '#D98282',
+      'kitchen-food-detail': '#4958A6',
+      'kitchen-food-detail-selected': '#FF9900',
+      'kitchen-button-red': '#D91604',
+      'kitchen-button-green': '#2FE900'
     },
     extend: {
       height: {

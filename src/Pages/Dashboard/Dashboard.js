@@ -1,23 +1,11 @@
-import { useEffect, useState } from "react";
-
 import CategoryButton from '../../Components/CategoryButton/CategoryButton';
 
 function Dashboard() {
-    const [categories, setCategories] = useState([]);
+    const data = localStorage.getItem("data");
 
-    useEffect(() => {
-      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/food_category/`).then(response => {
-        response.json().then(data => {
-          setCategories(data);
-        });
-      }).catch(error => {
-        console.log(error);
-      });
-    }, []);
-
-    const buttons = categories.map((category) =>
-        <CategoryButton key={category.id} id={category.id} name={category.name} color="red" route="category/"/>
-    );
+    const buttons = JSON.parse(data).map((elem) =>
+      <CategoryButton key={elem.id} id={elem.id} name={elem.name} food={elem.food} color="red" route="category/"/>
+  );
 
 
   return (

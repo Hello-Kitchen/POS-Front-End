@@ -1,16 +1,12 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function CategoryButton({id, name, color, food, route}) {
+function FoodButton({id, name, color, food, route}) {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        localStorage.setItem("food_category/"+id, JSON.stringify(food));
-      }, [id, food]);
-
     const handleClick = () => {
-        navigate(route + id, {state: {food: food}})
+        navigate(route + id, {state: {id: id, food: food}})
     }
+
     return (
         <div className="col-span-1">
             <button 
@@ -27,4 +23,4 @@ function CategoryButton({id, name, color, food, route}) {
     );
 }
 
-export default CategoryButton;
+export default FoodButton;

@@ -1,27 +1,22 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
+import FoodButton from "../../Components/FoodButton/FoodButton";
 
 function CategoryList() {
 
-    const {id} = useParams();
-    const [elems, setElems] = useState([]);
+    const location = useLocation();
+    const { id, food } = location.state || {};
 
-    useEffect(() => {
-      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/food?category=${id}`).then(response => {
-        response.json().then(data => {
-          setElems(data);
-        });
-      }).catch(error => {
-        console.log(error);
-      });
-    }, [id]);
-
-    const foods = elems.map((food) =>
-        <h1 key={food.id}>{food.name}</h1>
+    const foods = food.map((food) =>
+      <FoodButton key={food.id}
+          id={food.id}
+          name={food.name}
+          food={food}
+          color="red" route={``}/>
     );
 
     return (
-        <div>
+        <div className="h-full w-3/4 grid grid-cols-2 content-start gap-1">
             {foods}
         </div>
     )
