@@ -1,4 +1,7 @@
+import React from 'react';
+
 import { GoArrowRight } from "react-icons/go";
+import PropTypes from 'prop-types';
 
 const Header = ({ cmd }) => (
     <div className='w-full h-13 p-2 align-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow'>{cmd}</div>
@@ -83,6 +86,41 @@ function Currentcommand({ orders }) {
             <Content orders={orders[1]} stop={false} />
         </div>
     )
+}
+
+Header.propTypes = {
+    cmd: PropTypes.string.isRequired
+}
+
+Food.propTypes = {
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+}
+
+Detail.propTypes = {
+    text: PropTypes.string.isRequired
+}
+
+Sup.propTypes = {
+    text: PropTypes.string.isRequired
+}
+
+Note.propTypes = {
+    text: PropTypes.string.isRequired
+}
+
+Order.propTypes = {
+    order: PropTypes.object.isRequired,
+    border: PropTypes.bool.isRequired
+}
+
+Content.propTypes = {
+    orders: PropTypes.array.isRequired,
+    stop: PropTypes.bool.isRequired
+}
+
+Currentcommand.propTypes = {
+    orders: PropTypes.array.isRequired
 }
 
 export default Currentcommand;

@@ -1,3 +1,5 @@
+import React from 'react';
+
 const ButtonTables = () => (
     <div className='w-1/4 bg-kitchen-blue p-0.5 flex flex-col justify-center items-center gap-1.5'>
         <svg viewBox="0 0 24 24" height="60" width="60" xmlns="http://www.w3.org/2000/svg">
