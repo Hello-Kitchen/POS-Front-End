@@ -79,7 +79,6 @@ const Content = ({ orders, stop }) => (
 )
 
 function Currentcommand({ orders }) {
-    console.log(orders);
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right p-2 gap-3 flex flex-col'>
             <Header cmd={`Table ${orders[0].nb}`} />

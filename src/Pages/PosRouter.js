@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from './Login/Login';
 import Dashboard from './Dashboard/Dashboard';
+import Pay from './Pay/Pay';
 import Layout from './Layout';
 import CategoryList from './CategoryList/CategoryList';
 
@@ -14,6 +15,7 @@ function PosRouter() {
         <Route path="/" element={<Login />}/>
           <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Dashboard />}/>
+          <Route path="/dashboard/pay" element={<Pay />}/>
           <Route path="/dashboard/category/:id" element={<CategoryList />}/>
         </Route>
       </Routes>

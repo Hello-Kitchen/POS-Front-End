@@ -13,7 +13,7 @@ const NewTicket = () => (
         <svg viewBox="0 0 24 24" height="70" width="70" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="imageNewTicket" patternUnits="userSpaceOnUse" width="24" height="24">
-                    <image href="./new_ticket.jpg" x="0" y="0" width="24" height="24" />
+                    <image href="/new_ticket.jpg" x="0" y="0" width="24" height="24" />
                 </pattern>
             </defs>
             <circle r="10" cx="12" cy="12" fill="url(#imageNewTicket)" />
