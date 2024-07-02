@@ -1,10 +1,10 @@
+import React from 'react';
+
 import { useLocation } from "react-router-dom";
 
-import FoodHeader from "../../../Components/FoodElem/FoodHeader/FoodHeader";
 import IngredientsButton from "../../../Components/FoodElem/IngredientsButton/IngredientsButton";
 import ModifBackButton from "../../../Components/FoodElem/ModifButton/ModifBackButton";
 import IngredientList from "../../../Components/FoodElem/Ingredientlist/IngredientList";
-import FoodFooter from "../../../Components/FoodElem/FoodFooter/FoodFooter";
 
 function FoodModif() {
 

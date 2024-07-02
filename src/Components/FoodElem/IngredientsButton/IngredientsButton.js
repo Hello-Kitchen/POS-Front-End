@@ -1,3 +1,5 @@
+import React from 'react';
+
 function IngredientsButton() {
     return (
         <div className="h-4/6 w-full row-span-2 grid grid-flow-col bottom-0">

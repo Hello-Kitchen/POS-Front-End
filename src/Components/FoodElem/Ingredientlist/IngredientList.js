@@ -1,3 +1,6 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 function IngredientList({name, data}) {
 
     console.log(data)
@@ -20,5 +23,11 @@ function IngredientList({name, data}) {
         </div>
     )
 }
+
+IngredientList.propTypes = {
+    name: PropTypes.string.isRequired,
+    data: PropTypes.array.isRequired
+}
+
 
 export default IngredientList;

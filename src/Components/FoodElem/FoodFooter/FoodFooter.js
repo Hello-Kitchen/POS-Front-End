@@ -1,10 +1,12 @@
+import React from 'react';
+
 import { useNavigate, useLocation } from "react-router-dom";
 
 function FoodFooter() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const { hash, pathname, search } = location;
+    const { pathname } = location;
 
     const handleBackClick = () => {
         if (pathname.endsWith("modification")) {

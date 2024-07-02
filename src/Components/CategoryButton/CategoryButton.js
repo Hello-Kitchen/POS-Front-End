@@ -1,6 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PropTypes from 'prop-types';
 
 function CategoryButton({id, name, color, food, route}) {
     const navigate = useNavigate();
@@ -32,6 +34,7 @@ CategoryButton.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
+    food: PropTypes.object.isRequired,
     route: PropTypes.string.isRequired,
 }
 

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import CategoryButton from '../../Components/CategoryButton/CategoryButton';
 
 function Dashboard() {

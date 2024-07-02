@@ -1,12 +1,13 @@
+import React from 'react';
+
 import { useLocation } from "react-router-dom";
 
 import FoodButton from "../../Components/FoodButton/FoodButton";
-//import React from "react";
 
 function CategoryList() {
 
     const location = useLocation();
-    const { id, food } = location.state || {};
+    const { food } = location.state || {};
 
     const foods = food.map((food) =>
       <FoodButton key={food.id}

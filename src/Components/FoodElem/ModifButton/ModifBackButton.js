@@ -1,7 +1,10 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import { GoArrowDown } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
-function ModifButton({id, food}) {
+function ModifBackButton({food}) {
 
     const navigate = useNavigate();
     const handleClick = () => {
@@ -24,4 +27,9 @@ function ModifButton({id, food}) {
     )
 }
 
-export default ModifButton;
+ModifBackButton.propTypes = {
+    food: PropTypes.object.isRequired
+}
+
+
+export default ModifBackButton;

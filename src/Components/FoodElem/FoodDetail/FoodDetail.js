@@ -1,3 +1,6 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import { useState } from "react";
 
 function FoodDetail({name, data}) {
@@ -50,5 +53,11 @@ function FoodDetail({name, data}) {
         </div>
     )
 }
+
+FoodDetail.propTypes = {
+    name: PropTypes.string.isRequired,
+    data: PropTypes.array.isRequired
+}
+
 
 export default FoodDetail;

@@ -1,7 +1,10 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import { GoArrowUp } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
-function ModifButton({id, food}) {
+function ModifButton({food}) {
 
     const navigate = useNavigate();
     const handleClick = () => {
@@ -22,6 +25,11 @@ function ModifButton({id, food}) {
             </div>
         </div>
     )
+}
+
+
+ModifButton.propTypes = {
+    food: PropTypes.object.isRequired
 }
 
 export default ModifButton;

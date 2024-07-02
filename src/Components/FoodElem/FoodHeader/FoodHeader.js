@@ -1,4 +1,7 @@
-function FoodHeader({id, name, price}) {
+import React from 'react';
+import PropTypes from 'prop-types';
+
+function FoodHeader({name, price}) {
 
     return (
         <div className="h-1/6 w-full grid grid-flow-col colbottom-0 p-6 content-center border-b-2 border-b-black">
@@ -15,5 +18,11 @@ function FoodHeader({id, name, price}) {
         </div>
     )
 }
+
+FoodHeader.propTypes = {
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+}
+
 
 export default FoodHeader;
