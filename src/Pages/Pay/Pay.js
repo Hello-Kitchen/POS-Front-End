@@ -1,9 +1,16 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
+
 import Calculator from './../../Components/Calculator/Calculator';
 import ModsPay from '../../Components/ModsPay/ModsPay';
 import OptionsPay from '../../Components/OptionsPay/OptionsPay'
 
-const Pay = () => {
+const Pay = ({ config }) => {
+  const navigate = useNavigate();
+
+  if (config.payement === false)
+    navigate('/dashboard')
+
   return (
     <div className='h-full w-3/4 flex flex-col'>
         <OptionsPay buttons={["Reduction", "Offert", "Fidelite", "Annuler l'encaissement"]}></OptionsPay>

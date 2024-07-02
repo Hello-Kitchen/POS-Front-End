@@ -16,7 +16,9 @@ module.exports = {
         'lh': '7%',
         'lf': '13%',
         'pos-button': '11%',
-        '95': '95%',
+        'current-cmd-content': '77%',
+        'current-cmd-footer': '15%',
+        'current-cmd-header': '8%',
         'ls': '20%',
         'lb': '80%',
       },
@@ -27,6 +29,7 @@ module.exports = {
       fontSize: {
         '24px': '24px',
         '20px': '20px',
+        'testpx': '28px',
       },
     },
   },

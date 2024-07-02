@@ -36,6 +36,10 @@ function ButtonBox({ children }) {
 function Calculator() {
     let [calc, setCalc] = useState({ sign: "", num: 0, res: 0 });
 
+    const displayCalc = () => {
+        console.log()
+    }
+
     const numClickHandler = (e) => {
         e.preventDefault();
         const value = e.target.innerHTML;
@@ -102,6 +106,7 @@ function Calculator() {
                 sign: "",
                 num: 0,
             });
+            displayCalc();
         }
     };
 

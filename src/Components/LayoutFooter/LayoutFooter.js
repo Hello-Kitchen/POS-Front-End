@@ -39,7 +39,7 @@ function Footer({ buttons, price, config, setConfig }) {
                 </div>
             </div>
             <div className='w-1/4 h-full bg-kitchen-yellow flex justify-center items-center p-3 shadow-[inset_0_10px_50px_-20px_rgba(0,0,0,0.7)]'>
-                <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue cursor-pointer' onClick={() => { !config.payement ? navigate('/dashboard/pay') : navigate('/dashboard'); setConfig({payement: !config.payement}) }}>{!config.payement ? `Encaisser ${price}€` : 'Retour'}</div>
+                <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue cursor-pointer' onClick={() => { !config.payement ? navigate('/dashboard/pay') : navigate('/dashboard'); config.payement = !config.payement }}>{!config.payement ? `Encaisser ${price}€` : 'Retour'}</div>
             </div>
         </div>
     );

@@ -4,7 +4,7 @@ import { GoArrowRight } from "react-icons/go";
 import PropTypes from 'prop-types';
 
 const Header = ({ cmd }) => (
-    <div className='w-full h-13 p-2 align-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow'>{cmd}</div>
+    <div className='w-full h-current-cmd-header p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{cmd}</div>
 )
 
 const Food = ({ name, price }) => (
@@ -41,8 +41,8 @@ const Stop = () => (
     </div>
 )
 
-const Order = ({ order, border }) => (
-    <div className={`w-full h-auto p-2 ${border ? 'border-t-2 border-t-kitchen-yellow' : ''}`}>
+const Order = ({ order, border, config }) => (
+    <div className={`w-full h-auto p-2 ${border ? 'border-t border-t-kitchen-yellow' : ''}`}>
         {order.plat && order.price && <Food name={order.plat} price={order.price} />}
         {order.details && order.details.map((detail, index) => (
             <Detail key={index} text={detail} />
@@ -51,38 +51,52 @@ const Order = ({ order, border }) => (
             <Sup key={index} text={sup} />
         ))}
         {order.note && <Note text={order.note} />}
-        {order.stop && <Stop />}
+        {!config.payement && order.stop && <Stop />}
     </div>
 )
 
-const Content = ({ orders, stop }) => (
-    <div className='w-full h-95 flex flex-col overflow-auto scrollbar-hide'>
+const Content = ({ orders, stop, config }) => (
+    <div className='w-full h-current-cmd-content flex flex-col overflow-auto scrollbar-hide'>
         {
             orders.map((order, index) => {
                 if (index === 0) {
-                    return <Order key={index} order={order} border={false} />
+                    return <Order key={index} order={order} border={false} config={config} />
                 }
-                if (order.stop === true) {
+                if (!config.payement && order.stop === true) {
                     stop = true;
-                    return <Order key={index} order={order} border={false} />
+                    return <Order key={index} order={order} border={false} config={config} />
                 }
-                if (stop === true) {
+                if (config.payement && order.stop === true)
+                    return
+                if (!config.payement && stop === true) {
                     stop = false;
-                    return <Order key={index} order={order} border={false} />
+                    return <Order key={index} order={order} border={false} config={config} />
                 }
                 else {
                     stop = false;
-                    return <Order key={index} order={order} border={true} />
+                    return <Order key={index} order={order} border={true} config={config} />
                 }
         })}
     </div>
 )
 
-function Currentcommand({ orders }) {
+function Footer () {
     return (
-        <div className='h-full w-1/4 bg-kitchen-blue float-right p-2 gap-3 flex flex-col'>
-            <Header cmd={`Table ${orders[0].nb}`} />
-            <Content orders={orders[1]} stop={false} />
+        <div className='w-full h-current-cmd-footer border-t border-kitchen-yellow flex flex-row gap-px bg-kitchen-yellow'>
+            <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer'>STOP</div>
+            <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer'>Demander la suite</div>
+        </div>
+    )
+}
+
+function Currentcommand({ orders, config }) {
+    return (
+        <div className='h-full w-1/4 bg-kitchen-blue float-right gap-3 flex flex-col'>
+            <div className='w-full h-full float-right px-2 gap-3 flex flex-col'>
+                <Header cmd={`Table ${orders[0].nb}`} />
+                <Content orders={orders[1]} stop={false} config={config} />
+            </div>
+            <Footer />
         </div>
     )
 }
