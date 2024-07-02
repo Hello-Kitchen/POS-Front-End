@@ -13,7 +13,8 @@ module.exports = {
       'kitchen-food-detail': '#4958A6',
       'kitchen-food-detail-selected': '#FF9900',
       'kitchen-button-red': '#D91604',
-      'kitchen-button-green': '#2FE900'
+      'kitchen-button-green': '#2FE900',
+      'kitchen-button-orange': '#FF9900'
     },
     extend: {
       height: {
