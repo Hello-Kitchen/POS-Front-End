@@ -26,7 +26,7 @@ function FoodButton({id, name, color, food, route}) {
     );
 }
 
-CategoryButton.propTypes = {
+FoodButton.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,

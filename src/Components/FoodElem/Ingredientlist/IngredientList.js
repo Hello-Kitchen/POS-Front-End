@@ -5,7 +5,7 @@ function IngredientList({name, data}) {
 
     console.log(data)
     const choice = data.map((elem) =>
-        <div className="bg-kitchen-food-detail">
+        <div key={elem.id} className="bg-kitchen-food-detail">
             <button>
                 <h1 className="text-3xl font-bold text-white">
                     {elem.name}
