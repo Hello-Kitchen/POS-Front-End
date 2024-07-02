@@ -9,7 +9,7 @@ import IngredientList from "../../../Components/FoodElem/Ingredientlist/Ingredie
 function FoodModif() {
 
     const location = useLocation();
-    const {id, food, color} = location.state || {};
+    const {food, color} = location.state || {};
     
     console.log(color)
     return ( 
