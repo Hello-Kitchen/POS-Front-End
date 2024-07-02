@@ -13,14 +13,10 @@ function FoodDetails() {
     if (food != null) {
       console.log(food.details)
       return (
-        <div className="h-full w-3/4">
           <div className="h-5/6 w-full grid grid-flow-row p-2">
-              <FoodHeader id={id} name={food.name} price={food.price} />
               <DetailList id={id} name={food.name} ingredients={food.ingredients} details={food.details}/>
               <ModifButton id={id} food={food}/>
           </div>
-            <FoodFooter />
-        </div>
       )
     }
 }

@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 
 import FoodHeader from "../../../Components/FoodElem/FoodHeader/FoodHeader";
 import IngredientsButton from "../../../Components/FoodElem/IngredientsButton/IngredientsButton";
-import ModifButton from "../../../Components/FoodElem/FoodHeader/FoodHeader";
+import ModifBackButton from "../../../Components/FoodElem/ModifButton/ModifBackButton";
 import IngredientList from "../../../Components/FoodElem/Ingredientlist/IngredientList";
 import FoodFooter from "../../../Components/FoodElem/FoodFooter/FoodFooter";
 
@@ -13,14 +13,12 @@ function FoodModif() {
     
 
     return ( 
-        <div className="h-full w-3/4">
           <div className="h-5/6 w-full grid grid-flow-row p-2">
-              <FoodHeader id={id} name={food.name} price={food.price} />
+              <ModifBackButton />
               <IngredientsButton />
               <IngredientList id={id} data={food.ingredients} />
           </div>
-            <FoodFooter />
-        </div>
+
     )
 }
 

@@ -1,7 +1,7 @@
 function FoodHeader({id, name, price}) {
 
     return (
-        <div className="w-full row-span-1 grid grid-flow-col colbottom-0 p-6 content-center border-b-2 border-b-black">
+        <div className="h-1/6 w-full grid grid-flow-col colbottom-0 p-6 content-center border-b-2 border-b-black">
             <div className="w-full col-span-5 justify-items-center flex-row content-center">
                 <h1 className="text-3xl font-bold text-black">
                     {name}

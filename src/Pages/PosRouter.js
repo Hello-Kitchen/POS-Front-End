@@ -6,6 +6,7 @@ import Loading from './Loading/Loading';
 import Dashboard from './Dashboard/Dashboard';
 import Layout from './Layout';
 import CategoryList from './CategoryList/CategoryList';
+import FoodLayout from './FoodDetails/FoodLayout';
 import FoodDetails from './FoodDetails/FoodDetails';
 import FoodModif from './FoodDetails/FoodModif/FoodModif';
 
@@ -19,8 +20,10 @@ function PosRouter() {
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Dashboard />}/>
           <Route path="/dashboard/category/:id" element={<CategoryList />}/>
-          <Route path="/dashboard/category/:id/:id" element={<FoodDetails />}/>
-          <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />}/>
+          <Route path="/dashboard/category/:id/:id" element={<FoodLayout />}>
+            <Route path="/dashboard/category/:id/:id" element={<FoodDetails />}/>
+            <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />}/>
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
