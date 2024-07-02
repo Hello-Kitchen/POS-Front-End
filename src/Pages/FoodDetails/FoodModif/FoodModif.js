@@ -16,7 +16,7 @@ function FoodModif() {
           <div className="h-full w-full grid grid-flow-row grid-rows-6">
               <ModifBackButton />
               <IngredientsButton />
-              <IngredientList id={id} data={food.ingredients} />
+              <IngredientList data={food.ingredients} />
           </div>
 
     )

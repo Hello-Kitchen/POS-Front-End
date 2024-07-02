@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function IngredientList({name, data}) {
+function IngredientList({data}) {
 
-    console.log(data)
     const choice = data.map((elem) =>
         <div key={elem.id} className="bg-kitchen-food-detail border border-white h-20 col-span-1 flex content-center" >
             <button>
