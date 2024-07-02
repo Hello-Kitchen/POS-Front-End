@@ -6,7 +6,7 @@ function Loading({id}) {
   const navigate = useNavigate();
 
     useEffect(() => {
-      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/0`).then(response => {
+      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/1`).then(response => {
           response.json().then(data => {
             localStorage.setItem("data", JSON.stringify(data));
           }).then(() => {

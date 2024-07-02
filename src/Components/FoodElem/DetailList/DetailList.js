@@ -7,10 +7,10 @@ function DetailList({details}) {
 
     console.log(details)
     const detailsList = details.map((elem) =>
-        <FoodDetail key={elem.id} id={elem.id} name={elem.name} data={elem.data}/>
+        <FoodDetail key={elem.id} id={elem.id} name={elem.name} data={elem.data} multiple={elem.mutliple} />
     );
     return (
-        <div className="w-full row-span-8">
+        <div className="h-full w-full row-span-5 overflow-auto scrollbar-hide">
             {detailsList}
         </div>
     )

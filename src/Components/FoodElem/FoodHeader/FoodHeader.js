@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function FoodHeader({name, price}) {
+import FoodStick from '../../FoodStick/FoodStick';
+
+function FoodHeader({name, price, color}) {
 
     return (
-        <div className="h-1/6 w-full grid grid-flow-col colbottom-0 p-6 content-center border-b-2 border-b-black">
-            <div className="w-full col-span-5 justify-items-center flex-row content-center">
-                <h1 className="text-3xl font-bold text-black">
+        <div className="w-full row-span-1 grid grid-flow-col grid-cols-48 border-b-2 border-b-black">
+            <FoodStick color={color} />
+            <div className="h-full col-span-36 content-center self-center flex">
+                <h1 className="text-3xl font-bold text-black text-left self-center">
                     {name}
                 </h1>
             </div>
-            <div className="col-span-1 w-full grid justify-items-end float-right">
+            <div className="col-span-11 w-full grid justify-items-end float-right pr-2 self-center">
                 <h1 className="text-3xl font-bold text-black">
                     {price}€
                 </h1>
@@ -21,7 +24,8 @@ function FoodHeader({name, price}) {
 
 FoodHeader.propTypes = {
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
+    price: PropTypes.number.isRequired,
+    color: PropTypes.string.isRequired
 }
 
 

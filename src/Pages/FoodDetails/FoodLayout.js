@@ -10,14 +10,14 @@ import { Outlet } from "react-router-dom";
 function FoodLayout() {
 
     const location = useLocation();
-    const {id, food} = location.state || {};
+    const {id, food, color} = location.state || {};
 
     if (food != null) {
       console.log(food.details)
       return (
-        <div className="h-full w-3/4">
-          <div className="h-5/6 w-full p-2">
-              <FoodHeader id={id} name={food.name} price={food.price} />
+        <div className="h-full w-3/4 grid grid-flow-row grid-rows-8">
+              <FoodHeader id={id} name={food.name} price={food.price} color={color} />
+          <div className="w-full row-span-6">
               <Outlet />
           </div>
             <FoodFooter />

@@ -17,7 +17,7 @@ function FoodFooter() {
     }
 
     return (
-        <div className="h-1/6 w-full grid grid-flow-col bottom-0">
+        <div className="w-full row-span-1 grid grid-flow-col bottom-0">
             <button className="col-span-1 bg-kitchen-button-red" onClick={() => handleBackClick()}>
                 <h1 className="text-3xl font-bold text-white">Annuler</h1>
             </button>

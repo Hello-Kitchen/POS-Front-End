@@ -12,17 +12,16 @@ function CategoryButton({id, name, color, food, route}) {
       }, [id, food]);
 
     const handleClick = () => {
-        navigate(route + id, {state: {food: food}})
+        navigate(route + id, {state: {food: food, color: color}})
     }
     return (
-        <div className="col-span-1">
+        <div className={`${color} col-span-1 row-span-1`}>
             <button 
                 className="h-full w-full"
-                style={{ backgroundColor: color }}
                 onClick={() => handleClick()}
                 type="button"
             >
-                <h1 className="text-3xl font-bold text-white">
+                <h1 className="text-3xl font-bold text-white text-left ml-5">
                     {name}
                 </h1>
             </button>
