@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 
 import CategoryButton from '../../Components/CategoryButton/CategoryButton';
 
 function Dashboard() {
     const [categories, setCategories] = useState([]);
+    const { setPriceLess, price, setPayList } = useOutletContext();
 
     useEffect(() => {
       fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/food_category/`).then(response => {
@@ -13,6 +15,8 @@ function Dashboard() {
       }).catch(error => {
         console.log(error);
       });
+      setPriceLess(price);
+      setPayList([]);
     }, []);
 
     const buttons = categories.map((category) =>

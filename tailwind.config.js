@@ -16,11 +16,12 @@ module.exports = {
         'lh': '7%',
         'lf': '13%',
         'pos-button': '11%',
-        'current-cmd-content': '77%',
+        'current-cmd-content': '92%',
         'current-cmd-footer': '15%',
         'current-cmd-header': '8%',
         'ls': '20%',
         'lb': '80%',
+        '85': '85%',
       },
       width: {
         '1/10': '10%',

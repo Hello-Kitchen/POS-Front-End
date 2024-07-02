@@ -3,8 +3,8 @@ import React from 'react';
 import { GoArrowRight } from "react-icons/go";
 import PropTypes from 'prop-types';
 
-const Header = ({ cmd }) => (
-    <div className='w-full h-current-cmd-header p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{cmd}</div>
+const Header = ({ orders }) => (
+    <div className='w-full h-current-cmd-header p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders[0].nb}`}</div>
 )
 
 const Food = ({ name, price }) => (
@@ -58,7 +58,7 @@ const Order = ({ order, border, config }) => (
 const Content = ({ orders, stop, config }) => (
     <div className='w-full h-current-cmd-content flex flex-col overflow-auto scrollbar-hide'>
         {
-            orders.map((order, index) => {
+            orders[1].map((order, index) => {
                 if (index === 0) {
                     return <Order key={index} order={order} border={false} config={config} />
                 }
@@ -76,27 +76,52 @@ const Content = ({ orders, stop, config }) => (
                     stop = false;
                     return <Order key={index} order={order} border={true} config={config} />
                 }
-        })}
+            })}
     </div>
 )
 
-function Footer () {
-    return (
-        <div className='w-full h-current-cmd-footer border-t border-kitchen-yellow flex flex-row gap-px bg-kitchen-yellow'>
-            <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer'>STOP</div>
-            <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer'>Demander la suite</div>
-        </div>
-    )
+function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
+    if (!config.payement) {
+        return (
+            <div className='w-full h-current-cmd-footer border-t border-kitchen-yellow flex flex-row gap-px bg-kitchen-yellow'>
+                <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={(event) => { const newOrders = [...orders]; newOrders[1] = [...newOrders[1], { stop: true }]; console.log(newOrders); setOrders(newOrders); }}>STOP</div>
+                {config.firstSend ? <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={(event) => { setConfig(prevConfig => ({ ...prevConfig, firstSend: false })); }}>Envoyer</div> : <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={(event) => { const newOrders = [...orders]; const index = newOrders[1].findIndex(item => item.stop === true); if (index !== -1) { newOrders[1] = newOrders[1].filter((_, i) => i !== index); setOrders(newOrders); } }}>Demander la suite</div>}
+            </div>
+        )
+    } else {
+        console.log(payList);
+        return (
+            <div className='w-full border-t border-kitchen-yellow flex flex-col gap-px p-2'>
+                <div className='flex flex-row justify-between w-full'>
+                    <div className='text-white font-normal'>Total</div>
+                    <div className='text-white'>{price.toFixed(2).toString()}€</div>
+                </div>
+                {payList}
+                {priceLess < 0 ? (
+                    <div className='flex flex-row justify-between w-full'>
+                        <div className='text-white font-bold text-24px'>Montant dû</div>
+                        <div className='text-white font-bold text-24px'>{(priceLess * (-1)).toFixed(2).toString()}€</div>
+                    </div>
+                ) : (
+                    <div className='flex flex-row justify-between w-full'>
+                        <div className='text-white font-bold text-24px'>Reste a payer</div>
+                        <div className='text-white font-bold text-24px'>{priceLess.toFixed(2).toString()}€</div>
+                    </div>
+                )
+                }
+            </div>
+        )
+    }
 }
 
-function Currentcommand({ orders, config }) {
+function Currentcommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
     return (
-        <div className='h-full w-1/4 bg-kitchen-blue float-right gap-3 flex flex-col'>
-            <div className='w-full h-full float-right px-2 gap-3 flex flex-col'>
-                <Header cmd={`Table ${orders[0].nb}`} />
-                <Content orders={orders[1]} stop={false} config={config} />
+        <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col'>
+            <div className='w-full h-85 float-right px-2 gap-3 flex flex-col'>
+                <Header orders={orders} />
+                <Content orders={orders} stop={false} config={config} setOrders={setOrders} setConfig={setConfig} />
             </div>
-            <Footer />
+            <Footer config={config} orders={orders} setOrders={setOrders} setConfig={setConfig} price={price} priceLess={priceLess} payList={payList} />
         </div>
     )
 }

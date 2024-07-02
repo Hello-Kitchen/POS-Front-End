@@ -10,19 +10,19 @@ function handleClick (event) {
     event.currentTarget.classList.add('select-mod')
 }
 
-function Button({ button }) {
+function Button({ button, id, setPayList, priceLess, payList, setPriceLess }) {
     return (
-        <div className='flex w-full h-1/4 bg-kitchen-yellow rounded-3xl text-kitchen-blue justify-center items-center font-bold shadow-md text-2xl font-bold cursor-pointer mods-pay' onClick={handleClick} >{button}</div>
+        <div id={id} className='flex w-full h-1/4 bg-kitchen-yellow rounded-3xl text-kitchen-blue justify-center items-center font-bold shadow-md text-2xl font-bold cursor-pointer mods-pay' onClick={(event) => { handleClick(event); if (event.currentTarget.id === "CB Total") { const newDiv = <div key={payList.length} className='flex flex-row justify-between w-full'><div className='text-white font-normal'>{event.currentTarget.id}</div><div className='text-white'>{Number(priceLess).toFixed(2)}€</div></div>; setPayList([...payList, newDiv]); setPriceLess(prevPriceLess => (Number(prevPriceLess) - Number(prevPriceLess))) } }} >{button}</div>
     )
 }
 
-function ModsPay({ buttons }) {
+function ModsPay({ buttons, setPayList, priceLess, payList, setPriceLess }) {
     return (
         <div className='h-full w-1/2 p-2 flex flex-col gap-3'>
             {
                 buttons.map((button, i) => {
                     return (
-                        <Button key={i} button={button} ></Button>
+                        <Button key={i} button={button} id={button} setPayList={setPayList} priceLess={priceLess} payList={payList} setPriceLess={setPriceLess} ></Button>
                     )
                 })
             }

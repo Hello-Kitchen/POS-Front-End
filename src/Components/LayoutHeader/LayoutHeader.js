@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -14,13 +14,32 @@ function SideText({text}) {
     );
 }
 
-function LayoutHeader({textRight, textCenter, textLeft}) {
+const formatDate = (date) => {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} - ${hours}:${minutes}`;
+};
+
+function LayoutHeader({textCenter, textLeft}) {
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
       <div className='w-full h-lh bg-kitchen-blue p-1'>
         <div className='w-full h-full flex justify-between items-center'>
             {<SideText text={textLeft}/>}
             {<CenterText text={textCenter}/>}
-            {<SideText text={textRight}/>}
+            {<SideText text={formatDate(currentTime)}/>}
         </div>
       </div>
     );

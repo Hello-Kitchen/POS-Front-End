@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 
 const btnValues = [
     ["C", "+-", "%", "/"],
@@ -33,12 +33,25 @@ function ButtonBox({ children }) {
     )
 }
 
-function Calculator() {
-    let [calc, setCalc] = useState({ sign: "", num: 0, res: 0 });
+function Calculator({ setPriceLess, payList, setPayList }) {
+    const [calc, setCalc] = useState({ sign: "", num: 0, res: 0 });
+    const [display, setDisplay] = useState(false);
 
     const displayCalc = () => {
-        console.log()
+        let elem = document.getElementsByClassName('select-mod')[0];
+        if (elem && calc.res !== "Can't divide with 0") {
+            const text = elem.id;
+            const newDiv = <div key={payList.length} className='flex flex-row justify-between w-full'><div className='text-white font-normal'>{text}</div><div className='text-white'>{Number(calc.res.toString().split(' ').join('')).toFixed(2).toString()}€</div></div>
+            setPayList([...payList, newDiv]);
+            setPriceLess(prevPriceLess => (Number(prevPriceLess) - Number(calc.res.toString().split(' ').join(''))));
+        }
+        setDisplay(false);
     }
+
+    useEffect(() => {
+        if (display)
+            displayCalc();
+    }, [display]);
 
     const numClickHandler = (e) => {
         e.preventDefault();
@@ -105,8 +118,8 @@ function Calculator() {
                         ),
                 sign: "",
                 num: 0,
-            });
-            displayCalc();
+            })
+            setDisplay(true);
         }
     };
 

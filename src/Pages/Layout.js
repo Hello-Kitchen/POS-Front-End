@@ -1,37 +1,17 @@
 import { Outlet } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
 import LayoutHeader from "../Components/LayoutHeader/LayoutHeader";
 import Currentcommand from "../Components/CurrentCommand/CurrentCommand";
 import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
 
-const formatDate = (date) => {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${day}/${month}/${year} - ${hours}:${minutes}`;
-};
-
-const Layout = ({ orders, price, config }) => {
-    const [currentTime, setCurrentTime] = useState(new Date());
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentTime(new Date());
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
-
+const Layout = ({ orders, price, config, setConfig, setOrders, priceLess, setPriceLess, payList, setPayList }) => {
     return (
         <div className="column w-full h-full">
-            <LayoutHeader textLeft="05 - Francois Dupont" textCenter="Caisse 1" textRight={formatDate(currentTime)} />
+            <LayoutHeader textLeft="05 - Francois Dupont" textCenter="Caisse 1" />
             <div className="w-full h-4/5">
-                <Currentcommand orders={orders} config={config} />
-                <Outlet />
+                <Currentcommand orders={orders} config={config} setConfig={setConfig} setOrders={setOrders} price={price} priceLess={priceLess} payList={payList} />
+                <Outlet context={{ orders, setOrders, price, config, setConfig, priceLess, setPriceLess, payList, setPayList }} />
             </div>
-            <LayoutFooter buttons={["tables", "commandes", "transactions", "manager"]} price={price.toString()} config={config} />
+            <LayoutFooter buttons={["tables", "commandes", "transactions", "manager"]} price={price.toString()} config={config} setConfig={setConfig} />
         </div>
     )
 };
