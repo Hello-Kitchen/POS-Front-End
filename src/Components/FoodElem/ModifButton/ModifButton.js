@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { GoArrowUp } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
-function ModifButton({food}) {
+function ModifButton({food, color}) {
 
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("modification", {state: {food: food}})
+        navigate("modification", {state: {food: food, color: color}})
     }
 
     return (
@@ -29,7 +29,8 @@ function ModifButton({food}) {
 
 
 ModifButton.propTypes = {
-    food: PropTypes.object.isRequired
+    food: PropTypes.object.isRequired,
+    color: PropTypes.string.isRequired
 }
 
 export default ModifButton;

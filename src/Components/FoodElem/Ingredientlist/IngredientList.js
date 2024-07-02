@@ -5,9 +5,9 @@ function IngredientList({name, data}) {
 
     console.log(data)
     const choice = data.map((elem) =>
-        <div key={elem.id} className="bg-kitchen-food-detail">
+        <div key={elem.id} className="bg-kitchen-food-detail border border-white h-20 col-span-1 flex content-center" >
             <button>
-                <h1 className="text-3xl font-bold text-white">
+                <h1 className="text-3xl text-white float-left ml-4">
                     {elem.name}
                 </h1>
             </button>
@@ -15,9 +15,8 @@ function IngredientList({name, data}) {
     );
 
     return (
-        <div className="h-full w-full row-span-5">
-            <h1 className="text-3xl font-bold text-black">{name}</h1>
-            <div className="h-full w-full grid grid-cols-4 content-start">
+        <div className="row-span-4 w-full pt-8">
+            <div className="grid grid-flow-row grid-cols-4 overflow-auto scrollbar-hide">
                 {choice}
             </div>
         </div>
