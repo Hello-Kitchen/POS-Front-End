@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
 
 import Login from './Login/Login';
 import Dashboard from './Dashboard/Dashboard';
 import Pay from './Pay/Pay';
 import Layout from './Layout';
 import CategoryList from './CategoryList/CategoryList';
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
+}
 
 let data =
   [
@@ -24,20 +35,20 @@ function PosRouter() {
   const [orders, setOrders] = useState(data);
   const [priceLess, setPriceLess] = useState(price);
   const [payList, setPayList] = useState([]);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let tmp = 0;
     for (let i = 0; i < orders[1].length; i++) {
       if (orders[1][i].price)
-        tmp += Number(orders[1][i].price); // Corrigez ici l'index à utiliser
+        tmp += Number(orders[1][i].price);
     }
     setPrice(tmp);
     setPriceLess(tmp);
-  }, [orders]); // Ajoutez 'orders' comme dépendance
+    setReady(true)
+  }, [orders]);
 
-  console.log("payList: ", payList)
-  console.log("priceLess: ", priceLess)
-  if (price && priceLess) {
+  if (ready) {
     return (
       <BrowserRouter>
         <Routes>

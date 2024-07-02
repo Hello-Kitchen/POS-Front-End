@@ -89,7 +89,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             </div>
         )
     } else {
-        console.log(payList);
         return (
             <div className='w-full border-t border-kitchen-yellow flex flex-col gap-px p-2'>
                 <div className='flex flex-row justify-between w-full'>
