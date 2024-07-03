@@ -126,12 +126,12 @@ function Currentcommand({ orders, config, setConfig, setOrders, price, priceLess
 }
 
 Header.propTypes = {
-    orders: PropTypes.string.isRequired,
+    orders: PropTypes.array.isRequired,
 }
 
 Food.propTypes = {
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    price: PropTypes.string.isRequired,
 }
 
 Detail.propTypes = {

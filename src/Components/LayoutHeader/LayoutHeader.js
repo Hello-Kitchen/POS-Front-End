@@ -54,7 +54,6 @@ SideText.propTypes = {
 }
 
 LayoutHeader.propTypes = {
-    textRight: PropTypes.string.isRequired,
     textCenter: PropTypes.string.isRequired,
     textLeft: PropTypes.string.isRequired,
 }

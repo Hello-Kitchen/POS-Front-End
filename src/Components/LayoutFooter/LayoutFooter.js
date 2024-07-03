@@ -47,7 +47,7 @@ function Footer({ buttons, price, config, setConfig }) {
 
 Footer.propTypes = {
     buttons: PropTypes.array.isRequired,
-    price: PropTypes.number.isRequired,
+    price: PropTypes.string.isRequired,
     config: PropTypes.object.isRequired,
     setConfig: PropTypes.func.isRequired,
 }
