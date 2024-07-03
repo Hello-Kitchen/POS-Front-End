@@ -4,7 +4,7 @@ function IngredientsButton() {
 
     const [buttonData, setButtonData] = useState([
         {
-            name: "Ajout",
+            name: "Supplément",
             color: "bg-kitchen-button-green",
             selected: false
         },
