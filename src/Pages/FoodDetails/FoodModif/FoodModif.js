@@ -9,9 +9,8 @@ import IngredientList from "../../../Components/FoodElem/Ingredientlist/Ingredie
 function FoodModif() {
 
     const location = useLocation();
-    const {food, color} = location.state || {};
-    
-    console.log(color)
+    const {food} = location.state || {};
+
     return ( 
           <div className="h-full w-full grid grid-flow-row grid-rows-6">
               <ModifBackButton />

@@ -8,7 +8,7 @@ function FoodDetail({name, data, multiple}) {
     const [fullData, setFullData] = useState(data.map((name => {
         return {
             name: name,
-            color: '#4958A6',
+            color: 'bg-kitchen-food-detail',
             selected: false
         }
     })));
@@ -19,15 +19,15 @@ function FoodDetail({name, data, multiple}) {
             let color = data.color;
             let selected = data.selected;
             if (multiple === false) {
-                color = '#4958A6';
+                color = 'bg-kitchen-food-detail';
                 selected = false;
             }
             if (data.name === name) {
                 selected = data.selected ? false : true;
                 if (selected) {
-                    color = '#FF9900';
+                    color = 'bg-kitchen-food-detail-selected';
                 } else {
-                    color = '#4958A6';
+                    color = 'bg-kitchen-food-detail';
                 }
             }
             return {
@@ -39,7 +39,10 @@ function FoodDetail({name, data, multiple}) {
     }
 
     const choice = fullData.map((elem) =>
-        <div key={elem.name} className="h-20 col-span-1 border border-white" style={{backgroundColor: elem.color}}>
+        <div
+            key={elem.name}
+            className={`${elem.color} h-20 col-span-1 border border-white ${elem.selected ? "shadow-button" : ""}`}
+        >
             <button className="h-full w-full" onClick={() => handleClick(elem.name)}>
                 <h1 className="text-2xl text-white float-left ml-4">
                     {elem.name}

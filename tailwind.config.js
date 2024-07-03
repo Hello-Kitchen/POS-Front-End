@@ -48,6 +48,9 @@ module.exports = {
       gridColumn: {
         'span-36': 'span 36 / span 36',
       },
+      boxShadow: {
+        "button": "inset 0 10px 20px -20px rgba(0,0,0,1)",
+      }
     },
   },
   plugins: [

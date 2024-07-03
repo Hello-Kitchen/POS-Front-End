@@ -13,7 +13,6 @@ function FoodLayout() {
     const {id, food, color} = location.state || {};
 
     if (food != null) {
-      console.log(food.details)
       return (
         <div className="h-full w-3/4 grid grid-flow-row grid-rows-8">
               <FoodHeader id={id} name={food.name} price={food.price} color={color} />
