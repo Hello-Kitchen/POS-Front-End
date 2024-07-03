@@ -11,11 +11,13 @@ function handleClick (event) {
     event.currentTarget.classList.add('border-2')
     event.currentTarget.classList.add('border-kitchen-blue')
     event.currentTarget.classList.add('select-mod')
+    let equal = document.getElementById('=');
+    equal.innerHTML = "Entrée"
 }
 
 function Button({ button, id, setPayList, priceLess, payList, setPriceLess }) {
     return (
-        <div id={id} className='flex w-full h-1/4 bg-kitchen-yellow rounded-3xl text-kitchen-blue justify-center items-center font-bold shadow-md text-2xl font-bold cursor-pointer mods-pay' onClick={(event) => { handleClick(event); if (event.currentTarget.id === "CB Total") { const newDiv = <div key={payList.length} className='flex flex-row justify-between w-full'><div className='text-white font-normal'>{event.currentTarget.id}</div><div className='text-white'>{Number(priceLess).toFixed(2)}€</div></div>; setPayList([...payList, newDiv]); setPriceLess(0) } }} >{button}</div>
+        <div id={id} className='flex w-full h-1/4 bg-kitchen-yellow rounded-3xl text-kitchen-blue justify-center items-center font-bold shadow-md text-2xl font-bold cursor-pointer mods-pay' onClick={(event) => { handleClick(event); if (event.currentTarget.id === "CB Total" && priceLess > 0) { const newDiv = <div key={payList.length} className='flex flex-row justify-between w-full'><div className='text-white font-normal text-20px'>{event.currentTarget.id}</div><div className='text-white font-normal text-20px'>{Number(priceLess).toFixed(2)}€</div></div>; setPayList([...payList, newDiv]); setPriceLess(0) } }} >{button}</div>
     )
 }
 
@@ -43,7 +45,7 @@ ModsPay.propTypes = {
 
 Button.propTypes = {
     button: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     setPayList: PropTypes.func.isRequired,
     priceLess: PropTypes.number.isRequired,
     payList: PropTypes.array.isRequired,

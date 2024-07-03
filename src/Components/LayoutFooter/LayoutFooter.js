@@ -22,7 +22,7 @@ const NewTicket = () => (
     </div>
 )
 
-function Footer({ buttons, price, config, setConfig }) {
+function Footer({ buttons, price, config, setConfig, priceLess, setOrders }) {
     const navigate = useNavigate();
 
     return (
@@ -38,9 +38,19 @@ function Footer({ buttons, price, config, setConfig }) {
                     <NewTicket />
                 </div>
             </div>
-            <div className='w-1/4 h-full bg-kitchen-yellow flex justify-center items-center p-3 shadow-[inset_0_10px_50px_-20px_rgba(0,0,0,0.7)]'>
-                <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue cursor-pointer' onClick={() => { setConfig(prevConfig => ({ ...prevConfig, payement: !prevConfig.payement })); navigate(!config.payement ? '/dashboard/pay' : '/dashboard'); }}>{!config.payement ? `Encaisser ${Number(price).toFixed(2).toString()}€` : 'Retour'}</div>
-            </div>
+            {(priceLess > 0) || (!config.payement) ? (
+                <div className='w-1/4 h-full bg-kitchen-yellow flex justify-center items-center p-3 shadow-[inset_0_10px_50px_-20px_rgba(0,0,0,0.7)]'>
+                    <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue cursor-pointer' onClick={() => { setConfig(prevConfig => ({ ...prevConfig, payement: !prevConfig.payement })); navigate(!config.payement ? '/dashboard/pay' : '/dashboard'); }}>
+                        {!config.payement ? `Encaisser ${Number(price).toFixed(2).toString()}€` : 'Retour'}
+                    </div>
+                </div>
+            ) : (
+                <div className='w-1/4 h-full bg-kitchen-yellow flex justify-center items-center p-3 shadow-[inset_0_10px_50px_-20px_rgba(0,0,0,0.7)]'>
+                    <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue cursor-pointer' onClick={() => { setConfig(prevConfig => ({ ...prevConfig, payement: !prevConfig.payement })); setOrders([{nb: ""}, []]); navigate(!config.payement ? '/dashboard/pay' : '/dashboard'); }}>
+                        Terminée
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
@@ -50,6 +60,8 @@ Footer.propTypes = {
     price: PropTypes.string.isRequired,
     config: PropTypes.object.isRequired,
     setConfig: PropTypes.func.isRequired,
+    priceLess: PropTypes.number.isRequired,
+    setOrders: PropTypes.func.isRequired,
 }
 
 export default Footer;

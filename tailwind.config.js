@@ -44,6 +44,7 @@ module.exports = {
         '1/20': '5%',
       },
       fontSize: {
+        '16px': '16px',
         '24px': '24px',
         '20px': '20px',
         'testpx': '28px'

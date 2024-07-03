@@ -14,7 +14,7 @@ const Layout = ({ orders, price, config, setConfig, setOrders, priceLess, setPri
                 <Currentcommand orders={orders} config={config} setConfig={setConfig} setOrders={setOrders} price={price} priceLess={priceLess} payList={payList} />
                 <Outlet context={{ orders, setOrders, price, config, setConfig, priceLess, setPriceLess, payList, setPayList }} />
             </div>
-            <LayoutFooter buttons={["tables", "commandes", "transactions", "manager"]} price={price.toString()} config={config} setConfig={setConfig} />
+            <LayoutFooter buttons={["tables", "commandes", "transactions", "manager"]} price={price.toString()} config={config} setConfig={setConfig} priceLess={priceLess} setOrders={setOrders} />
         </div>
     )
 };

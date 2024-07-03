@@ -4,7 +4,7 @@ import { GoArrowRight } from "react-icons/go";
 import PropTypes from 'prop-types';
 
 const Header = ({ orders }) => (
-    <div className='w-full h-current-cmd-header p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders[0].nb}`}</div>
+    <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders[0].nb}`}</div>
 )
 
 const Food = ({ name, price }) => (
@@ -56,7 +56,7 @@ const Order = ({ order, border, config }) => (
 )
 
 const Content = ({ orders, stop, config }) => (
-    <div className='w-full h-current-cmd-content flex flex-col overflow-auto scrollbar-hide'>
+    <div className='w-full flex flex-col overflow-auto scrollbar-hide'>
         {
             orders[1].map((order, index) => {
                 if (index === 0) {
@@ -90,24 +90,26 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         )
     } else {
         return (
-            <div className='w-full border-t border-kitchen-yellow flex flex-col gap-px p-2'>
-                <div className='flex flex-row justify-between w-full'>
-                    <div className='text-white font-normal'>Total</div>
-                    <div className='text-white'>{price.toFixed(2).toString()}€</div>
+            <div className='w-full flex p-2 overflow-auto scrollbar-hide'>
+                <div className='w-full border-t-4 border-kitchen-yellow flex flex-col gap-px pt-2'>
+                    <div className='flex flex-row justify-between w-full'>
+                        <div className='text-white font-normal text-20px'>Total</div>
+                        <div className='text-white font-normal text-20px'>{price.toFixed(2).toString()}€</div>
+                    </div>
+                    {payList}
+                    {priceLess < 0 ? (
+                        <div className='flex flex-row justify-between w-full'>
+                            <div className='text-white font-bold text-24px'>Montant dû</div>
+                            <div className='text-white font-bold text-24px'>{(priceLess * (-1)).toFixed(2).toString()}€</div>
+                        </div>
+                    ) : (
+                        <div className='flex flex-row justify-between w-full'>
+                            <div className='text-white font-bold text-24px'>Reste a payer</div>
+                            <div className='text-white font-bold text-24px'>{priceLess.toFixed(2).toString()}€</div>
+                        </div>
+                    )
+                    }
                 </div>
-                {payList}
-                {priceLess < 0 ? (
-                    <div className='flex flex-row justify-between w-full'>
-                        <div className='text-white font-bold text-24px'>Montant dû</div>
-                        <div className='text-white font-bold text-24px'>{(priceLess * (-1)).toFixed(2).toString()}€</div>
-                    </div>
-                ) : (
-                    <div className='flex flex-row justify-between w-full'>
-                        <div className='text-white font-bold text-24px'>Reste a payer</div>
-                        <div className='text-white font-bold text-24px'>{priceLess.toFixed(2).toString()}€</div>
-                    </div>
-                )
-                }
             </div>
         )
     }
@@ -115,8 +117,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 
 function Currentcommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
     return (
-        <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col'>
-            <div className='w-full h-85 float-right px-2 gap-3 flex flex-col'>
+        <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
+            <div className='w-full float-right px-2 gap-3 flex flex-col'>
                 <Header orders={orders} />
                 <Content orders={orders} stop={false} config={config} setOrders={setOrders} setConfig={setConfig} />
             </div>
