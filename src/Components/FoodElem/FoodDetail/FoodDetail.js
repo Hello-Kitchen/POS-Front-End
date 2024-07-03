@@ -5,35 +5,64 @@ import { useState } from "react";
 
 function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
 
-    const [fullData, setFullData] = useState(data.map((name => {
+    let detailObj = {name: name, list: []};
+    const [fullData, setFullData] = useState(data.map((elem => {
+        let color = 'bg-kitchen-food-detail';
+        let selected = false;
+        let copy = orderDetails.details;
+        let check = copy.filter(e => e.name === name);
+        if (check.length != 0 && check[0].list.find(e => e === elem)) {
+            color = 'bg-kitchen-food-detail-selected';
+            selected = true;
+        }
         return {
-            name: name,
-            color: 'bg-kitchen-food-detail',
-            selected: false
+            name: elem,
+            color: color,
+            selected: selected
         }
     })));
+
 
     const handleClick = (name) => {
         setFullData(null)
         setFullData(fullData.map((data => {
             let color = data.color;
             let selected = data.selected;
-            let arr = orderDetails.details;
             if (multiple === false) {
                 color = 'bg-kitchen-food-detail';
                 selected = false;
             }
             if (data.name === name) {
                 selected = data.selected ? false : true;
+                let copy = orderDetails.details;
                 if (selected) {
                     color = 'bg-kitchen-food-detail-selected';
-                    arr.push(data.name);
-                    setOrderDetails({details: arr, sups: orderDetails.sups})
+                    copy = copy.filter(e => e.name === detailObj.name);
+                    let temp = detailObj.list;
+                    if (copy.length != 0) {
+                        temp = copy[0].list;
+                    }
+                    if (multiple === false) {
+                        temp = [data.name];
+                    } else {
+                        temp.push(data.name);
+                    }
+                    detailObj = {name: detailObj.name, list: temp};
                 } else {
+                    copy = copy.filter(e => e.name === detailObj.name);
+                    let temp = detailObj.list;
+                    if (copy.length != 0) {
+                        temp = copy[0].list;
+                        temp = temp.filter(e => e !== data.name);
+                        detailObj = {name: detailObj.name, list: temp};
+                    }
                     color = 'bg-kitchen-food-detail';
-                    arr = arr.filter(e => e !== data.name)
-                    setOrderDetails({details: arr, sups: orderDetails.sups})
                 }
+                let arr = orderDetails.details;
+                arr = arr.filter(e => e.name !== detailObj.name);
+                let sups = orderDetails.sups;
+                arr.push(detailObj);
+                setOrderDetails({details: arr, sups: sups});
             }
             return {
                 name: data.name,
