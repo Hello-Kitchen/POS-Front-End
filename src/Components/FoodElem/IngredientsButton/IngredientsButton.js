@@ -42,7 +42,7 @@ function IngredientsButton() {
     }
 
     const buttons = buttonData.map((buttonElem) =>
-        <div className={`col-span-1 ${buttonElem.color} border border-white ${buttonElem.selected ? "shadow-button" : ""}`}>
+        <div key={buttonElem.name} className={`col-span-1 ${buttonElem.color} border border-white ${buttonElem.selected ? "shadow-button" : ""}`}>
             <button key={buttonElem.name} className="h-full w-full" onClick={() => handleClick(buttonElem.name)}>
                 <h1 className="text-3xl text-white float-left ml-4">{buttonElem.name}</h1>
             </button>
