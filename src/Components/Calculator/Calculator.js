@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const btnValues = [
     ["C", "+-", "%", "/"],
@@ -167,6 +168,26 @@ function Calculator({ setPriceLess, payList, setPayList }) {
             </ButtonBox>
         </div>
     )
+}
+
+Calculator.propTypes = {
+    setPriceLess: PropTypes.func.isRequired,
+    payList: PropTypes.array.isRequired,
+    setPayList: PropTypes.func.isRequired,
+}
+
+Screen.propTypes = {
+    value: PropTypes.number.isRequired,
+}
+
+Button.propTypes = {
+    className: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired || PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired,
+}
+
+ButtonBox.propTypes = {
+    children: PropTypes.array.isRequired,
 }
 
 export default Calculator;

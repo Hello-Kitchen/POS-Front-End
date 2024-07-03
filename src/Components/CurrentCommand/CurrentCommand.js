@@ -84,8 +84,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
     if (!config.payement) {
         return (
             <div className='w-full h-current-cmd-footer border-t border-kitchen-yellow flex flex-row gap-px bg-kitchen-yellow'>
-                <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={(event) => { const newOrders = [...orders]; newOrders[1] = [...newOrders[1], { stop: true }]; console.log(newOrders); setOrders(newOrders); }}>STOP</div>
-                {config.firstSend ? <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={(event) => { setConfig(prevConfig => ({ ...prevConfig, firstSend: false })); }}>Envoyer</div> : <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={(event) => { const newOrders = [...orders]; const index = newOrders[1].findIndex(item => item.stop === true); if (index !== -1) { newOrders[1] = newOrders[1].filter((_, i) => i !== index); setOrders(newOrders); } }}>Demander la suite</div>}
+                <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { const newOrders = [...orders]; newOrders[1] = [...newOrders[1], { stop: true }]; console.log(newOrders); setOrders(newOrders); }}>STOP</div>
+                {config.firstSend ? <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { setConfig(prevConfig => ({ ...prevConfig, firstSend: false })); }}>Envoyer</div> : <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { const newOrders = [...orders]; const index = newOrders[1].findIndex(item => item.stop === true); if (index !== -1) { newOrders[1] = newOrders[1].filter((_, i) => i !== index); setOrders(newOrders); } }}>Demander la suite</div>}
             </div>
         )
     } else {
@@ -126,38 +126,58 @@ function Currentcommand({ orders, config, setConfig, setOrders, price, priceLess
 }
 
 Header.propTypes = {
-    cmd: PropTypes.string.isRequired
+    orders: PropTypes.string.isRequired,
 }
 
 Food.propTypes = {
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
+    price: PropTypes.number.isRequired,
 }
 
 Detail.propTypes = {
-    text: PropTypes.string.isRequired
+    text: PropTypes.string.isRequired,
 }
 
 Sup.propTypes = {
-    text: PropTypes.string.isRequired
+    text: PropTypes.string.isRequired,
 }
 
 Note.propTypes = {
-    text: PropTypes.string.isRequired
+    text: PropTypes.string.isRequired,
 }
 
 Order.propTypes = {
     order: PropTypes.object.isRequired,
-    border: PropTypes.bool.isRequired
+    border: PropTypes.bool.isRequired,
+    config: PropTypes.object.isRequired,
 }
 
 Content.propTypes = {
     orders: PropTypes.array.isRequired,
-    stop: PropTypes.bool.isRequired
+    stop: PropTypes.bool.isRequired,
+    config: PropTypes.object.isRequired,
+    setOrders: PropTypes.func.isRequired,
+    setConfig: PropTypes.func.isRequired,
+}
+
+Footer.propTypes = {
+    orders: PropTypes.array.isRequired,
+    config: PropTypes.object.isRequired,
+    setOrders: PropTypes.func.isRequired,
+    setConfig: PropTypes.func.isRequired,
+    price: PropTypes.number.isRequired,
+    priceLess: PropTypes.number.isRequired,
+    payList: PropTypes.array.isRequired,
 }
 
 Currentcommand.propTypes = {
-    orders: PropTypes.array.isRequired
+    orders: PropTypes.array.isRequired,
+    config: PropTypes.object.isRequired,
+    setConfig: PropTypes.func.isRequired,
+    setOrders: PropTypes.func.isRequired,
+    price: PropTypes.number.isRequired,
+    priceLess: PropTypes.number.isRequired,
+    payList: PropTypes.array.isRequired,
 }
 
 export default Currentcommand;

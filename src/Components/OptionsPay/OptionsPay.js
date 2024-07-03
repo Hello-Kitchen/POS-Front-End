@@ -1,3 +1,6 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 function Button({ button }) {
     return (
         <div className='flex border-none bg-kitchen-yellow text-2xl text-kitchen-blue font-bold rounded-3xl outline-none shadow-md justify-center items-center cursor-pointer' onClick={button.func}>{button.name}</div>
@@ -14,6 +17,14 @@ function OptionsPay ({ buttons }) {
             }
         </div>
     )
+}
+
+OptionsPay.propTypes = {
+    buttons: PropTypes.array.isRequired,
+}
+
+Button.propTypes = {
+    button: PropTypes.object.isRequired,
 }
 
 export default OptionsPay;

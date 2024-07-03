@@ -1,3 +1,6 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 function handleClick (event) {
     let elements = document.getElementsByClassName("mods-pay");
     for (let i = 0; i < elements.length; i++) {
@@ -28,6 +31,23 @@ function ModsPay({ buttons, setPayList, priceLess, payList, setPriceLess }) {
             }
         </div>
     )
+}
+
+ModsPay.propTypes = {
+    buttons: PropTypes.array.isRequired,
+    setPayList: PropTypes.func.isRequired,
+    priceLess: PropTypes.number.isRequired,
+    payList: PropTypes.array.isRequired,
+    setPriceLess: PropTypes.func.isRequired,
+}
+
+Button.propTypes = {
+    button: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    setPayList: PropTypes.func.isRequired,
+    priceLess: PropTypes.number.isRequired,
+    payList: PropTypes.array.isRequired,
+    setPriceLess: PropTypes.func.isRequired,
 }
 
 export default ModsPay;

@@ -1,4 +1,7 @@
+import React from 'react';
 import { Outlet } from "react-router-dom";
+import PropTypes from 'prop-types';
+
 import LayoutHeader from "../Components/LayoutHeader/LayoutHeader";
 import Currentcommand from "../Components/CurrentCommand/CurrentCommand";
 import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
@@ -15,5 +18,17 @@ const Layout = ({ orders, price, config, setConfig, setOrders, priceLess, setPri
         </div>
     )
 };
+
+Layout.propTypes = {
+    orders: PropTypes.array.isRequired,
+    price: PropTypes.number.isRequired,
+    config: PropTypes.object.isRequired,
+    setConfig: PropTypes.func.isRequired,
+    setOrders: PropTypes.func.isRequired,
+    setPayList: PropTypes.func.isRequired,
+    priceLess: PropTypes.number.isRequired,
+    payList: PropTypes.array.isRequired,
+    setPriceLess: PropTypes.func.isRequired,
+}
 
 export default Layout;
