@@ -12,7 +12,7 @@ const Login = () => {
         e.preventDefault();
         await axios.post(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/login/`, {username, password})
         .then(() => {
-            navigate('/dashboard');
+            navigate('/loading');
         })
         .catch((err) => {
             console.log("ERROR", err);

@@ -1,27 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function CategoryButton({id, name, color, food, route}) {
+import FoodStick from '../FoodStick/FoodStick';
+
+function FoodButton({id, name, color, food, route}) {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        localStorage.setItem("food_category/"+id, JSON.stringify(food));
-      }, [id, food]);
-
     const handleClick = () => {
-        navigate(route + id, {state: {food: food, color: color}})
+        navigate(route + id, {state: {id: id, food: food, color: color}})
     }
+
     return (
-        <div className={`${color} col-span-1 row-span-1`}>
+        <div className="bg-white col-span-1 row-span-1 grid grid-cols-12 border-b-2 border-b-white">
+            <FoodStick color={color} />
             <button 
-                className="h-full w-full"
+                className="h-full w-full col-span-11"
                 onClick={() => handleClick()}
                 type="button"
             >
-                <h1 className="text-3xl font-bold text-white text-left ml-5">
+                <h1 className="text-3xl font-bold text-black text-left">
                     {name}
                 </h1>
             </button>
@@ -29,7 +28,7 @@ function CategoryButton({id, name, color, food, route}) {
     );
 }
 
-CategoryButton.propTypes = {
+FoodButton.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
@@ -37,4 +36,4 @@ CategoryButton.propTypes = {
     route: PropTypes.string.isRequired,
 }
 
-export default CategoryButton;
+export default FoodButton;

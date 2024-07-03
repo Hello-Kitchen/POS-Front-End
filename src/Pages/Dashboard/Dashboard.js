@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
 
 import CategoryButton from '../../Components/CategoryButton/CategoryButton';
 
 function Dashboard() {
-    const [categories, setCategories] = useState([]);
+    const data = localStorage.getItem("data");
 
-    useEffect(() => {
-      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/food_category/`).then(response => {
-        response.json().then(data => {
-          setCategories(data);
-        });
-      }).catch(error => {
-        console.log(error);
-      });
-    }, []);
-
-    const buttons = categories.map((category) =>
-        <CategoryButton key={category.id} id={category.id} name={category.name} color="red" route="category/"/>
-    );
+    const colors = [
+      "bg-category-red",
+      "bg-category-purple",
+      "bg-category-orange",
+      "bg-category-green",
+      "bg-category-blue",
+      "bg-category-cyan"
+    ]
+    const buttons = JSON.parse(data).map((elem) =>
+      <CategoryButton key={elem.id} id={elem.id} name={elem.name} food={elem.food} color={colors[elem.id] != null ? colors[elem.id] : colors[0]} route="category/"/>
+  );
 
 
   return (
-    <div className="h-full w-3/4 grid grid-cols-2 content-start gap-1">
+    <div className="h-full w-3/4 grid grid-cols-2 grid-rows-8 content-start">
         {buttons}
     </div>
   );
