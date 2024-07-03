@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useState } from "react";
 
-function FoodDetail({name, data, multiple}) {
+function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
 
     const [fullData, setFullData] = useState(data.map((name => {
         return {
@@ -18,6 +18,7 @@ function FoodDetail({name, data, multiple}) {
         setFullData(fullData.map((data => {
             let color = data.color;
             let selected = data.selected;
+            let arr = orderDetails.details;
             if (multiple === false) {
                 color = 'bg-kitchen-food-detail';
                 selected = false;
@@ -26,8 +27,12 @@ function FoodDetail({name, data, multiple}) {
                 selected = data.selected ? false : true;
                 if (selected) {
                     color = 'bg-kitchen-food-detail-selected';
+                    arr.push(data.name);
+                    setOrderDetails({details: arr, sups: orderDetails.sups})
                 } else {
                     color = 'bg-kitchen-food-detail';
+                    arr = arr.filter(e => e !== data.name)
+                    setOrderDetails({details: arr, sups: orderDetails.sups})
                 }
             }
             return {

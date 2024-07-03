@@ -6,7 +6,7 @@ import IngredientsButton from "../../../Components/FoodElem/IngredientsButton/In
 import ModifBackButton from "../../../Components/FoodElem/ModifButton/ModifBackButton";
 import IngredientList from "../../../Components/FoodElem/Ingredientlist/IngredientList";
 
-function FoodModif() {
+function FoodModif({orderDetails, setOrderDetails}) {
 
     const location = useLocation();
     const {food} = location.state || {};

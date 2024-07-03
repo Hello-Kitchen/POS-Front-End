@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from './Login/Login';
@@ -12,6 +12,9 @@ import FoodModif from './FoodDetails/FoodModif/FoodModif';
 
 
 function PosRouter() {
+
+    const [orderDetails, setOrderDetails] = useState({details: [], sups: []});
+
     return (
     <BrowserRouter>
       <Routes>
@@ -21,8 +24,8 @@ function PosRouter() {
           <Route index element={<Dashboard />}/>
           <Route path="/dashboard/category/:id" element={<CategoryList />}/>
           <Route path="/dashboard/category/:id/:id" element={<FoodLayout />}>
-            <Route path="/dashboard/category/:id/:id" element={<FoodDetails />}/>
-            <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />}/>
+            <Route path="/dashboard/category/:id/:id" element={<FoodDetails orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}/>
+            <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}/>
           </Route>
         </Route>
       </Routes>
