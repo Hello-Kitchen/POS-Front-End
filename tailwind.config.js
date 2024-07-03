@@ -46,6 +46,7 @@ module.exports = {
       fontSize: {
         '24px': '24px',
         '20px': '20px',
+        'testpx': '28px'
       },
       gridTemplateColumns: {
         '48': 'repeat(48, minmax(0, 1fr))',

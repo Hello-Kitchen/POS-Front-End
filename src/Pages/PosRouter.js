@@ -7,6 +7,9 @@ import Dashboard from './Dashboard/Dashboard';
 import Pay from './Pay/Pay';
 import Layout from './Layout';
 import CategoryList from './CategoryList/CategoryList';
+import FoodLayout from './FoodDetails/FoodLayout';
+import FoodDetails from './FoodDetails/FoodDetails';
+import FoodModif from './FoodDetails/FoodModif/FoodModif';
 
 let data =
   [
@@ -43,15 +46,15 @@ function PosRouter() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-        <Route path="/loading" element={<Loading />}/>
-        <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} />}>
+          <Route path="/loading" element={<Loading />} />
+          <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} />}>
             <Route index element={<Dashboard />} />
             <Route path="/dashboard/pay" element={<Pay />} />
             <Route path="/dashboard/category/:id" element={<CategoryList />} />
-          <Route path="/dashboard/category/:id/:id" element={<FoodLayout />}>
-            <Route path="/dashboard/category/:id/:id" element={<FoodDetails />}/>
-            <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />}/>
-          </Route>
+            <Route path="/dashboard/category/:id/:id" element={<FoodLayout />}>
+              <Route path="/dashboard/category/:id/:id" element={<FoodDetails />} />
+              <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

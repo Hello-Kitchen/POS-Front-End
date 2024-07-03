@@ -8,13 +8,6 @@ function Dashboard() {
     const { setPriceLess, price, setPayList } = useOutletContext();
 
     useEffect(() => {
-      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/food_category/`).then(response => {
-        response.json().then(data => {
-          setCategories(data);
-        });
-      }).catch(error => {
-        console.log(error);
-      });
       setPriceLess(price);
       setPayList([]);
     }, [price, setPriceLess, setPayList]);
