@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const btnValues = [
@@ -38,7 +38,7 @@ function Calculator({ setPriceLess, payList, setPayList }) {
     const [calc, setCalc] = useState({ sign: "", num: 0, res: 0 });
     const [display, setDisplay] = useState(false);
 
-    const displayCalc = () => {
+    const displayCalc = useCallback(() => {
         let elem = document.getElementsByClassName('select-mod')[0];
         if (elem && calc.res !== "Can't divide with 0") {
             const text = elem.id;
@@ -47,12 +47,12 @@ function Calculator({ setPriceLess, payList, setPayList }) {
             setPriceLess(prevPriceLess => (Number(prevPriceLess) - Number(calc.res.toString().split(' ').join(''))));
         }
         setDisplay(false);
-    }
+    }, [calc.res, payList, setPayList, setPriceLess]);
 
     useEffect(() => {
         if (display)
             displayCalc();
-    }, [display]);
+    }, [display, displayCalc]);
 
     const numClickHandler = (e) => {
         e.preventDefault();

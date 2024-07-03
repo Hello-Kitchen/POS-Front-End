@@ -14,7 +14,7 @@ const Pay = () => {
     if (config.payement === false)
       navigate('/dashboard')
 
-  }, []);
+  }, [config, navigate]);
 
   function cancel () {
     setConfig(prevConfig => ({ ...prevConfig, payement: !prevConfig.payement }));

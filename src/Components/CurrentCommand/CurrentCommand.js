@@ -67,7 +67,7 @@ const Content = ({ orders, stop, config }) => (
                     return <Order key={index} order={order} border={false} config={config} />
                 }
                 if (config.payement && order.stop === true)
-                    return
+                    return null
                 if (!config.payement && stop === true) {
                     stop = false;
                     return <Order key={index} order={order} border={false} config={config} />

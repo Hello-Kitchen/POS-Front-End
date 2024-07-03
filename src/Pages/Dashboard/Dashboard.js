@@ -17,7 +17,7 @@ function Dashboard() {
       });
       setPriceLess(price);
       setPayList([]);
-    }, []);
+    }, [price, setPriceLess, setPayList]);
 
     const buttons = categories.map((category) =>
         <CategoryButton key={category.id} id={category.id} name={category.name} color="red" route="category/"/>
