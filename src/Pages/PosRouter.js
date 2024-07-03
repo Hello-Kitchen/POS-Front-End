@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Login from './Login/Login';
+import Loading from './Loading/Loading';
 import Dashboard from './Dashboard/Dashboard';
 import Pay from './Pay/Pay';
 import Layout from './Layout';
@@ -42,10 +43,15 @@ function PosRouter() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} />}>
+        <Route path="/loading" element={<Loading />}/>
+        <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} />}>
             <Route index element={<Dashboard />} />
             <Route path="/dashboard/pay" element={<Pay />} />
             <Route path="/dashboard/category/:id" element={<CategoryList />} />
+          <Route path="/dashboard/category/:id/:id" element={<FoodLayout />}>
+            <Route path="/dashboard/category/:id/:id" element={<FoodDetails />}/>
+            <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />}/>
+          </Route>
           </Route>
         </Routes>
       </BrowserRouter>
