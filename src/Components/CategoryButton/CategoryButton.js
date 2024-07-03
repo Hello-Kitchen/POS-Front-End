@@ -33,7 +33,7 @@ CategoryButton.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
-    food: PropTypes.object.isRequired,
+    food: PropTypes.array.isRequired,
     route: PropTypes.string.isRequired,
 }
 

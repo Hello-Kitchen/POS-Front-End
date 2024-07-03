@@ -1,52 +1,34 @@
+import React from 'react';
 import { Outlet } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import LayoutHeader from "../Components/LayoutHeader/LayoutHeader";
 import Currentcommand from "../Components/CurrentCommand/CurrentCommand";
 import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
 
-const data = 
-[
-    {nb: '42'}, 
-    [
-        {plat: 'Hamburger', price: '15.60', details: ['Saignant', 'Frites', 'Salade'], sups: ['Supplement fromages', 'Allergie Oignons']},
-        {plat: 'Entrecote Classique', price: '22.30', details: ['Saignant', 'Frites', 'Salade'], note: 'Frites sans sel'},
-        {stop: true},
-        {plat: 'Brownie', price: '7.00'},
-        {plat: 'Hamburger', price: '15.60', details: ['Saignant', 'Frites', 'Salade'], sups: ['Supplement fromages', 'Allergie Oignons']}, 
-        {plat: 'Entrecote Classique', price: '22.30', details: ['Saignant', 'Frites', 'Salade'], note: 'Frites sans sel'}
-    ]
-];
-
-const formatDate = (date) => {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${day}/${month}/${year} - ${hours}:${minutes}`;
-};
-
-const Layout = () => {
-    const [currentTime, setCurrentTime] = useState(new Date());
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentTime(new Date());
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
-
+const Layout = ({ orders, price, config, setConfig, setOrders, priceLess, setPriceLess, payList, setPayList }) => {
     return (
         <div className="column w-full h-full">
-            <LayoutHeader textLeft="05 - Francois Dupont" textCenter="Caisse 1" textRight={formatDate(currentTime)} />
+            <LayoutHeader textLeft="05 - Francois Dupont" textCenter="Caisse 1" />
             <div className="w-full h-4/5">
-                <Currentcommand orders={data}/>
-                <Outlet />
+                <Currentcommand orders={orders} config={config} setConfig={setConfig} setOrders={setOrders} price={price} priceLess={priceLess} payList={payList} />
+                <Outlet context={{ orders, setOrders, price, config, setConfig, priceLess, setPriceLess, payList, setPayList }} />
             </div>
-            <LayoutFooter buttons={["tables", "commandes", "transactions", "manager"]} price="44.90" />
+            <LayoutFooter buttons={["tables", "commandes", "transactions", "manager"]} price={price.toString()} config={config} setConfig={setConfig} priceLess={priceLess} setOrders={setOrders} />
         </div>
     )
 };
+
+Layout.propTypes = {
+    orders: PropTypes.array.isRequired,
+    price: PropTypes.number.isRequired,
+    config: PropTypes.object.isRequired,
+    setConfig: PropTypes.func.isRequired,
+    setOrders: PropTypes.func.isRequired,
+    setPayList: PropTypes.func.isRequired,
+    priceLess: PropTypes.number.isRequired,
+    payList: PropTypes.array.isRequired,
+    setPriceLess: PropTypes.func.isRequired,
+}
 
 export default Layout;

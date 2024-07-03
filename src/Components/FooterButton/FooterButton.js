@@ -5,7 +5,7 @@ const ButtonTables = () => (
         <svg viewBox="0 0 24 24" height="60" width="60" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="imageTables" patternUnits="userSpaceOnUse" width="24" height="24">
-                    <image href="./lampe.jpg" x="0" y="0" width="24" height="24" />
+                    <image href="/lampe.jpg" x="0" y="0" width="24" height="24" />
                 </pattern>
             </defs>
             <circle r="10" cx="12" cy="12" fill="url(#imageTables)" />
@@ -19,7 +19,7 @@ const ButtonCommandes = () => (
         <svg viewBox="0 0 24 24" height="60" width="60" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="imageCommandes" patternUnits="userSpaceOnUse" width="24" height="24">
-                    <image href="./book.jpg" x="0" y="0" width="24" height="24" />
+                    <image href="/book.jpg" x="0" y="0" width="24" height="24" />
                 </pattern>
             </defs>
             <circle r="10" cx="12" cy="12" fill="url(#imageCommandes)" />
@@ -33,7 +33,7 @@ const ButtonTransactions = () => (
         <svg viewBox="0 0 24 24" height="60" width="60" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="imageTransactions" patternUnits="userSpaceOnUse" width="24" height="24">
-                    <image href="./ticket.jpg" x="0" y="0" width="24" height="24" />
+                    <image href="/ticket.jpg" x="0" y="0" width="24" height="24" />
                 </pattern>
             </defs>
             <circle r="10" cx="12" cy="12" fill="url(#imageTransactions)" />
@@ -47,7 +47,7 @@ const ButtonManager = () => (
         <svg viewBox="0 0 24 24" height="60" width="60" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <pattern id="imageManager" patternUnits="userSpaceOnUse" width="24" height="24">
-                    <image href="./sac.jpg" x="0" y="0" width="24" height="24" />
+                    <image href="/sac.jpg" x="0" y="0" width="24" height="24" />
                 </pattern>
             </defs>
             <circle r="10" cx="12" cy="12" fill="url(#imageManager)" />

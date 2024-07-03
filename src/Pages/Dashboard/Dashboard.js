@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 
 import CategoryButton from '../../Components/CategoryButton/CategoryButton';
 
 function Dashboard() {
     const data = localStorage.getItem("data");
+    const { setPriceLess, price, setPayList } = useOutletContext();
+
+    useEffect(() => {
+      setPriceLess(price);
+      setPayList([]);
+    }, [price, setPriceLess, setPayList]);
 
     const colors = [
       "bg-category-red",
