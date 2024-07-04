@@ -11,7 +11,7 @@ function FoodLayout() {
 
     const location = useLocation();
     const {id, food, color} = location.state || {};
-    const {orders, setOrders, orderDetails, setOrderDetails} = useOutletContext();
+    const {setOrders, orderDetails, setOrderDetails} = useOutletContext();
 
     if (food != null) {
       return (
@@ -20,7 +20,7 @@ function FoodLayout() {
           <div className="w-full row-span-6">
               <Outlet context={{ orderDetails, setOrderDetails }} />
           </div>
-            <FoodFooter name={food.name} price={food.price} orders={orders} setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
+            <FoodFooter name={food.name} price={food.price} setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
         </div>
       )
     }

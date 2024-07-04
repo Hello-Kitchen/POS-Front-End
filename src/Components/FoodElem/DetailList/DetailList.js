@@ -17,7 +17,9 @@ function DetailList({details, orderDetails, setOrderDetails}) {
 }
 
 DetailList.propTypes = {
-    details: PropTypes.array.isRequired
+    details: PropTypes.array.isRequired,
+    orderDetails: PropTypes.object.isRequired,
+    setOrderDetails: PropTypes.func.isRequired
 }
 
 

@@ -29,6 +29,8 @@ Layout.propTypes = {
     priceLess: PropTypes.number.isRequired,
     payList: PropTypes.array.isRequired,
     setPriceLess: PropTypes.func.isRequired,
+    orderDetails: PropTypes.object.isRequired,
+    setOrderDetails: PropTypes.func.isRequired
 }
 
 export default Layout;

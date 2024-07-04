@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 function IngredientsButton({orderDetails, setOrderDetails}) {
 
@@ -61,6 +62,11 @@ function IngredientsButton({orderDetails, setOrderDetails}) {
             {buttons}
         </div>
     )
+}
+
+IngredientsButton.propTypes = {
+    orderDetails: PropTypes.object.isRequired,
+    setOrderDetails: PropTypes.func.isRequired
 }
 
 export default IngredientsButton;

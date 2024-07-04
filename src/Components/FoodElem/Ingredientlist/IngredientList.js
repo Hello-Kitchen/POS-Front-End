@@ -66,7 +66,9 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
 
 IngredientList.propTypes = {
     name: PropTypes.string.isRequired,
-    data: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired,
+    orderDetails: PropTypes.object.isRequired,
+    setOrderDetails: PropTypes.func.isRequired
 }
 
 

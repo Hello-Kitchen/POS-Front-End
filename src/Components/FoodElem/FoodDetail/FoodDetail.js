@@ -100,7 +100,9 @@ function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
 FoodDetail.propTypes = {
     name: PropTypes.string.isRequired,
     data: PropTypes.array.isRequired,
-    multiple: PropTypes.bool.isRequired
+    multiple: PropTypes.bool.isRequired,
+    orderDetails: PropTypes.object.isRequired,
+    setOrderDetails: PropTypes.func.isRequired
 }
 
 

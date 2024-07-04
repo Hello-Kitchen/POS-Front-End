@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { useNavigate, useLocation } from "react-router-dom";
 
-function FoodFooter({name, price, orders, setOrders, orderDetails, setOrderDetails}) {
+function FoodFooter({name, price, setOrders, orderDetails, setOrderDetails}) {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -62,6 +63,14 @@ function FoodFooter({name, price, orders, setOrders, orderDetails, setOrderDetai
             </button>
         </div>
     )
+}
+
+FoodFooter.propTypes = {
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    setOrders: PropTypes.func.isRequired,
+    orderDetails: PropTypes.object.isRequired,
+    setOrderDetails: PropTypes.func.isRequired
 }
 
 export default FoodFooter;
