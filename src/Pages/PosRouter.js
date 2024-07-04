@@ -22,7 +22,7 @@ let data =
 
 function PosRouter() {
 
-  const [config, setConfig] = useState({ payement: false, firstSend: true });
+  const [config, setConfig] = useState({ payement: false, firstSend: true, id_order: null});
   const [price, setPrice] = useState(null);
   const [orders, setOrders] = useState(data);
   const [priceLess, setPriceLess] = useState(price);

@@ -114,8 +114,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
     
         await Promise.all(promises);
     
-        console.log('arrayId: ', arrayId);
-    
         let obj = {
             id_restaurant: orders[2].id_restaurant,
             channel: orders[3].channel,
@@ -123,19 +121,23 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             food_ordered: arrayId
         };
     
-        await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/orders/`, {
+        const response = await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/orders/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
         });
-    
-        setConfig(prevConfig => ({ ...prevConfig, firstSend: false }));
+        const data = await response.json();
+        
+        setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.id }));
     }
 
-    function sendOtherOrder() {
+    async function sendOtherOrder() {
         const newOrders = [...orders];
         const index = newOrders[1].findIndex(item => item.stop === true);
         if (index !== -1) {
+            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/orders/next/${config.id_order}`, {
+                method: 'PUT'
+            });
             newOrders[1] = newOrders[1].filter((_, i) => i !== index);
             setOrders(newOrders);
         }
