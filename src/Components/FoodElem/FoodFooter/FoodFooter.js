@@ -39,9 +39,11 @@ function FoodFooter({name, price, orders, setOrders, orderDetails, setOrderDetai
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);
         let current = {plat: name, price: String(price), details: details, sups: sups};
-        let copy = orders;
-        copy[1].push(current);
-        setOrders(copy);
+        setOrders(prevOrders => {
+            let updatedOrders = [...prevOrders];
+            updatedOrders[1] = [...updatedOrders[1], current];
+            return updatedOrders;
+        });
         setOrderDetails({details: [], sups: {current: 0, list: []}});
         if (pathname.endsWith("modification")) {
             navigate(-3)
