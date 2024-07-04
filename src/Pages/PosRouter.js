@@ -15,22 +15,20 @@ let data =
   [
     { nb: '42' },
     [
-      { plat: 'Hamburger', price: '15.60', details: ['Saignant', 'Frites', 'Salade'], sups: ['Supplement fromages', 'Allergie Oignons'] },
-      { plat: 'Entrecote Classique', price: '22.30', details: ['Saignant', 'Frites', 'Salade'], note: 'Frites sans sel' },
-      { stop: true },
-      { plat: 'Brownie', price: '7.00' },
-      { plat: 'Hamburger', price: '15.60', details: ['Saignant', 'Frites', 'Salade'], sups: ['Supplement fromages', 'Allergie Oignons'] },
-      { plat: 'Entrecote Classique', price: '22.30', details: ['Saignant', 'Frites', 'Salade'], note: 'Frites sans sel' },
-    ]
+    ],
+    { id_restaurant: 4 },
+    { channel: "En salle" },
   ];
 
 function PosRouter() {
-  const [config, setConfig] = useState({ payement: false, firstSend: true });
+
+  const [config, setConfig] = useState({ payement: false, firstSend: true, id_order: null});
   const [price, setPrice] = useState(null);
   const [orders, setOrders] = useState(data);
   const [priceLess, setPriceLess] = useState(price);
   const [payList, setPayList] = useState([]);
   const [ready, setReady] = useState(false);
+  const [orderDetails, setOrderDetails] = useState({details: [], sups: {current: 0, list: []}});
 
   useEffect(() => {
     let tmp = 0;
@@ -49,13 +47,13 @@ function PosRouter() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/loading" element={<Loading />} />
-          <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} />}>
+          <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}>
             <Route index element={<Dashboard />} />
             <Route path="/dashboard/pay" element={<Pay />} />
             <Route path="/dashboard/category/:id" element={<CategoryList />} />
             <Route path="/dashboard/category/:id/:id" element={<FoodLayout />}>
-              <Route path="/dashboard/category/:id/:id" element={<FoodDetails />} />
-              <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />} />
+              <Route path="/dashboard/category/:id/:id" element={<FoodDetails />}/>
+              <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />}/>
             </Route>
           </Route>
         </Routes>

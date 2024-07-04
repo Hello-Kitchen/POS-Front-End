@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-function IngredientsButton() {
+function IngredientsButton({orderDetails, setOrderDetails}) {
 
+    let current = {value: "", done: false};
     const [buttonData, setButtonData] = useState([
         {
-            name: "Ajout",
+            name: "Supplément",
             color: "bg-kitchen-button-green",
             selected: false
         },
@@ -32,6 +34,12 @@ function IngredientsButton() {
             let selected = false;
             if (data.name === name) {
                 selected = data.selected ? false : true;
+                if (selected && data.name !== "Note") {
+                    let copy = orderDetails.sups;
+                    current.value = data.name;
+                    copy.list[copy.current] = current;
+                    setOrderDetails({details: orderDetails.details, sups: copy});
+                }
             }
             return {
                 name: data.name,
@@ -54,6 +62,11 @@ function IngredientsButton() {
             {buttons}
         </div>
     )
+}
+
+IngredientsButton.propTypes = {
+    orderDetails: PropTypes.object.isRequired,
+    setOrderDetails: PropTypes.func.isRequired
 }
 
 export default IngredientsButton;

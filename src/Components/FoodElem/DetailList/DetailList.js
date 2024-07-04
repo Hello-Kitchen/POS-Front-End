@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import FoodDetail from "../FoodDetail/FoodDetail";
 
-function DetailList({details}) {
+function DetailList({details, orderDetails, setOrderDetails}) {
 
     const detailsList = details.map((elem) =>
-        <FoodDetail key={elem.id} id={elem.id} name={elem.name} data={elem.data} multiple={elem.mutliple} />
+        <FoodDetail key={elem.id} name={elem.name} data={elem.data} multiple={elem.mutliple} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
     );
     return (
         <div className="h-full w-full row-span-5 overflow-auto scrollbar-hide">
@@ -17,7 +17,9 @@ function DetailList({details}) {
 }
 
 DetailList.propTypes = {
-    details: PropTypes.array.isRequired
+    details: PropTypes.array.isRequired,
+    orderDetails: PropTypes.object.isRequired,
+    setOrderDetails: PropTypes.func.isRequired
 }
 
 

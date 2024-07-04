@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 
 import IngredientsButton from "../../../Components/FoodElem/IngredientsButton/IngredientsButton";
 import ModifBackButton from "../../../Components/FoodElem/ModifButton/ModifBackButton";
@@ -10,12 +10,13 @@ function FoodModif() {
 
     const location = useLocation();
     const {food} = location.state || {};
+    const {orderDetails, setOrderDetails} = useOutletContext();
 
     return ( 
           <div className="h-full w-full grid grid-flow-row grid-rows-6">
               <ModifBackButton />
-              <IngredientsButton />
-              <IngredientList data={food.ingredients} />
+              <IngredientsButton orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
+              <IngredientList data={food.ingredients} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
           </div>
 
     )

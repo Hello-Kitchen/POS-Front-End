@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function IngredientList({data}) {
+function IngredientList({data, orderDetails, setOrderDetails}) {
 
+    let current = {value: "", done: false};
     const [fullData, setFullData] = useState(data.map((elem => {
         return {
             id: elem.id,
@@ -20,6 +21,16 @@ function IngredientList({data}) {
             if (data.name === name) {
                 selected = data.selected ? false : true;
                 if (selected) {
+                    let copy = orderDetails.sups;
+                    if (copy.list.length === copy.current + 1) {
+                        if (copy.list[copy.current].done === false) {
+                            current.value = copy.list[copy.current].value + " " + data.name;
+                            current.done = true;
+                            copy.list[copy.current] = current;
+                            copy.current = copy.current + 1;
+                            setOrderDetails({details: orderDetails.details, sups: copy});
+                        }
+                    }
                     color = 'bg-kitchen-food-detail-selected';
                 } else {
                     color = 'bg-kitchen-food-detail';
@@ -54,8 +65,9 @@ function IngredientList({data}) {
 }
 
 IngredientList.propTypes = {
-    name: PropTypes.string.isRequired,
-    data: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired,
+    orderDetails: PropTypes.object.isRequired,
+    setOrderDetails: PropTypes.func.isRequired
 }
 
 
