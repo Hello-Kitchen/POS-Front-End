@@ -14,8 +14,8 @@ function FoodModif({orderDetails, setOrderDetails}) {
     return ( 
           <div className="h-full w-full grid grid-flow-row grid-rows-6">
               <ModifBackButton />
-              <IngredientsButton />
-              <IngredientList data={food.ingredients} />
+              <IngredientsButton orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
+              <IngredientList data={food.ingredients} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
           </div>
 
     )

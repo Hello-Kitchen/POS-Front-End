@@ -7,20 +7,6 @@ import FoodFooter from "../../Components/FoodElem/FoodFooter/FoodFooter";
 
 import { Outlet } from "react-router-dom";
 
-// order looks like this :
-//{
-//  plat: 'Hamburger',
-//  price: '15.60',
-//  details: [
-//    'Saignant',
-//    'Frites',
-//    'Salade'
-//  ],
-//  sups: [
-//    'Supplement fromages',
-//    'Allergie Oignons'
-//  ]
-//},
 
 function FoodLayout() {
 

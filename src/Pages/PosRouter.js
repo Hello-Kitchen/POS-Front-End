@@ -30,7 +30,7 @@ function PosRouter() {
   const [priceLess, setPriceLess] = useState(price);
   const [payList, setPayList] = useState([]);
   const [ready, setReady] = useState(false);
-  const [orderDetails, setOrderDetails] = useState({details: [], sups: []});
+  const [orderDetails, setOrderDetails] = useState({details: [], sups: {current: 0, list: []}});
 
   useEffect(() => {
     let tmp = 0;

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-function IngredientsButton() {
+function IngredientsButton({orderDetails, setOrderDetails}) {
 
+    let current = {value: "", done: false};
     const [buttonData, setButtonData] = useState([
         {
             name: "Supplément",
@@ -32,6 +33,12 @@ function IngredientsButton() {
             let selected = false;
             if (data.name === name) {
                 selected = data.selected ? false : true;
+                if (selected && data.name !== "Note") {
+                    let copy = orderDetails.sups;
+                    current.value = data.name;
+                    copy.list[copy.current] = current;
+                    setOrderDetails({details: orderDetails.details, sups: copy});
+                }
             }
             return {
                 name: data.name,
