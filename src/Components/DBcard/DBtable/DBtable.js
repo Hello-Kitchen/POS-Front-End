@@ -60,11 +60,20 @@ const DBtable = ({ tableName }) => {
 
   const renderCell = (value) => {
     if (typeof value === 'object' && value !== null) {
+
       return (
         <div className="flex flex-col">
           {Object.entries(value).map(([key, val]) => (
+          typeof val === 'object' ? (
+            <div className="flex flex-col border-black border-2 m-1 rounded">
+            {Object.entries(val).map(([subKey, subVal]) => (
+              <p key={`${key}-${subKey}`} className="text-sm text-gray-500">{`${subKey}: ${subVal}`}</p>
+            ))}
+            </div>
+          ) : (
             <p key={key} className="text-sm text-gray-500">{`${key}: ${val}`}</p>
-          ))}
+          )
+        ))}
         </div>
       );
     }
