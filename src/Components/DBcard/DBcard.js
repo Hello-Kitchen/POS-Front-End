@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import DBtable from './DBtable/DBtable';
+import DBadd from './DBadd/DBadd';
 
 const DBcard = ({ table }) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [ajout, setAjout] = useState(false);
 
     const openModal = () => {
       setModalIsOpen(true);
@@ -35,12 +37,13 @@ const DBcard = ({ table }) => {
             >
               &times;
             </button>
-            {/* <h2 className="text-2xl mb-4">Table: {table}</h2>
-            <p className="mb-4">
-              This is a large modal. You can put more content here.
-            </p> */}
             <div>
                 <h2 className="text-2xl mb-4">Table: {table}</h2>
+                <button onClick={() => setAjout(!ajout)} className="bg-kitchen-blue rounded m-2 text-kitchen-yellow h-12 w-24">Ajouter</button>
+                {
+                    ajout ? <DBadd tableName={table}/>
+                    : <></>
+                }
                 <DBtable tableName={table} />
             </div>
             <button
