@@ -11,7 +11,7 @@ function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
         let selected = false;
         let copy = orderDetails.details;
         let check = copy.filter(e => e.name === name);
-        if (check.length != 0 && check[0].list.find(e => e === elem)) {
+        if (check.length !== 0 && check[0].list.find(e => e === elem)) {
             color = 'bg-kitchen-food-detail-selected';
             selected = true;
         }
@@ -51,7 +51,7 @@ function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
                 } else {
                     copy = copy.filter(e => e.name === detailObj.name);
                     let temp = detailObj.list;
-                    if (copy.length != 0) {
+                    if (copy.length !== 0) {
                         temp = copy[0].list;
                         temp = temp.filter(e => e !== data.name);
                         detailObj = {name: detailObj.name, list: temp};
