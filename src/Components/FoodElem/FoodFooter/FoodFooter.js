@@ -20,8 +20,8 @@ function FoodFooter({name, price, setOrders, orderDetails, setOrderDetails}) {
 
     const getAllDetails = (base) => {
         let res = []
-        base.map((detail) => {
-            detail.list.map((elem) => {
+        base.foreach((detail) => {
+            detail.list.mapeach((elem) => {
                 res.push(elem)
             })
         })
@@ -30,7 +30,7 @@ function FoodFooter({name, price, setOrders, orderDetails, setOrderDetails}) {
 
     const getAllSups = (base) => {
         let res = []
-        base.list.map((e) => {
+        base.list.foreach((e) => {
             res.push(e.value)
         })
         return res;
