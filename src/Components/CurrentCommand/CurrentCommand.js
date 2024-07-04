@@ -180,7 +180,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 function Currentcommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
-            <div className='w-full max-h-[80%] float-right px-2 gap-3 flex flex-col '>
+            <div className={!config.payement ? 'w-full max-h-[85%] float-right px-2 gap-3 flex flex-col' : 'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
                 <Header orders={orders} />
                 <Content orders={orders} stop={false} config={config} setOrders={setOrders} setConfig={setConfig} />
             </div>
