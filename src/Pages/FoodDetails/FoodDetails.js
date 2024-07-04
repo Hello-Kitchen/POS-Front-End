@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 
 import DetailList from "../../Components/FoodElem/DetailList/DetailList";
 import ModifButton from "../../Components/FoodElem/ModifButton/ModifButton";
 
-function FoodDetails({orderDetails, setOrderDetails}) {
+function FoodDetails() {
 
     const location = useLocation();
     const {id, food, color} = location.state || {};
+    const {orderDetails, setOrderDetails} = useOutletContext();
 
     if (food != null) {
       return (

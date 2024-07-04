@@ -49,13 +49,13 @@ function PosRouter() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/loading" element={<Loading />} />
-          <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} />}>
+          <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}>
             <Route index element={<Dashboard />} />
             <Route path="/dashboard/pay" element={<Pay />} />
             <Route path="/dashboard/category/:id" element={<CategoryList />} />
             <Route path="/dashboard/category/:id/:id" element={<FoodLayout orders={orders} setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}>
-            <Route path="/dashboard/category/:id/:id" element={<FoodDetails orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}/>
-            <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}/>
+              <Route path="/dashboard/category/:id/:id" element={<FoodDetails />}/>
+              <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />}/>
             </Route>
           </Route>
         </Routes>
