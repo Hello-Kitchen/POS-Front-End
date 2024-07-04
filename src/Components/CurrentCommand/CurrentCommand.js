@@ -92,7 +92,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 return;
             }
             let newObj = Object.keys(order).reduce((acc, key) => {
-                console.log(key);
                 if (key !== "plat" && key !== "price") {
                     acc[key] = order[key];
                 }
@@ -107,7 +106,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                     body: JSON.stringify(newObj)
                 });
                 const data = await response.json();
-                console.log("data: ", data)
                 arrayId.push(data.id);
             } catch (error) {
                 console.log(error);
@@ -178,7 +176,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 }
 
 function Currentcommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
-    console.log(orders);
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className='w-full max-h-[80%] float-right px-2 gap-3 flex flex-col '>
