@@ -10,6 +10,7 @@ import CategoryList from './CategoryList/CategoryList';
 import FoodLayout from './FoodDetails/FoodLayout';
 import FoodDetails from './FoodDetails/FoodDetails';
 import FoodModif from './FoodDetails/FoodModif/FoodModif';
+import Admin from './Admin/Admin';
 
 let data =
   [
@@ -47,6 +48,7 @@ function PosRouter() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/loading" element={<Loading />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} />}>
             <Route index element={<Dashboard />} />
             <Route path="/dashboard/pay" element={<Pay />} />
