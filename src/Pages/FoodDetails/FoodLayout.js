@@ -8,7 +8,7 @@ import FoodFooter from "../../Components/FoodElem/FoodFooter/FoodFooter";
 import { Outlet } from "react-router-dom";
 
 
-function FoodLayout() {
+function FoodLayout({orders, setOrders, orderDetails}) {
 
     const location = useLocation();
     const {id, food, color} = location.state || {};
@@ -20,7 +20,7 @@ function FoodLayout() {
           <div className="w-full row-span-6">
               <Outlet />
           </div>
-            <FoodFooter />
+            <FoodFooter name={food.name} price={food.price} orders={orders} setOrders={setOrders} orderDetails={orderDetails} />
         </div>
       )
     }

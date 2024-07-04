@@ -10,8 +10,6 @@ function FoodDetails({orderDetails, setOrderDetails}) {
     const location = useLocation();
     const {id, food, color} = location.state || {};
 
-    console.log(orderDetails)
-
     if (food != null) {
       return (
           <div className="h-full w-full grid grid-flow-row grid-rows-6">
