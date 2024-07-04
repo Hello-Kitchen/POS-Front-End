@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { GoArrowDown } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
@@ -25,10 +24,6 @@ function ModifBackButton() {
             </div>
         </div>
     )
-}
-
-ModifBackButton.propTypes = {
-    food: PropTypes.object.isRequired
 }
 
 

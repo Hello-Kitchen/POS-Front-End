@@ -20,7 +20,7 @@ function FoodLayout() {
           <div className="w-full row-span-6">
               <Outlet context={{ orderDetails, setOrderDetails }} />
           </div>
-            <FoodFooter name={food.name} price={food.price} setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
+            <FoodFooter id={food.id} name={food.name} price={food.price} setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
         </div>
       )
     }

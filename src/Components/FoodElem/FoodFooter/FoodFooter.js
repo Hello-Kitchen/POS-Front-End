@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useNavigate, useLocation } from "react-router-dom";
 
-function FoodFooter({name, price, setOrders, orderDetails, setOrderDetails}) {
+function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails}) {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -20,8 +20,8 @@ function FoodFooter({name, price, setOrders, orderDetails, setOrderDetails}) {
 
     const getAllDetails = (base) => {
         let res = []
-        base.foreach((detail) => {
-            detail.list.mapeach((elem) => {
+        base.forEach((detail) => {
+            detail.list.forEach((elem) => {
                 res.push(elem)
             })
         })
@@ -30,8 +30,20 @@ function FoodFooter({name, price, setOrders, orderDetails, setOrderDetails}) {
 
     const getAllSups = (base) => {
         let res = []
-        base.list.foreach((e) => {
-            res.push(e.value)
+        base.list.forEach((e) => {
+            let info = e.value.split(" ");
+            switch (info[0]) {
+                case "Supplément":
+                    res.push({type: "ADD", ingredient: info[1]});
+                    break;
+                case "Retiter":
+                    res.push({type: "DEL", ingredient: info[1]});
+                    break;
+                case "Allergie":
+                    res.push({type: "ALL", ingredient: info[1]});
+                    break;
+                    default: break;
+            }
         })
         return res;
     }
@@ -39,7 +51,7 @@ function FoodFooter({name, price, setOrders, orderDetails, setOrderDetails}) {
     const addToOrder = () => {
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);
-        let current = {plat: name, price: String(price), details: details, sups: sups};
+        let current = {food: id, plat: name, price: String(price), details: details, mods_ingredients: sups};
         setOrders(prevOrders => {
             let updatedOrders = [...prevOrders];
             updatedOrders[1] = [...updatedOrders[1], current];
@@ -66,6 +78,7 @@ function FoodFooter({name, price, setOrders, orderDetails, setOrderDetails}) {
 }
 
 FoodFooter.propTypes = {
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     setOrders: PropTypes.func.isRequired,
