@@ -36,7 +36,7 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails})
                 case "Supplément":
                     res.push({type: "ADD", ingredient: info[1]});
                     break;
-                case "Retiter":
+                case "Retirer":
                     res.push({type: "DEL", ingredient: info[1]});
                     break;
                 case "Allergie":

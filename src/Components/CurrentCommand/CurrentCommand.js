@@ -23,7 +23,7 @@ const Detail = ({ text }) => (
 
 const Sup = ({ text }) => (
     <div className="w-full flex flex-row gap-2 pl-3 items-center">
-        <div className="flex text-20px text-white font-light">{text}</div>
+        <div className="flex text-20px text-white font-light">{text.type === 'ADD' ? `Supplement ${text.ingredient}` : text.type === 'ALL' ? `Allergie ${text.ingredient}` : text.type === 'DEL' ? `Sans ${text.ingredient}` : ``}</div>
     </div>
 )
 
@@ -47,7 +47,7 @@ const Order = ({ order, border, config }) => (
         {order.details && order.details.map((detail, index) => (
             <Detail key={index} text={detail} />
         ))}
-        {order.sups && order.sups.map((sup, index) => (
+        {order.mods_ingredients && order.mods_ingredients.map((sup, index) => (
             <Sup key={index} text={sup} />
         ))}
         {order.note && <Note text={order.note} />}
@@ -81,11 +81,73 @@ const Content = ({ orders, stop, config }) => (
 )
 
 function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
+
+    async function sendFirstOrder() {
+        let stopCounter = 1;
+        let arrayId = [];
+    
+        const promises = orders[1].map(async (order) => {
+            if (order.stop) {
+                stopCounter++;
+                return;
+            }
+            let newObj = Object.keys(order).reduce((acc, key) => {
+                console.log(key);
+                if (key !== "plat" && key !== "price") {
+                    acc[key] = order[key];
+                }
+                return acc;
+            }, {});
+            newObj['part'] = stopCounter;
+            newObj['id_restaurant'] = orders[2].id_restaurant;
+            try {
+                const response = await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/food_ordered/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newObj)
+                });
+                const data = await response.json();
+                console.log("data: ", data)
+                arrayId.push(data.id);
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    
+        await Promise.all(promises);
+    
+        console.log('arrayId: ', arrayId);
+    
+        let obj = {
+            id_restaurant: orders[2].id_restaurant,
+            channel: orders[3].channel,
+            number: (orders[3].channel === "En salle") ? `Table ${orders[0].nb}` : `${orders[0].nb}`,
+            food_ordered: arrayId
+        };
+    
+        await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/orders/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        });
+    
+        setConfig(prevConfig => ({ ...prevConfig, firstSend: false }));
+    }
+
+    function sendOtherOrder() {
+        const newOrders = [...orders];
+        const index = newOrders[1].findIndex(item => item.stop === true);
+        if (index !== -1) {
+            newOrders[1] = newOrders[1].filter((_, i) => i !== index);
+            setOrders(newOrders);
+        }
+    }
+
     if (!config.payement) {
         return (
             <div className='w-full h-current-cmd-footer border-t border-kitchen-yellow flex flex-row gap-px bg-kitchen-yellow'>
                 <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { const newOrders = [...orders]; newOrders[1] = [...newOrders[1], { stop: true }]; console.log(newOrders); setOrders(newOrders); }}>STOP</div>
-                {config.firstSend ? <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { setConfig(prevConfig => ({ ...prevConfig, firstSend: false })); }}>Envoyer</div> : <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { const newOrders = [...orders]; const index = newOrders[1].findIndex(item => item.stop === true); if (index !== -1) { newOrders[1] = newOrders[1].filter((_, i) => i !== index); setOrders(newOrders); } }}>Demander la suite</div>}
+                {config.firstSend ? <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={sendFirstOrder}>Envoyer</div> : <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={sendOtherOrder}>Demander la suite</div>}
             </div>
         )
     } else {
@@ -116,6 +178,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 }
 
 function Currentcommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
+    console.log(orders);
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className='w-full max-h-[80%] float-right px-2 gap-3 flex flex-col '>
