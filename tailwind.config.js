@@ -29,7 +29,12 @@ module.exports = {
         'lh': '7%',
         'lf': '13%',
         'pos-button': '11%',
-        '95': '95%',
+        'current-cmd-content': '92%',
+        'current-cmd-footer': '15%',
+        'current-cmd-header': '8%',
+        'ls': '20%',
+        'lb': '80%',
+        '85': '85%',
         '1/12': '8.333333333%',
         '9/12': '75%'
       },
@@ -39,8 +44,10 @@ module.exports = {
         '1/20': '5%',
       },
       fontSize: {
+        '16px': '16px',
         '24px': '24px',
         '20px': '20px',
+        'testpx': '28px'
       },
       gridTemplateColumns: {
         '48': 'repeat(48, minmax(0, 1fr))',
