@@ -10,29 +10,11 @@ import CategoryList from './CategoryList/CategoryList';
 import FoodLayout from './FoodDetails/FoodLayout';
 import FoodDetails from './FoodDetails/FoodDetails';
 import FoodModif from './FoodDetails/FoodModif/FoodModif';
- 
-let new_ex = { food: 1, plat: 'Hamburger', price: '15.60', details: ['Saignant', 'Frites', 'Salade'], mods_ingredients: [{type: 'ADD', ingredient: 'Fromage'}] }
-
-let stock =
-  [
-    { nb: '42' },
-    [
-      { food: 1, plat: 'Burger Miam', price: '15', details: ['Saignant', 'Frites', 'Salade'], mods_ingredients: [{type: 'ADD', ingredient: 'Fromage'}, {type: 'ALL', ingredient: 'Oignon'}] },
-      { food: 2, plat: 'Burger Gourmand', price: '17.99', details: ['Saignant', 'Frites', 'Salade'], note: 'Frites sans sel' },
-      { stop: true },
-      { food: 3, plat: 'Boisson du Champion', price: '3' },
-      { food: 1, plat: 'Burger Miam', price: '15', details: ['Saignant', 'Frites', 'Salade'], mods_ingredients: [{type: 'ADD', ingredient: 'Fromage'}, {type: 'ALL', ingredient: 'Oignon'}] },
-      { food: 2, plat: 'Burger Gourmand', price: '17.99', details: ['Saignant', 'Frites', 'Salade'], note: 'Frites sans sel' },
-    ],
-    { id_restaurant: 4 },
-    { channel: "En salle" },
-  ];
 
 let data =
   [
     { nb: '42' },
     [
-      { food: 1, plat: 'Burger Miam', price: '15', details: ['Saignant', 'Frites', 'Salade'], mods_ingredients: [{type: 'ADD', ingredient: 'Fromage'}, {type: 'ALL', ingredient: 'Oignon'}] },
     ],
     { id_restaurant: 4 },
     { channel: "En salle" },
