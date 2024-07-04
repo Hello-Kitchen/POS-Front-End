@@ -2,13 +2,14 @@ import React from 'react';
 
 import { useNavigate, useLocation } from "react-router-dom";
 
-function FoodFooter({name, price, orders, setOrders, orderDetails}) {
+function FoodFooter({name, price, orders, setOrders, orderDetails, setOrderDetails}) {
 
     const navigate = useNavigate();
     const location = useLocation();
     const { pathname } = location;
 
     const handleBackClick = () => {
+        setOrderDetails({details: [], sups: {current: 0, list: []}});
         if (pathname.endsWith("modification")) {
             navigate(-3)
         } else {
@@ -37,10 +38,11 @@ function FoodFooter({name, price, orders, setOrders, orderDetails}) {
     const addToOrder = () => {
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);
-        let current = {plat: name, price: price, details: details, sups: sups};
+        let current = {plat: name, price: String(price), details: details, sups: sups};
         let copy = orders;
         copy[1].push(current);
         setOrders(copy);
+        setOrderDetails({details: [], sups: {current: 0, list: []}});
         if (pathname.endsWith("modification")) {
             navigate(-3)
         } else {
