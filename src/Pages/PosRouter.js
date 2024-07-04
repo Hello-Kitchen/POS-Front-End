@@ -19,6 +19,8 @@ let data =
       { plat: 'Entrecote Classique', price: '22.30', details: ['Saignant', 'Frites', 'Salade'], note: 'Frites sans sel' },
       { stop: true },
       { plat: 'Brownie', price: '7.00' },
+      { plat: 'Hamburger', price: '15.60', details: ['Saignant', 'Frites', 'Salade'], sups: ['Supplement fromages', 'Allergie Oignons'] },
+      { plat: 'Entrecote Classique', price: '22.30', details: ['Saignant', 'Frites', 'Salade'], note: 'Frites sans sel' },
     ]
   ];
 
