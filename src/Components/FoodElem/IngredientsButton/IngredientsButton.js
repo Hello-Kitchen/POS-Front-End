@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function IngredientsButton({orderDetails, setOrderDetails}) {
+function IngredientsButton({orderDetails, setOrderDetails, setButtonSelected}) {
 
     let current = {value: "", done: false};
     const [buttonData, setButtonData] = useState([
@@ -33,12 +33,13 @@ function IngredientsButton({orderDetails, setOrderDetails}) {
             let color = data.color;
             let selected = false;
             if (data.name === name) {
-                selected = data.selected ? false : true;
+                selected = true;
                 if (selected && data.name !== "Note") {
                     let copy = orderDetails.sups;
                     current.value = data.name;
                     copy.list[copy.current] = current;
                     setOrderDetails({details: orderDetails.details, sups: copy});
+                    setButtonSelected({active: true, same: false});
                 }
             }
             return {
@@ -66,7 +67,8 @@ function IngredientsButton({orderDetails, setOrderDetails}) {
 
 IngredientsButton.propTypes = {
     orderDetails: PropTypes.object.isRequired,
-    setOrderDetails: PropTypes.func.isRequired
+    setOrderDetails: PropTypes.func.isRequired,
+    setButtonSelected: PropTypes.func.isRequired
 }
 
 export default IngredientsButton;
