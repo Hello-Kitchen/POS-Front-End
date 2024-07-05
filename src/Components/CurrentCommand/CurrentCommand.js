@@ -83,6 +83,8 @@ const Content = ({ orders, stop, config }) => (
 function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
 
     async function sendFirstOrder() {
+        if (orders[1].length < 1)
+            return;
         let stopCounter = 1;
         let arrayId = [];
     
