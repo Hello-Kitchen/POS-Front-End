@@ -11,7 +11,7 @@ function Loading({id}) {
       }})
       .then((response) => {
         if (response.status === 401) {
-          navigate("/");
+          navigate("/", {state: {error: "Unauthorized access. Please log in."}});
           throw new Error("Unauthorized access. Please log in.");
         }
         return response.json();
