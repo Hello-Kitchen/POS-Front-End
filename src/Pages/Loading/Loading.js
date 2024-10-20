@@ -15,15 +15,25 @@ function Loading({id}) {
     //Will stock it as an object in the local storage under "data"
     //Then redirect to the dashboard once it's loaded.
     useEffect(() => {
-      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/1`).then(response => {
-          response.json().then(data => {
-            localStorage.setItem("data", JSON.stringify(data));
-          }).then(() => {
-            navigate("/dashboard");
-          });
-        }).catch(error => {
-          console.log(error);
-        });
+      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/${process.env.REACT_APP_NBR_RESTAURANT}`, {headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      }})
+      .then((response) => {
+        if (response.status === 401) {
+          navigate("/", {state: {error: "Unauthorized access. Please log in."}});
+          throw new Error("Unauthorized access. Please log in.");
+        }
+        return response.json();
+      })
+      .then(data => {
+        localStorage.setItem("data", JSON.stringify(data));
+      })
+      .then(() => {
+        navigate("/dashboard");
+      })
+      .catch(error => {
+        console.log(error);
+      });
     }, [id, navigate]);
 
 
