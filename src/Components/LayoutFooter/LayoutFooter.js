@@ -22,6 +22,17 @@ const NewTicket = () => (
     </div>
 )
 
+/**
+ * Component : Footer of the main Layout component, handles all the buttons not related to food and categories
+ * 
+ * @component Footer
+ * @param {[String]} buttons Array of the footer buttons, defined in the layout
+ * @param {Number} price full price of the current order
+ * @param {Object} config state of the current order
+ * @param {Function} setConfig state function to update the config of the current order
+ * @param {Number} priceLess full price of the current order
+ * @param {Function} setOrders state function to update the current orders
+ */
 function Footer({ buttons, price, config, setConfig, priceLess, setOrders }) {
     const navigate = useNavigate();
 

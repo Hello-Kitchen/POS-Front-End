@@ -3,9 +3,21 @@ import PropTypes from 'prop-types';
 
 import { useState } from "react";
 
+/**
+ * Component : Component handling a specific detail of a food, user inputs, and displays the choices
+ * 
+ * @component FoodDetail
+ * @param {String} name Name of the food detail
+ * @param {[Object]} data Object Array of the current detail information of a food
+ * @param {Object} multiple Boolean, used to know if multiple detail options can be chosen
+ * @param {Object} orderDetails Object used to persist detail and ingredient choices of a current food
+ * @param {function} setOrderDetails state function to update the orderDetails object
+ */
 function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
 
     let detailObj = {name: name, list: []};
+    //map function to parse the data of a detail, to add a button color and a boolean
+    //uses current order details to update data, preventing resets between page change
     const [fullData, setFullData] = useState(data.map((elem => {
         let color = 'bg-kitchen-food-detail';
         let selected = false;
@@ -22,7 +34,8 @@ function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
         }
     })));
 
-
+    //function called when a choice of a detail is clicked :
+    //updates the button based on user inputs
     const handleClick = (name) => {
         setFullData(null)
         setFullData(fullData.map((data => {
@@ -35,6 +48,7 @@ function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
             if (data.name === name) {
                 selected = data.selected ? false : true;
                 let copy = orderDetails.details;
+                //adds the user choices to an object, else remove it
                 if (selected) {
                     color = 'bg-kitchen-food-detail-selected';
                     copy = copy.filter(e => e.name === detailObj.name);
@@ -42,6 +56,7 @@ function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
                     if (copy.length !== 0) {
                         temp = copy[0].list;
                     }
+                    //If the detail is a single choice, will erase previous one, otherwise add it to a list
                     if (multiple === false) {
                         temp = [data.name];
                     } else {
@@ -58,6 +73,7 @@ function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
                     }
                     color = 'bg-kitchen-food-detail';
                 }
+                //adds the new detail to the current order
                 let arr = orderDetails.details;
                 arr = arr.filter(e => e.name !== detailObj.name);
                 let sups = orderDetails.sups;
@@ -72,6 +88,7 @@ function FoodDetail({name, data, multiple, orderDetails, setOrderDetails}) {
         })))
     }
 
+    //map function to display all choices of a detail
     const choice = fullData.map((elem) =>
         <div
             key={elem.name}

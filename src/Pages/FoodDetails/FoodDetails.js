@@ -5,6 +5,11 @@ import { useLocation, useOutletContext } from "react-router-dom";
 import DetailList from "../../Components/FoodElem/DetailList/DetailList";
 import ModifButton from "../../Components/FoodElem/ModifButton/ModifButton";
 
+/**
+ * Component : Page, Component displaying the detail page of a food based on the router location
+ * 
+ * @component FoodDetails
+ */
 function FoodDetails() {
 
     const location = useLocation();

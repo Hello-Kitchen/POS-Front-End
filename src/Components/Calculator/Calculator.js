@@ -34,10 +34,20 @@ function ButtonBox({ children }) {
     )
 }
 
+/**
+ * Component : Component displaying a calculator, handling all transactions and calculations of when paying the current POS order
+ * 
+ * @component Calculator
+ * @param {Number} priceLess full price of the current order
+ * @param {Function} setPriceLess state function to update full price of the current order
+ * @param {[]} payList 
+ * @param {Function} setPayList state function to update the payList
+ */
 function Calculator({ priceLess, setPriceLess, payList, setPayList }) {
     const [calc, setCalc] = useState({ sign: "", num: 0, res: 0 });
     const [display, setDisplay] = useState(false);
 
+    //displays the calculator, with the current price
     const displayCalc = useCallback(() => {
         let elem = document.getElementsByClassName('select-mod')[0];
         if (elem && calc.res !== "Erreur" && priceLess > 0) {
@@ -54,6 +64,7 @@ function Calculator({ priceLess, setPriceLess, payList, setPayList }) {
             displayCalc();
     }, [display, displayCalc]);
 
+    //handles all numeric user inputs
     const numClickHandler = (e) => {
         e.preventDefault();
         const value = e.target.innerHTML;
@@ -72,6 +83,7 @@ function Calculator({ priceLess, setPriceLess, payList, setPayList }) {
         }
     };
 
+    //handles all comma user inputs
     const commaClickHandler = (e) => {
         e.preventDefault();
         const value = e.target.innerHTML;
@@ -82,6 +94,7 @@ function Calculator({ priceLess, setPriceLess, payList, setPayList }) {
         });
     };
 
+    //handles all calculation signs user inputs
     const signClickHandler = (e) => {
         e.preventDefault();
         const value = e.target.innerHTML;
@@ -94,6 +107,7 @@ function Calculator({ priceLess, setPriceLess, payList, setPayList }) {
         });
     };
 
+    //handles the calculation
     const equalsClickHandler = () => {
         if (calc.sign && calc.num) {
             const math = (a, b, sign) =>

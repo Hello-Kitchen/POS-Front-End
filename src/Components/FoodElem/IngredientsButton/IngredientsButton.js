@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Component : Component handling and displaying all user input regarding ingredient choices and changes of the selected food
+ * 
+ * @component IngredientsButton
+ * @param {Object} orderDetails Object used to persist detail and ingredient choices of a current food
+ * @param {function} setOrderDetails state function to update the orderDetails object
+ * @param {function} setButtonSelected state function to update all selected button based on the current food choices
+ */
 function IngredientsButton({orderDetails, setOrderDetails, setButtonSelected}) {
 
     let current = {value: "", done: false};
@@ -27,6 +35,8 @@ function IngredientsButton({orderDetails, setOrderDetails, setButtonSelected}) {
         }
     ]);
 
+    // function called when one of the ingredient modification button is clicked :
+    // updates the display state of buttons, and adds the option chosen in the orderDetails object, or update if another choice was selected without ingredients
     const handleClick = (name) => {
         setButtonData(null)
         setButtonData(buttonData.map((data => {
@@ -50,6 +60,7 @@ function IngredientsButton({orderDetails, setOrderDetails, setButtonSelected}) {
         })))
     }
 
+    //map function to display all the button choice on the ingredient modification page
     const buttons = buttonData.map((buttonElem) =>
         <div key={buttonElem.name} className={`col-span-1 ${buttonElem.color} border border-white ${buttonElem.selected ? "shadow-button" : ""}`}>
             <button key={buttonElem.name} className="h-full w-full" onClick={() => handleClick(buttonElem.name)}>

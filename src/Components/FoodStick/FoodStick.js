@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Component used to display a color band next to the current food - recalls food category
+ * 
+ * @component FoodStick
+ * @param {string} color Color code of the food category
+ */
 function FoodStick({color}) {
     return (
         <div className={`${color} col-span-1 mt-2 mb-2 ml-1 mr-4 rounded`} />

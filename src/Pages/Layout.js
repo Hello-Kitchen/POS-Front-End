@@ -6,6 +6,22 @@ import LayoutHeader from "../Components/LayoutHeader/LayoutHeader";
 import Currentcommand from "../Components/CurrentCommand/CurrentCommand";
 import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
 
+/**
+ * Component : Main Layout of the POS Application, Main Component.
+ * 
+ * @component Layout
+ * @param {[Object]} orders current order
+ * @param {Number} price full price of the current order
+ * @param {Object} config state of the current order
+ * @param {Function} setConfig state function to update the config of the current order
+ * @param {Function} setOrders state function to update the current orders
+ * @param {Number} priceLess full price of the current order
+ * @param {Function} setPriceLess state function to update full price of the current order
+ * @param {[]} payList 
+ * @param {Function} setPayList state function to update the payList
+ * @param {Object} orderDetails Object of the selected food
+ * @param {Function} setOrderDetails state function used to update the selected food
+ */
 const Layout = ({ orders, price, config, setConfig, setOrders, priceLess, setPriceLess, payList, setPayList, orderDetails, setOrderDetails }) => {
     return (
         <div className="column w-full h-full">

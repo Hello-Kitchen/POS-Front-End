@@ -3,11 +3,17 @@ import { useNavigate } from "react-router-dom";
 import logo from "./Logo_Hello_Kitchen.png";
 import axios from "axios";
 
+/**
+ * Component : Page, Component used to handle a User login in the POS Application. Main entry point
+ * 
+ * @component Login
+ */
 const Login = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    //post request to the back-end, If login informations are correct, will redirect to the Loading page
     const handleSubmit = async (e) => {
         e.preventDefault();
         await axios.post(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/login/`, {username, password})

@@ -6,6 +6,11 @@ import IngredientsButton from "../../../Components/FoodElem/IngredientsButton/In
 import ModifBackButton from "../../../Components/FoodElem/ModifButton/ModifBackButton";
 import IngredientList from "../../../Components/FoodElem/Ingredientlist/IngredientList";
 
+/**
+ * Component : Page, Component displaying the ingredient page of a food based on the router location
+ * 
+ * @component FoodModif
+ */
 function FoodModif() {
 
     const location = useLocation();
