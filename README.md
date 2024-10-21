@@ -1,74 +1,54 @@
-# Getting Started with Create React App
+![HelloKitchen banner](./docs/images/banner.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# HelloKitchen - POS Front-end
 
-## Available Scripts
+Welcome to the **HelloKitchen** POS Front-end repository! This project powers the Point of Sales functionality of the HelloKitchen platform.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🛠️ Project Setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To get started, install the required dependencies:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+$ npm install
+```
 
-### `npm test`
+## ⚙️ Environment Configuration
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create a `.env` file at the root of the project with the following variables:
 
-### `npm run build`
+```
+REACT_APP_BACKEND_URL= [Database URL]
+REACT_APP_BACKEND_PORT= [Database port]
+REACT_APP_NBR_RESTAURANT= [ID of the restaurant] // DEV purposes, will be removed in a future version
+REACT_APP_SALT_HASH= [SALT HASH used for the password]
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Running the Project
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+You can compile and run the project using the following commands:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Development Mode
 
-### `npm run eject`
+```bash
+$ npm run start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🧪 Running Tests
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Ensure code quality with the available tests:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Unit Tests
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+$ npm run test
+```
 
-## Learn More
+## 📄 Documentation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Comprehensive documentation for the project can be found in the [Wiki section of the GitHub repository](https://github.com/Hello-Kitchen/POS-Front-End/wiki).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🤝 Contribution Guidelines
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-Ajouter les variables suivantes dans un .env:
-REACT_APP_BACKEND_URL=XXXXX
-REACT_APP_BACKEND_PORT=XXXXX
+Currently, this project does **not accept external contributions**. Feel free to explore the codebase, but contribution via pull requests is restricted.
