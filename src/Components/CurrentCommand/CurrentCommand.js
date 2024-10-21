@@ -89,7 +89,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         if (orders[1].length < 1)
             return;
         let stopCounter = 1;
-        let arrayId = [];
         const orderedFood = [];
     
         const promises = orders[1].map(async (order) => {
