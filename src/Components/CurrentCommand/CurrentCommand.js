@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 import { GoArrowRight } from "react-icons/go";
 import PropTypes from 'prop-types';
@@ -81,12 +82,15 @@ const Content = ({ orders, stop, config }) => (
 )
 
 function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
+  
+    const navigate = useNavigate();
 
     async function sendFirstOrder() {
         if (orders[1].length < 1)
             return;
         let stopCounter = 1;
         let arrayId = [];
+        const orderedFood = [];
     
         const promises = orders[1].map(async (order) => {
             if (order.stop) {
@@ -100,35 +104,34 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 return acc;
             }, {});
             newObj['part'] = stopCounter;
-            newObj['id_restaurant'] = orders[2].id_restaurant;
-            try {
-                const response = await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/food_ordered/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(newObj)
-                });
-                const data = await response.json();
-                arrayId.push(data.id);
-            } catch (error) {
-                console.log(error);
-            }
+            orderedFood.push(newObj);
         });
     
         await Promise.all(promises);
     
         let obj = {
-            id_restaurant: orders[2].id_restaurant,
+            date: new Date().toISOString(),
             channel: orders[3].channel,
             number: (orders[3].channel === "En salle") ? `Table ${orders[0].nb}` : `${orders[0].nb}`,
-            food_ordered: arrayId
+            part: 1,
+            food_ordered: orderedFood
         };
-    
-        const response = await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/orders/`, {
+
+        const data = fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem("token")}` },
             body: JSON.stringify(obj)
+        })
+        .then(response => {
+            if (response.status === 401) {
+              navigate("/", {state: {error: "Unauthorized access. Please log in."}});
+              throw new Error("Unauthorized access. Please log in.");
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.log(error);
         });
-        const data = await response.json();
         
         setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.id }));
     }
@@ -137,8 +140,19 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         const newOrders = [...orders];
         const index = newOrders[1].findIndex(item => item.stop === true);
         if (index !== -1) {
-            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/orders/next/${config.id_order}`, {
-                method: 'PUT'
+            fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/orders/next/${config.id_order}`, {
+                method: 'PUT',
+                headers: {Authorization: `Bearer ${localStorage.getItem("token")}` },
+            })
+            .then(response => {
+                if (response.status === 401) {
+                  navigate("/", {state: {error: "Unauthorized access. Please log in."}});
+                  throw new Error("Unauthorized access. Please log in.");
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.log(error);
             });
             newOrders[1] = newOrders[1].filter((_, i) => i !== index);
             setOrders(newOrders);
