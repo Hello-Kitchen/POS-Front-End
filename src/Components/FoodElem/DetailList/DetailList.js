@@ -15,7 +15,7 @@ function DetailList({details, orderDetails, setOrderDetails}) {
 
     //map function to display all details of a food as a FoodDetail Component
     const detailsList = details.map((elem) =>
-        <FoodDetail key={elem.id} name={elem.name} data={elem.data} multiple={elem.mutliple} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
+        <FoodDetail key={elem.id} name={elem.name} data={elem.data} multiple={elem.multiple} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
     );
     return (
         <div className="h-full w-full row-span-5 overflow-auto scrollbar-hide">
