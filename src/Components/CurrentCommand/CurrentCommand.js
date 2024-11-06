@@ -192,7 +192,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
     }
 }
 
-function Currentcommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
+function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className={!config.payement ? 'w-full max-h-[85%] float-right px-2 gap-3 flex flex-col' : 'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
@@ -249,7 +249,7 @@ Footer.propTypes = {
     payList: PropTypes.array.isRequired,
 }
 
-Currentcommand.propTypes = {
+CurrentCommand.propTypes = {
     orders: PropTypes.array.isRequired,
     config: PropTypes.object.isRequired,
     setConfig: PropTypes.func.isRequired,
@@ -259,4 +259,4 @@ Currentcommand.propTypes = {
     payList: PropTypes.array.isRequired,
 }
 
-export default Currentcommand;
+export default CurrentCommand;
