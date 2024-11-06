@@ -17,7 +17,7 @@ import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
  * @param {Function} setOrders state function to update the current orders
  * @param {Number} priceLess full price of the current order
  * @param {Function} setPriceLess state function to update full price of the current order
- * @param {[]} payList 
+ * @param {[Number]} payList List of all current transactions
  * @param {Function} setPayList state function to update the payList
  * @param {Object} orderDetails Object of the selected food
  * @param {Function} setOrderDetails state function used to update the selected food

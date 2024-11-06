@@ -23,7 +23,7 @@ function handleClick (event) {
  * @param {Number} id id of the current button
  * @param {Function} setPayList state function to update the payList
  * @param {Number} priceLess full price of the current order
- * @param {[]} payList 
+ * @param {[Number]} payList List of all current transactions 
  * @param {Function} setPriceLess state function to update full price of the current order
  */
 function Button({ button, id, setPayList, priceLess, payList, setPriceLess }) {
@@ -39,7 +39,7 @@ function Button({ button, id, setPayList, priceLess, payList, setPriceLess }) {
  * @param {[Object]} buttons array of object with all mods buttons informations
  * @param {Function} setPayList state function to update the payList
  * @param {Number} priceLess full price of the current order
- * @param {[]} payList 
+ * @param {[Number]} payList List of all current transactions
  * @param {Function} setPriceLess state function to update full price of the current order
  */
 function ModsPay({ buttons, setPayList, priceLess, payList, setPriceLess }) {

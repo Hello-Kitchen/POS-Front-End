@@ -107,7 +107,7 @@ const Content = ({ orders, stop, config }) => (
  * @param {Function} setConfig state function to update the config of the current order
  * @param {Number} price full price of the current order
  * @param {Number} priceLess full price of the current order
- * @param {[]} payList 
+ * @param {[Number]} payList List of all current transactions
  */
 function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
   
@@ -230,7 +230,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
  * @param {Function} setOrders state function to update the current orders
  * @param {Number} price full price of the current order
  * @param {Number} priceLess full price of the current order
- * @param {[]} payList 
+ * @param {[Number]} payList List of all current transactions
  */
 function Currentcommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
     return (

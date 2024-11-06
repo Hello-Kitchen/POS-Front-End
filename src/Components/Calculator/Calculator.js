@@ -40,7 +40,7 @@ function ButtonBox({ children }) {
  * @component Calculator
  * @param {Number} priceLess full price of the current order
  * @param {Function} setPriceLess state function to update full price of the current order
- * @param {[]} payList 
+ * @param {[Number]} payList List of all current transactions
  * @param {Function} setPayList state function to update the payList
  */
 function Calculator({ priceLess, setPriceLess, payList, setPayList }) {
