@@ -3,12 +3,24 @@ import PropTypes from 'prop-types';
 
 import { useNavigate, useLocation } from "react-router-dom";
 
+/**
+ * Footer Component : 
+ *  
+ * @component FoodFooter
+ * @param {Number} id Id of the current food
+ * @param {String} name Name of the current food
+ * @param {Number} price Price of the current food
+ * @param {function} setOrders state function used to update the current order when the food is added
+ * @param {Object} orderDetails Object used to persist detail and ingredient choices of a current food
+ * @param {function} setOrderDetails state function to update the orderDetails object
+ */
 function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails}) {
 
     const navigate = useNavigate();
     const location = useLocation();
     const { pathname } = location;
 
+    //function used to reset the current order details and redirects to the dashboard page, used by the "Annuler" button
     const handleBackClick = () => {
         setOrderDetails({details: [], sups: {current: 0, list: []}});
         if (pathname.endsWith("modification")) {
@@ -18,6 +30,7 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails})
         }
     }
 
+    //formats the detail list of a selected food
     const getAllDetails = (base) => {
         let res = []
         base.forEach((detail) => {
@@ -28,6 +41,7 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails})
         return res;
     }
 
+    //formats the ingredient list of a selected food
     const getAllSups = (base) => {
         let res = []
         base.list.forEach((e) => {
@@ -48,6 +62,7 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails})
         return res;
     }
 
+    //function used to add the selected food to the current order and redirects to the dashboard page, used by the "Ajouter" button
     const addToOrder = () => {
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);

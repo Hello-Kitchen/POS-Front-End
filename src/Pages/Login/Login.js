@@ -3,6 +3,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import logo from "./Logo_Hello_Kitchen.png";
 import bcrypt from "bcryptjs-react";
 
+/**
+ * Component : Page, Component used to handle a User login in the POS Application. Main entry point
+ * 
+ * @component Login
+ */
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -15,7 +20,8 @@ const Login = () => {
             setError(location.state.error);
         }
     }, [location]);
-
+    
+    //post request to the back-end, If login informations are correct, will redirect to the Loading page
     const handleSubmit = (e) => {
         e.preventDefault();
 

@@ -3,6 +3,11 @@ import { useOutletContext } from "react-router-dom";
 
 import CategoryButton from '../../Components/CategoryButton/CategoryButton';
 
+/**
+ * Component : Page, Displays all the food categories of the restaurant
+ * 
+ * @component Dashboard
+ */
 function Dashboard() {
     const data = localStorage.getItem("data");
     const { setPriceLess, price, setPayList } = useOutletContext();

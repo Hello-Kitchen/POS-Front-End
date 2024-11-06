@@ -3,9 +3,15 @@ import React from 'react';
 import { GoArrowDown } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Header Component : used to change page from the ingredient modification page of a food to the detail modification page
+ * 
+ * @component ModifButton
+ */
 function ModifBackButton() {
 
     const navigate = useNavigate();
+    //Function called on button click, navigates to the previous page, the food detail page
     const handleClick = () => {
         navigate(-1)
     }

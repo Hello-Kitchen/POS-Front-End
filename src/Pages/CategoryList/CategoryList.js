@@ -4,11 +4,17 @@ import { useLocation } from "react-router-dom";
 
 import FoodButton from "../../Components/FoodButton/FoodButton";
 
+/**
+ * Component : Component displaying all food related to a category of a restaurant
+ * 
+ * @component CategoryList
+ */
 function CategoryList() {
 
     const location = useLocation();
     const { food, color } = location.state || {};
 
+    //maps all food of a category
     const foods = food.map((food) =>
       <FoodButton key={food.id}
           id={food.id}

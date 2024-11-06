@@ -20,6 +20,11 @@ let data =
     { channel: "En salle" },
   ];
 
+/**
+ * Component : Main Component of the POS Application, used as the main Router, handles all initialisation of variables, states and routes needed for the POS.
+ * 
+ * @component PosRouter
+ */
 function PosRouter() {
 
   const [config, setConfig] = useState({ payement: false, firstSend: true, id_order: null});
@@ -30,6 +35,7 @@ function PosRouter() {
   const [ready, setReady] = useState(false);
   const [orderDetails, setOrderDetails] = useState({details: [], sups: {current: 0, list: []}});
 
+  //update the price of the current order every time the order is updated
   useEffect(() => {
     let tmp = 0;
     for (let i = 0; i < orders[1].length; i++) {
