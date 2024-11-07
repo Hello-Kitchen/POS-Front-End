@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import CurrentCommand from '../../Components/CurrentCommand/CurrentCommand';
-import { useNavigate } from 'react-router-dom';
 
 jest.mock('react-router-dom', () => ({
     useNavigate: jest.fn(),

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { MemoryRouter, useLocation } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import FoodFooter from '../../../Components/FoodElem/FoodFooter/FoodFooter';
 
 describe('FoodFooter Component', () => {
@@ -11,12 +11,12 @@ describe('FoodFooter Component', () => {
         setOrderDetails = jest.fn();
         orderDetails = {
             details: [],
-            sups: { current: 0, list: [] }
+            sups: {current: 0, list: []}
         };
     });
 
     const Wrapper = ({ children }) => (
-        <MemoryRouter initialEntries={['/Plats/2']}>
+        <MemoryRouter initialEntries={['/category/0/2']}>
             {children}
         </MemoryRouter>
     );

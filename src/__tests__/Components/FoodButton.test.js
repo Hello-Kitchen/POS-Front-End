@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import FoodButton from '../../Components/FoodButton/FoodButton';
-import { useNavigate } from 'react-router-dom';
 
 jest.mock('react-router-dom', () => ({
     useNavigate: jest.fn(() => jest.fn()),

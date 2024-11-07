@@ -33,7 +33,7 @@ describe('DetailList Component', () => {
     });
 
     test('renders each FoodDetail', () => {
-        const { getByText } = render(
+        render(
             <DetailList 
                 details={details} 
                 orderDetails={orderDetails} 
