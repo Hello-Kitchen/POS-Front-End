@@ -4,9 +4,17 @@ import PropTypes from 'prop-types';
 import { GoArrowUp } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Footer Component : used to change page from the detail modification page of a food to the ingredient modification page
+ * 
+ * @component ModifButton
+ * @param {Object} food Current selected food object
+ * @param {string} color Color code of the food category
+ */
 function ModifButton({food, color}) {
 
     const navigate = useNavigate();
+    //Function called on button click, navigates to the food ingredients modification page
     const handleClick = () => {
         navigate("modification", {state: {food: food, color: color}})
     }

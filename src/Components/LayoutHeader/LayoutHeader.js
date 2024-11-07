@@ -23,6 +23,13 @@ const formatDate = (date) => {
     return `${day}/${month}/${year} - ${hours}:${minutes}`;
 };
 
+/**
+ * Component : Header of the main Layout component, displays relevant user informations
+ * 
+ * @component LayoutHeader
+ * @param {String} textCenter Number and name of logged in user
+ * @param {String} textLeft number of the current active POS
+ */
 function LayoutHeader({textCenter, textLeft}) {
     const [currentTime, setCurrentTime] = useState(new Date());
 

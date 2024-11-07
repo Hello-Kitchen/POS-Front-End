@@ -7,6 +7,11 @@ import FoodFooter from "../../Components/FoodElem/FoodFooter/FoodFooter";
 
 import { Outlet, useOutletContext } from "react-router-dom";
 
+/**
+ * Component : Main layout for all pages related to a food
+ * 
+ * @component FoodLayout
+ */
 function FoodLayout() {
 
     const location = useLocation();

@@ -5,10 +5,16 @@ import Calculator from './../../Components/Calculator/Calculator';
 import ModsPay from '../../Components/ModsPay/ModsPay';
 import OptionsPay from '../../Components/OptionsPay/OptionsPay'
 
+/**
+ * Component : Page, handles all transactions
+ * 
+ * @component Pay
+ */
 const Pay = () => {
   const navigate = useNavigate();
   const { config, setConfig, priceLess, setPriceLess, payList, setPayList } = useOutletContext();
 
+  //If payment is complete, redirectes to dashboard
   useEffect(() => {
     
     if (config.payement === false)
@@ -16,6 +22,7 @@ const Pay = () => {
 
   }, [config, navigate]);
 
+  //If payment is canceled, resets order config, redirects to ddashboard
   function cancel () {
     setConfig(prevConfig => ({ ...prevConfig, payement: !prevConfig.payement }));
     navigate('/dashboard')

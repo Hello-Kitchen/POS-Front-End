@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 
 import FoodStick from '../../FoodStick/FoodStick';
 
+/**
+ * Header Component : Header Component of the food page, displays the relevant information of the selected food
+ * 
+ * @component FoodHeader
+ * @param {String} name Name of the current food
+ * @param {Number} price Price of the current food
+ * @param {String} color Color code of the current food category, used by the FoodStick
+ */
 function FoodHeader({name, price, color}) {
 
     return (

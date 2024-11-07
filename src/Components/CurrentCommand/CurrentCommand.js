@@ -42,6 +42,14 @@ const Stop = () => (
     </div>
 )
 
+/**
+ * Component : Component used by the Content component. Displays the content of the related order
+ * 
+ * @component Order
+ * @param {Object} orders current order
+ * @param {Boolean} border boolean used to separate orders
+ * @param {Object} config state of the current order
+ */
 const Order = ({ order, border, config }) => (
     <div className={`w-full h-auto p-2 ${border ? 'border-t border-t-kitchen-yellow' : ''}`}>
         {order.plat && order.price && <Food name={order.plat} price={order.price} />}
@@ -56,6 +64,14 @@ const Order = ({ order, border, config }) => (
     </div>
 )
 
+/**
+ * Component : Component used by the CurrentCommand. Displays the content of the current orders
+ * 
+ * @component Content
+ * @param {[Object]} orders arrays of current order
+ * @param {Boolean} stop boolean used to know if the order has a stop
+ * @param {Object} config state of the current order
+ */
 const Content = ({ orders, stop, config }) => (
     <div className={!config.payement ? 'w-full flex flex-col overflow-auto scrollbar-hide' : 'w-full min-h-[h-current-cmd-content] flex flex-col overflow-auto scrollbar-hide border-b-4 border-kitchen-yellow box-border border-solid'}>
         {
@@ -81,6 +97,18 @@ const Content = ({ orders, stop, config }) => (
     </div>
 )
 
+/**
+ * Component : Footer Component of the CurrentCommand component. Displays the informations of the command, not the content, and handles PUT databases calls when the order is complete.
+ * 
+ * @component Footer
+ * @param {Object} config state of the current order
+ * @param {[Object]} orders arrays of current order
+ * @param {Function} setOrders state function to update the current orders
+ * @param {Function} setConfig state function to update the config of the current order
+ * @param {Number} price full price of the current order
+ * @param {Number} priceLess full price of the current order
+ * @param {[Number]} payList List of all current transactions
+ */
 function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
   
     const navigate = useNavigate();
@@ -192,6 +220,18 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
     }
 }
 
+/**
+ * Component : Main Component displaying all the information of the current command.
+ * 
+ * @component CurrentCommand
+ * @param {[Object]} orders arrays of current order
+ * @param {Object} config state of the current order
+ * @param {Function} setConfig state function to update the config of the current order
+ * @param {Function} setOrders state function to update the current orders
+ * @param {Number} price full price of the current order
+ * @param {Number} priceLess full price of the current order
+ * @param {[Number]} payList List of all current transactions
+ */
 function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
