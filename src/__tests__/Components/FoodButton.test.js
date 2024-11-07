@@ -1,3 +1,5 @@
+/* eslint-disable react/display-name, react/prop-types */
+
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import FoodButton from '../../Components/FoodButton/FoodButton';
