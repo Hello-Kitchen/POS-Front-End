@@ -17,7 +17,7 @@ let data =
     [
     ],
     { id_restaurant: 4 },
-    { channel: "En salle" },
+    { channel: "Sur place" },
   ];
 
 /**
