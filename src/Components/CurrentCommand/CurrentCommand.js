@@ -131,6 +131,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 return acc;
             }, {});
             newObj['part'] = stopCounter;
+            newObj['is_ready'] = false;
             orderedFood.push(newObj);
         });
     
@@ -144,6 +145,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             food_ordered: orderedFood
         };
 
+        console.log(obj);
         const data = fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem("token")}` },
