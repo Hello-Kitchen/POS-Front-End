@@ -47,17 +47,17 @@ function NewIngredientList({data, orderDetails, setOrderDetails}) {
                     {elem.name}
                 </h1>
             </div>
-                <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
-                    <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-green justify-items-center col-span-1 mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-ingredient-green aspect-square'>
-                        +
-                    </button>
-                    <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-1 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-ingredient-red aspect-square'>
-                        -
-                    </button>
-                    <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-ingredient-red h-current-cmd-content'>
-                        Allergie
-                    </button>
-                </div>
+            <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
+                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-green justify-items-center col-span-1 mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-ingredient-green aspect-square'>
+                    +
+                </button>
+                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-1 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-ingredient-red aspect-square'>
+                    -
+                </button>
+                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-ingredient-red h-current-cmd-content'>
+                    Allergie
+                </button>
+            </div>
         </div>
     );
 
@@ -65,6 +65,18 @@ function NewIngredientList({data, orderDetails, setOrderDetails}) {
         <div className="w-full">
             <div className="w-full grid grid-flow-row overflow-auto scrollbar-hide">
                 {choice}
+                <div className={`w-full row-span-1 grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6`} >
+                    <div className='col-span-10'>
+                        <h1 className="text-3xl text-black float-left ml-4">
+                            Note
+                        </h1>
+                    </div>
+                    <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
+                        <button className='text-3xl border-4 border-kitchen-food-detail-selected text-white col-start-3 justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-detail-selected h-current-cmd-content'>
+                            Ajouter
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     )
