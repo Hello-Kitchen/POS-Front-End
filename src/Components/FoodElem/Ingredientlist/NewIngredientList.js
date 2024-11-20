@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
  * @param {Object} orderDetails Object used to persist detail and ingredient choices of a current food
  * @param {function} setOrderDetails state function to update the orderDetails object
  */
-function NewIngredientList({data, orderDetails, setOrderDetails}) {
+function NewIngredientList({data}) {
 
     // const [fullData, setFullData] = useState(data.map((elem => {
     //     return {
