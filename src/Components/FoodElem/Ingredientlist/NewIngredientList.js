@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -11,19 +11,17 @@ import PropTypes from 'prop-types';
  */
 function NewIngredientList({data, orderDetails, setOrderDetails}) {
 
-    let current = {value: "", done: false};
-    
-    const [fullData, setFullData] = useState(data.map((elem => {
-        return {
-            id: elem.id,
-            name: elem.name,
-            color_green: 'bg-kitchen-food-ingredient-green',
-            color_red: 'bg-kitchen-food-ingredient-red',
-            add: false,
-            del: false,
-            all: false
-        }
-    })));
+    // const [fullData, setFullData] = useState(data.map((elem => {
+    //     return {
+    //         id: elem.id,
+    //         name: elem.name,
+    //         color_green: 'bg-kitchen-food-ingredient-green',
+    //         color_red: 'bg-kitchen-food-ingredient-red',
+    //         add: false,
+    //         del: false,
+    //         all: false
+    //     }
+    // })));
 
     const handleClick = (event) => {
         let style = event.target.className
@@ -40,7 +38,7 @@ function NewIngredientList({data, orderDetails, setOrderDetails}) {
         event.target.className = style
     }
 
-    const choice = fullData.map((elem) =>
+    const choice = data.map((elem) =>
         <div key={elem.id} className={`${elem.color} w-full row-span-1 grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6`} >
             <div className='col-span-10'>
                 <h1 className="text-3xl text-black float-left ml-4">

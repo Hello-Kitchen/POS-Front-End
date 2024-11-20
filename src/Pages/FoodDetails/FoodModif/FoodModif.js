@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useLocation, useOutletContext } from "react-router-dom";
 
-import IngredientsButton from "../../../Components/FoodElem/IngredientsButton/IngredientsButton";
 import ModifBackButton from "../../../Components/FoodElem/ModifButton/ModifBackButton";
-import IngredientList from "../../../Components/FoodElem/Ingredientlist/IngredientList";
 
 import NewIngredientList from '../../../Components/FoodElem/Ingredientlist/NewIngredientList';
 
