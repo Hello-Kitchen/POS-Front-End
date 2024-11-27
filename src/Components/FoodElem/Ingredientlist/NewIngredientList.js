@@ -39,20 +39,20 @@ function NewIngredientList({data}) {
     }
 
     const choice = data.map((elem) =>
-        <div key={elem.id} className={`${elem.color} w-full row-span-1 grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6`} >
+        <div key={elem.id} className={`${elem.color} w-full row-span-1 grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6 mb-1`} >
             <div className='col-span-10'>
                 <h1 className="text-3xl text-black float-left ml-4">
                     {elem.name}
                 </h1>
             </div>
             <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
-                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-green justify-items-center col-span-1 mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-ingredient-green aspect-square'>
+                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-green col-span-1 ml-1 rounded-full bg-kitchen-food-ingredient-green aspect-square h-full'>
                     +
                 </button>
-                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-1 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-ingredient-red aspect-square'>
+                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red col-span-1 self-center ml-1 rounded-full bg-kitchen-food-ingredient-red h-full aspect-square'>
                     -
                 </button>
-                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-ingredient-red h-current-cmd-content'>
+                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-3 self-center ml-1 rounded-full bg-kitchen-food-ingredient-red h-full'>
                     Allergie
                 </button>
             </div>
