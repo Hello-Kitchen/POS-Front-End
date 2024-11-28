@@ -46,13 +46,13 @@ function NewIngredientList({data}) {
                 </h1>
             </div>
             <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
-                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-green col-span-1 ml-1 rounded-full bg-kitchen-food-ingredient-green aspect-square h-full'>
+                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-green col-span-1 mr-1 rounded-full bg-kitchen-food-ingredient-green aspect-square w-full h-full'>
                     +
                 </button>
-                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red col-span-1 self-center ml-1 rounded-full bg-kitchen-food-ingredient-red h-full aspect-square'>
+                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red col-span-1 self-center ml-1 rounded-full bg-kitchen-food-ingredient-red w-full h-full aspect-square'>
                     -
                 </button>
-                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-3 self-center ml-1 rounded-full bg-kitchen-food-ingredient-red h-full'>
+                <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-3 self-center ml-2 rounded-full bg-kitchen-food-ingredient-red h-full'>
                     Allergie
                 </button>
             </div>
