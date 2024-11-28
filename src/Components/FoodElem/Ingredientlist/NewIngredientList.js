@@ -23,6 +23,21 @@ function NewIngredientList({data}) {
     //     }
     // })));
 
+    const noteButton = (
+            <div className={`w-full row-span-1 grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6`} >
+                <div className='col-span-10'>
+                    <h1 className="text-3xl text-black float-left ml-4">
+                        Note
+                    </h1>
+                </div>
+                <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
+                    <button className='text-3xl border-4 border-kitchen-food-detail-selected text-white col-start-3 justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-detail-selected h-current-cmd-content'>
+                        Ajouter
+                    </button>
+                </div>
+            </div>
+    )
+
     const handleClick = (event) => {
         let style = event.target.className
         if (style.includes("-selected")) {
@@ -39,13 +54,13 @@ function NewIngredientList({data}) {
     }
 
     const choice = data.map((elem) =>
-        <div key={elem.id} className={`${elem.color} w-full row-span-1 grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6 mb-1`} >
-            <div className='col-span-10'>
+        <div key={elem.id} className={`h-15 w-full grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6 mb-1`} >
+            <div className='h-full col-span-10'>
                 <h1 className="text-3xl text-black float-left ml-4">
                     {elem.name}
                 </h1>
             </div>
-            <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
+            <div className='h-full w-full col-span-2 grid grid-flow-col grid-cols-5'>
                 <button onClick={handleClick} className='text-3xl text-white border-4 border-kitchen-food-ingredient-green col-span-1 mr-1 rounded-full bg-kitchen-food-ingredient-green aspect-square w-full h-full'>
                     +
                 </button>
@@ -60,22 +75,9 @@ function NewIngredientList({data}) {
     );
 
     return (
-        <div className="w-full">
-            <div className="w-full grid grid-flow-row overflow-auto scrollbar-hide">
-                {choice}
-                <div className={`w-full row-span-1 grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6`} >
-                    <div className='col-span-10'>
-                        <h1 className="text-3xl text-black float-left ml-4">
-                            Note
-                        </h1>
-                    </div>
-                    <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
-                        <button className='text-3xl border-4 border-kitchen-food-detail-selected text-white col-start-3 justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-detail-selected h-current-cmd-content'>
-                            Ajouter
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div className="w-full row-span-5 overflow-auto scrollbar-hide">
+            {choice}
+            {noteButton}
         </div>
     )
 }
