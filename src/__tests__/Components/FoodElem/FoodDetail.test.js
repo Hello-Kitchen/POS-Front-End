@@ -1,109 +1,125 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import FoodDetail from '../../../Components/FoodElem/FoodDetail/FoodDetail';
 
 describe('FoodDetail Component', () => {
     const mockSetOrderDetails = jest.fn();
-    const name = "Accompagnement";
-    const data = ["Frite", "Salade", "Riz", "Pâte", "Semoule"];
-    const orderDetails = {details: [], sups: []};
 
-    beforeEach(() => {
+    const defaultProps = {
+        name: 'Accompagnement',
+        data: ['Frite', 'Salade', 'Riz', "Pâte"],
+        multiple: true,
+        orderDetails: {
+            details: [],
+            sups: [],
+        },
+        setOrderDetails: mockSetOrderDetails,
+    };
+
+    afterEach(() => {
         jest.clearAllMocks();
     });
 
-    test('renders FoodDetail', () => {
-        render(
-            <FoodDetail 
-                name={name}
-                data={data}
-                multiple={false}
-                orderDetails={orderDetails}
-                setOrderDetails={mockSetOrderDetails}
-            />
-        );
+    test('renders component', () => {
+        const { getByText } = render(<FoodDetail {...defaultProps} />);
 
-        expect(screen.getByText(name)).toBeInTheDocument();
-        data.forEach(item => {
-            expect(screen.getByText(item)).toBeInTheDocument();
+        expect(getByText('Accompagnement')).toBeInTheDocument();
+        defaultProps.data.forEach((item) => {
+            expect(getByText(item)).toBeInTheDocument();
         });
     });
 
-    test('updates an option when multiple = false', () => {
-        render(
-            <FoodDetail 
-                name={name}
-                data={data}
-                multiple={false}
-                orderDetails={orderDetails}
-                setOrderDetails={mockSetOrderDetails}
-            />
-        );
-
-        const selectedButton = screen.getByText("Frite").closest('div');
-        fireEvent.click(selectedButton.querySelector('button'));
-
-        expect(selectedButton).toHaveClass('bg-kitchen-food-detail-selected');
-        expect(mockSetOrderDetails).toHaveBeenCalledWith({
-            details: [{ name: name, list: ["Frite"] }],
-            sups: []
-        });
-    });
-
-    test('updates an option when mutiple = true', () => {
-        render(
-            <FoodDetail 
-                name={name}
-                data={data}
-                multiple={true}
-                orderDetails={orderDetails}
-                setOrderDetails={mockSetOrderDetails}
-            />
-        );
-
-        const firstButton = screen.getByText("Frite").closest('div');
-        fireEvent.click(firstButton.querySelector('button'));
-
-        const secondButton = screen.getByText("Semoule").closest('div');
-        fireEvent.click(secondButton.querySelector('button'));
-
-        expect(firstButton).toHaveClass('bg-kitchen-food-detail-selected');
-        expect(secondButton).toHaveClass('bg-kitchen-food-detail-selected');
-
-        expect(mockSetOrderDetails).toHaveBeenCalledWith({
-            details: [{ name: name, list: expect.arrayContaining(["Frite"]) }],
-            sups: []
-        });
-        expect(mockSetOrderDetails).toHaveBeenCalledWith({
-            details: [{ name: name, list: expect.arrayContaining(["Semoule"]) }],
-            sups: []
-        });
-    });
-
-    test('deselects an option', () => {
-        const orderDetailsWithSelection = { 
-            details: [{ name: name, list: ["Frite"] }], 
-            sups: [] 
+    test('initializes data with orderDetails', () => {
+        const customProps = {
+            ...defaultProps,
+            orderDetails: {
+                details: [{name: 'Accompagnement', list: ['Riz']}],
+                sups: [],
+            },
         };
 
-        render(
-            <FoodDetail 
-                name={name}
-                data={data}
-                multiple={false}
-                orderDetails={orderDetailsWithSelection}
-                setOrderDetails={mockSetOrderDetails}
-            />
-        );
+        const { getByText } = render(<FoodDetail {...customProps} />);
 
-        const selectedButton = screen.getByText("Frite").closest('div');
+        const selectedButton = getByText('Riz').closest('div');
         expect(selectedButton).toHaveClass('bg-kitchen-food-detail-selected');
-        fireEvent.click(selectedButton.querySelector('button'));
+    });
 
-        expect(selectedButton).toHaveClass('bg-kitchen-food-detail');
+    test('handles selection', () => {
+        const singleChoiceProps = {...defaultProps, multiple: false};
+        const { getByText } = render(<FoodDetail {...singleChoiceProps} />);
+
+        const selectedButton = getByText('Riz').closest('button');
+        const secondButton = getByText('Frite').closest('button');
+
+        fireEvent.click(selectedButton);
         expect(mockSetOrderDetails).toHaveBeenCalledWith({
-            details: [{ name: name, list: [] }],
-            sups: []
+            details: [{name: 'Accompagnement', list: ['Riz']}],
+            sups: [],
         });
+
+        fireEvent.click(secondButton);
+        expect(mockSetOrderDetails).toHaveBeenCalledWith({
+            details: [{name: 'Accompagnement', list: ['Frite']}],
+            sups: [],
+        });
+    });
+
+    test('handles multiple selection', () => {
+        const { getByText } = render(<FoodDetail {...defaultProps} />);
+
+        const firstButton = getByText('Riz').closest('button');
+        const secondButton = getByText('Frite').closest('button');
+
+        fireEvent.click(firstButton);
+        expect(mockSetOrderDetails).toHaveBeenCalledWith({
+            details: [{name: 'Accompagnement', list: ['Riz']}],
+            sups: [],
+        });
+
+        fireEvent.click(secondButton);
+        expect(mockSetOrderDetails).toHaveBeenCalledWith({
+            details: [{name: 'Accompagnement', list: ['Frite', 'Riz']}],
+            sups: [],
+        });
+
+        fireEvent.click(firstButton);
+        expect(mockSetOrderDetails).toHaveBeenCalledWith({
+            details: [{name: 'Accompagnement', list: ['Frite']}],
+            sups: [],
+        });
+    });
+
+    test('removes details', () => {
+        const initialProps = {
+            ...defaultProps,
+            orderDetails: {
+                details: [{name: 'Accompagnement', list: ['Riz']}],
+                sups: [],
+            },
+        };
+
+        const { getByText } = render(<FoodDetail {...initialProps} />);
+
+        const firstButton = getByText('Riz').closest('button');
+
+        fireEvent.click(firstButton);
+        expect(mockSetOrderDetails).toHaveBeenCalledWith({
+            details: [],
+            sups: [],
+        });
+    });
+
+    test('updates color', () => {
+        const { getByText } = render(<FoodDetail {...defaultProps} />);
+
+        const firstButton = getByText('Riz').closest('div');
+        const secondButton = getByText('Frite').closest('div');
+
+        expect(firstButton).toHaveClass('bg-kitchen-food-detail');
+        expect(secondButton).toHaveClass('bg-kitchen-food-detail');
+
+        fireEvent.click(firstButton.querySelector('button'));
+        expect(firstButton).toHaveClass('bg-kitchen-food-detail-selected');
+        expect(secondButton).toHaveClass('bg-kitchen-food-detail');
     });
 });
