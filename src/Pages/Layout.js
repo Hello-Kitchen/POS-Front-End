@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from "react-router-dom";
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,7 @@ import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
 
 /**
  * Component : Main Layout of the POS Application, Main Component.
- * 
+ *
  * @component Layout
  * @param {[Object]} orders current order
  * @param {Number} price full price of the current order
@@ -23,6 +23,18 @@ import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
  * @param {Function} setOrderDetails state function used to update the selected food
  */
 const Layout = ({ orders, price, config, setConfig, setOrders, priceLess, setPriceLess, payList, setPayList, orderDetails, setOrderDetails }) => {
+    const [activeTab, setActiveTab] = useState('')
+
+     /**
+     * @function updateActiveTab
+     * @description Updates the active tab for navigation.
+     *
+     * @param {string} newTab - The new tab to set as active.
+     */
+    const updateActiveTab = (newTab) => {
+        setActiveTab(newTab);
+    };
+
     return (
         <div className="column w-full h-full">
             <LayoutHeader textLeft="05 - Francois Dupont" textCenter="Caisse 1" />
@@ -30,7 +42,7 @@ const Layout = ({ orders, price, config, setConfig, setOrders, priceLess, setPri
                 <CurrentCommand orders={orders} config={config} setConfig={setConfig} setOrders={setOrders} price={price} priceLess={priceLess} payList={payList} />
                 <Outlet context={{ orders, setOrders, price, config, setConfig, priceLess, setPriceLess, payList, setPayList, orderDetails, setOrderDetails }} />
             </div>
-            <LayoutFooter buttons={["tables", "commandes", "transactions", "manager"]} price={price.toString()} config={config} setConfig={setConfig} priceLess={priceLess} setOrders={setOrders} />
+            <LayoutFooter buttons={["tables", "commandes", "gestion"]} price={price.toString()} config={config} setConfig={setConfig} priceLess={priceLess} setOrders={setOrders} activeTab={activeTab} updateActiveTab={updateActiveTab}/>
         </div>
     )
 };

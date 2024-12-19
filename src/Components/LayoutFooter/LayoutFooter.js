@@ -1,13 +1,8 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 
-import buttonComponents from '../FooterButton/FooterButton';
+import ButtonSet from '../FooterButton/FooterButton';
 import PropTypes from 'prop-types';
-
-const ButtonEmpty = () => (
-    <div className='w-4 h-10 bg-[#F2E5A2]'>
-    </div>
-);
 
 const NewTicket = () => (
     <div className='w-full h-full bg-kitchen-blue flex flex-col justify-center items-center'>
@@ -24,7 +19,7 @@ const NewTicket = () => (
 
 /**
  * Component : Footer of the main Layout component, handles all the buttons not related to food and categories
- * 
+ *
  * @component Footer
  * @param {[String]} buttons Array of the footer buttons, defined in the layout
  * @param {Number} price full price of the current order
@@ -32,18 +27,26 @@ const NewTicket = () => (
  * @param {Function} setConfig state function to update the config of the current order
  * @param {Number} priceLess full price of the current order
  * @param {Function} setOrders state function to update the current orders
+ * @param {String} activeTab currently active tab
+ * @param {Function} updateActiveTab function to update active tab
  */
-function Footer({ buttons, price, config, setConfig, priceLess, setOrders }) {
+function Footer({ buttons, price, config, setConfig, priceLess, setOrders, activeTab, updateActiveTab }) {
     const navigate = useNavigate();
 
     return (
         <div className='w-full h-lf flex flex-row'>
             <div className='w-3/4 h-full bg-kitchen-yellow flex flex-row gap-0.5'>
-                <div className='w-9/10 h-full bg-kitchen-yellow flex flex-row justify-between gap-0.5'>
+                {/* <div className='w-9/10 h-full bg-kitchen-yellow flex flex-row justify-between gap-0.5'>
                     {buttons.map(buttonKey => {
                         const ButtonComponent = Object.prototype.hasOwnProperty.call(buttonComponents, buttonKey) ? buttonComponents[buttonKey] : ButtonEmpty;
                         return <ButtonComponent key={buttonKey} />;
                     })}
+                </div>
+                <div className='w-1/10 h-full bg-kitchen-yellow flex'>
+                    <NewTicket />
+                </div> */}
+                <div className='w-full bg-kitchen-yellow flex flex-row justify-between'>
+                    <ButtonSet buttons={buttons} activeTab={activeTab} updateActiveTab={updateActiveTab} />
                 </div>
                 <div className='w-1/10 h-full bg-kitchen-yellow flex'>
                     <NewTicket />
@@ -73,7 +76,8 @@ Footer.propTypes = {
     setConfig: PropTypes.func.isRequired,
     priceLess: PropTypes.number.isRequired,
     setOrders: PropTypes.func.isRequired,
+    activeTab: PropTypes.string.isRequired,
+    updateActiveTab: PropTypes.func.isRequired,
 }
 
 export default Footer;
-
