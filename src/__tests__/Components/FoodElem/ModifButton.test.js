@@ -11,12 +11,13 @@ jest.mock('react-router-dom', () => ({
 
 describe('ModifButton Component', () => {
     const mockFood = { id: 1, name: 'Pizza', description: 'Delicious pizza' };
+    const mockFoods = ['Burger Miam', 'Burger Gourmet'];
     const mockColor = 'red';
 
     test('renders', () => {
         const { getByText, getByRole } = render(
             <Router>
-                <ModifButton food={mockFood} color={mockColor} />
+                <ModifButton food={mockFood} foods={mockFoods} color={mockColor} />
             </Router>
         );
       
@@ -35,7 +36,7 @@ describe('ModifButton Component', () => {
 
         const { getByRole } = render(
             <Router>
-                <ModifButton food={mockFood} color={mockColor} />
+                <ModifButton food={mockFood} foods={mockFoods} color={mockColor} />
             </Router>
         );
 
@@ -43,14 +44,14 @@ describe('ModifButton Component', () => {
         fireEvent.click(button);
 
         expect(mockNavigate).toHaveBeenCalledWith('modification', {
-            state: {food: mockFood, color: mockColor}
+            state: {food: mockFood, foods: mockFoods, color: mockColor}
         });
     });
 
     test('matches the snapshot', () => {
         const { asFragment } = render(
             <Router>
-                <ModifButton food={mockFood} color={mockColor} />
+                <ModifButton food={mockFood} foods={mockFoods} color={mockColor} />
             </Router>
         );
 

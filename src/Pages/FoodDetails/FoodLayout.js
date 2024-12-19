@@ -14,13 +14,13 @@ import { Outlet, useOutletContext } from "react-router-dom";
  */
 function FoodLayout() {
 
-    const location = useLocation();
-    const {id, food, color} = location.state || {};
-    const {setOrders, orderDetails, setOrderDetails} = useOutletContext();
+  const location = useLocation();
+  const {id, food, color} = location.state || {};
+  const {setOrders, orderDetails, setOrderDetails} = useOutletContext();
 
     if (food != null) {
       return (
-        <div className="h-full w-3/4 grid grid-flow-row grid-rows-8">
+        <div className="h-full w-full grid grid-flow-row grid-rows-8">
               <FoodHeader id={id} name={food.name} price={food.price} color={color} />
           <div className="w-full row-span-6">
               <Outlet context={{ orderDetails, setOrderDetails }} />
