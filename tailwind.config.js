@@ -56,6 +56,7 @@ module.exports = {
         'span-36': 'span 36 / span 36',
       },
       boxShadow: {
+        'inner-top-lg': 'inset 0 5px 5px rgba(0, 0, 0, 0.3)',
         "button": "inset 0 10px 20px -20px rgba(0,0,0,1)",
       }
     },
@@ -64,4 +65,3 @@ module.exports = {
     require('tailwind-scrollbar-hide')
   ],
 }
-

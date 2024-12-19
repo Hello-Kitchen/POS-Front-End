@@ -7,41 +7,74 @@ jest.mock('react-router-dom', () => ({
     useNavigate: jest.fn(() => jest.fn()),
 }));
 
-jest.mock('../../Components/FooterButton/FooterButton', () => ({
-    table: () => <div>Table Button</div>,
-    commandes: () => <div>Commandes Button</div>,
-    transactions: () => <div>Transactions Button</div>,
-    manager: () => <div>Manager Button</div>,
-}));
-
 describe('Footer Component', () => {
     let setConfig, setOrders, navigate;
 
     beforeEach(() => {
         setConfig = jest.fn();
         setOrders = jest.fn();
-      
+
         navigate = useNavigate();
         navigate.mockClear();
     });
 
-    test('renders', () => {
-        const buttons = ['table', 'commandes', 'transactions', 'manager'];
+    test('renders buttons based on buttons prop', () => {
+        let buttons = ['tables','commandes'];
 
-        render(
+        const { rerender } = render(
             <Footer
-                buttons={buttons}
-                price="20"
-                priceLess={0}
-                config={{ payement: false }}
-                setConfig={setConfig}
-                setOrders={setOrders}
+            buttons={buttons}
+            price="20"
+            priceLess={0}
+            config={{ payement: false }}
+            setConfig={setConfig}
+            setOrders={setOrders}
+            activeTab=''
+            updateActiveTab={jest.fn()}
             />
         );
 
-        buttons.forEach(buttonKey => {
-            expect(screen.getByText(`${buttonKey.charAt(0).toUpperCase() + buttonKey.slice(1)} Button`)).toBeInTheDocument();
-        });
+        // Verify buttons that are present
+        expect(screen.queryByText('TABLES')).toBeInTheDocument();
+        expect(screen.queryByText('COMMANDES')).toBeInTheDocument();
+
+        // Add a new button
+        buttons.push('gestion');
+        rerender(
+            <Footer
+            buttons={buttons}
+            price="20"
+            priceLess={0}
+            config={{ payement: false }}
+            setConfig={setConfig}
+            setOrders={setOrders}
+            activeTab=''
+            updateActiveTab={jest.fn()}
+            />
+        );
+
+        // Check that the new button is rendered
+        expect(screen.queryByText('GESTION')).toBeInTheDocument();
+    });
+
+    test('renders unknown button', () => {
+        const buttons = ['unknownButton'];
+
+        render(
+            <Footer
+            buttons={buttons}
+            price="20"
+            priceLess={0}
+            config={{ payement: false }}
+            setConfig={setConfig}
+            setOrders={setOrders}
+            activeTab=''
+            updateActiveTab={jest.fn()}
+            />
+        );
+        expect(screen.queryByText('TABLES')).not.toBeInTheDocument();
+        expect(screen.queryByText('COMMANDES')).not.toBeInTheDocument();
+        expect(screen.queryByText('GESTION')).not.toBeInTheDocument();
     });
 
     test('Encaisser button priceLess > 0 or payement = false', () => {
@@ -55,6 +88,8 @@ describe('Footer Component', () => {
                 config={{ payement: false }}
                 setConfig={setConfig}
                 setOrders={setOrders}
+                activeTab=''
+                updateActiveTab={jest.fn()}
             />
         );
 
@@ -72,6 +107,8 @@ describe('Footer Component', () => {
                 config={{ payement: true }}
                 setConfig={setConfig}
                 setOrders={setOrders}
+                activeTab=''
+                updateActiveTab={jest.fn()}
             />
         );
 
@@ -91,6 +128,8 @@ describe('Footer Component', () => {
                 config={{ payement: false }}
                 setConfig={setConfig}
                 setOrders={setOrders}
+                activeTab=''
+                updateActiveTab={jest.fn()}
             />
         );
 
@@ -113,6 +152,8 @@ describe('Footer Component', () => {
                 config={{ payement: true }}
                 setConfig={setConfig}
                 setOrders={setOrders}
+                activeTab=''
+                updateActiveTab={jest.fn()}
             />
         );
 
@@ -133,6 +174,8 @@ describe('Footer Component', () => {
                 config={{ payement: true }}
                 setConfig={setConfig}
                 setOrders={setOrders}
+                activeTab=''
+                updateActiveTab={jest.fn()}
             />
         );
 

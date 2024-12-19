@@ -1,29 +1,36 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import buttonComponents from '../../Components/FooterButton/FooterButton';
+import React from "react";
+import { render, screen, fireEvent } from '@testing-library/react';
+import ButtonSet from '../../Components/FooterButton/FooterButton';
 
-describe('Button Components', () => {
-    test('renders ButtonTables', () => {
-        render(<buttonComponents.tables />);
+describe('ButtonSet Component', () => {
+    // Mock the setConfig function
+    const updateActiveTabMock = jest.fn();
 
-        expect(screen.getByText('TABLES')).toBeInTheDocument();
+    test('renders all buttons with correct text', () => {
+        const buttons = ['tables', 'commandes', 'gestion'];
+
+        render(<ButtonSet buttons={buttons} activeTab="" updateActiveTab={updateActiveTabMock} />);
+
+        // Check that each button's text is present
+        expect(screen.getByText("TABLES")).toBeInTheDocument();
+        expect(screen.getByText("COMMANDES")).toBeInTheDocument();
+        expect(screen.getByText("GESTION")).toBeInTheDocument();
     });
 
-    test('renders ButtonCommandes', () => {
-        render(<buttonComponents.commandes />);
+    test('Button click triggers updateActiveTab', () => {
+        const buttons = ['tables', 'commandes', 'gestion'];
 
-        expect(screen.getByText('COMMANDES')).toBeInTheDocument();
-    });
+        render(<ButtonSet buttons={buttons} activeTab="" updateActiveTab={updateActiveTabMock} />);
 
-    test('renders ButtonTransactions', () => {
-        render(<buttonComponents.transactions />);
+        const buttonTables = screen.getByText("TABLES");
+        const buttonCommands = screen.getByText("COMMANDES");
 
-        expect(screen.getByText('TRANSACTIONS')).toBeInTheDocument();
-    });
+        fireEvent.click(buttonTables);
+        fireEvent.click(buttonCommands);
 
-    test('renders ButtonManager', () => {
-        render(<buttonComponents.manager />);
-
-        expect(screen.getByText('MANAGER')).toBeInTheDocument();
+        // Verify that updateActiveTab was called with the correct argument
+        expect(updateActiveTabMock).toHaveBeenCalledWith("TABLES");
+        expect(updateActiveTabMock).toHaveBeenCalledWith("COMMANDES");
+        expect(updateActiveTabMock).not.toHaveBeenCalledWith("GESTION");
     });
 });
