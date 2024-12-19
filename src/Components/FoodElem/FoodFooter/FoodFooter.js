@@ -22,7 +22,7 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails})
 
     //function used to reset the current order details and redirects to the dashboard page, used by the "Annuler" button
     const handleBackClick = () => {
-        setOrderDetails({details: [], sups: {current: 0, list: []}});
+        setOrderDetails({details: [], sups: []});
         if (pathname.endsWith("modification")) {
             navigate(-3)
         } else {
@@ -44,8 +44,8 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails})
     //formats the ingredient list of a selected food
     const getAllSups = (base) => {
         let res = []
-        base.list.forEach((e) => {
-            let info = e.value.split(" ");
+        base.forEach((e) => {
+            let info = e.split(" ");
             switch (info[0]) {
                 case "Supplément":
                     res.push({type: "ADD", ingredient: info[1]});
@@ -72,7 +72,7 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails})
             updatedOrders[1] = [...updatedOrders[1], current];
             return updatedOrders;
         });
-        setOrderDetails({details: [], sups: {current: 0, list: []}});
+        setOrderDetails({details: [], sups: []});
         if (pathname.endsWith("modification")) {
             navigate(-3)
         } else {
