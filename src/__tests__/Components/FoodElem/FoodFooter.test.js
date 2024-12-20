@@ -13,7 +13,7 @@ describe('FoodFooter Component', () => {
         setOrderDetails = jest.fn();
         orderDetails = {
             details: [],
-            sups: {current: 0, list: []}
+            sups: []
         };
     });
 
@@ -57,7 +57,7 @@ describe('FoodFooter Component', () => {
 
         fireEvent.click(getByText('Annuler'));
 
-        expect(setOrderDetails).toHaveBeenCalledWith({details: [], sups: {current: 0, list: []}});
+        expect(setOrderDetails).toHaveBeenCalledWith({details: [], sups: []});
     });
 
     test('add button and update', () => {

@@ -1,98 +1,90 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import IngredientList from '../../../Components/FoodElem/Ingredientlist/IngredientList';
 
 describe('IngredientList Component', () => {
-    let setOrderDetails, setButtonSelected, orderDetails, buttonSelected, data;
+  const mockData = [
+    { id: 0, name: 'Salade' },
+    { id: 1, name: 'Tomate' },
+    { id: 2, name: 'Ognion' },
+  ];
 
-    beforeEach(() => {
-        setOrderDetails = jest.fn();
-        setButtonSelected = jest.fn();
-        orderDetails = {
-            details: {},
-            sups: {current: 0, list: [{value: 'Allergie', done: false}]}
-        };
-        buttonSelected = {active: true, same: false};
-        data = [
-            {id: 0, name: "Steak", price: 4},
-            {id: 1, price: 0.3, name: "Pain"},
-            {id: 2, price: 0.1, name: "Salade"},
-            {id: 3, price: 0.15, name: "Tomate"},
-            {id: 4, price: 0.2, name: "Oignon"},
-            {id: 5, price: 0.2, name: "Fromage"}
-        ];
+  const mockOrderDetails = {
+    details: '',
+    sups: [],
+  };
+
+  const mockSetOrderDetails = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('render', () => {
+    render(<IngredientList data={mockData} orderDetails={mockOrderDetails} setOrderDetails={mockSetOrderDetails} />);
+
+    mockData.forEach((ingredient) => {
+      expect(screen.getByText(ingredient.name)).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: '+' })[ingredient.id]).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: '-' })[ingredient.id]).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: 'Allergie' })[ingredient.id]).toBeInTheDocument();
     });
+  });
 
-    test('renders', () => {
-        const { getByText } = render(
-            <IngredientList 
-                data={data}
-                orderDetails={orderDetails}
-                setOrderDetails={setOrderDetails}
-                buttonSelected={buttonSelected}
-                setButtonSelected={setButtonSelected} 
-            />
-        );
+  test('Supplément button', () => {
+    render(<IngredientList data={mockData} orderDetails={mockOrderDetails} setOrderDetails={mockSetOrderDetails} />);
 
-        expect(getByText('Steak')).toBeInTheDocument();
-        expect(getByText('Pain')).toBeInTheDocument();
-        expect(getByText('Salade')).toBeInTheDocument();
-        expect(getByText('Tomate')).toBeInTheDocument();
-        expect(getByText('Oignon')).toBeInTheDocument();
-        expect(getByText('Fromage')).toBeInTheDocument();
+    const supplementButton = screen.getAllByRole('button', { name: '+' })[0];
+    fireEvent.click(supplementButton);
+
+    expect(mockSetOrderDetails).toHaveBeenCalledTimes(1);
+    expect(mockSetOrderDetails).toHaveBeenCalledWith({
+      details: '',
+      sups: ['Supplément Salade'],
     });
+  });
 
-    test('updates orderDetails', () => {
-        const { getByText } = render(
-            <IngredientList 
-                data={data}
-                orderDetails={orderDetails}
-                setOrderDetails={setOrderDetails}
-                buttonSelected={buttonSelected}
-                setButtonSelected={setButtonSelected} 
-            />
-        );
+  test('Retirer button', () => {
+    render(<IngredientList data={mockData} orderDetails={mockOrderDetails} setOrderDetails={mockSetOrderDetails} />);
 
-        fireEvent.click(getByText('Fromage'));
+    const retirerButton = screen.getAllByRole('button', { name: '-' })[0];
+    fireEvent.click(retirerButton);
 
-        expect(setOrderDetails).toHaveBeenCalledWith({
-            details: orderDetails.details,
-            sups: {current: 1, list: [{value: 'Allergie Fromage', done: true}]}
-        });
-        expect(setButtonSelected).toHaveBeenCalledWith({active: true, same: true});
+    expect(mockSetOrderDetails).toHaveBeenCalledTimes(1);
+    expect(mockSetOrderDetails).toHaveBeenCalledWith({
+      details: '',
+      sups: ['Retirer Salade'],
     });
+  });
 
-    test('ingredient selection', () => {
-        const { getByText } = render(
-            <IngredientList 
-                data={data}
-                orderDetails={orderDetails}
-                setOrderDetails={setOrderDetails}
-                buttonSelected={buttonSelected}
-                setButtonSelected={setButtonSelected} 
-            />
-        );
+  test('Allergie button', () => {
+    render(<IngredientList data={mockData} orderDetails={mockOrderDetails} setOrderDetails={mockSetOrderDetails} />);
 
-        fireEvent.click(getByText('Fromage'));
+    const allergieButton = screen.getAllByRole('button', { name: 'Allergie' })[0];
+    fireEvent.click(allergieButton);
 
-        expect(setOrderDetails).toHaveBeenCalledTimes(1);
-        expect(setButtonSelected).toHaveBeenCalledWith({active: true, same: true});
+    expect(mockSetOrderDetails).toHaveBeenCalledTimes(1);
+    expect(mockSetOrderDetails).toHaveBeenCalledWith({
+      details: '',
+      sups: ['Allergie Salade'],
     });
+  });
 
-    test('updates styles', () => {
-        buttonSelected = {active: true, same: false};
-        const { getByText } = render(
-            <IngredientList 
-                data={data}
-                orderDetails={orderDetails}
-                setOrderDetails={setOrderDetails}
-                buttonSelected={buttonSelected}
-                setButtonSelected={setButtonSelected} 
-            />
-        );
+  test('duplicates', () => {
+    const modifiedOrderDetails = {
+      details: '',
+      sups: ['Supplément Salade'],
+    };
 
-        const selectedButton = getByText('Fromage').closest('div');
-        fireEvent.click(getByText('Fromage'));
-        expect(selectedButton).toHaveClass('bg-kitchen-food-detail-selected');
+    render(<IngredientList data={mockData} orderDetails={modifiedOrderDetails} setOrderDetails={mockSetOrderDetails} />);
+
+    const supplementButton = screen.getAllByRole('button', { name: '-' })[0];
+    fireEvent.click(supplementButton);
+
+    expect(mockSetOrderDetails).toHaveBeenCalledWith({
+      details: '',
+      sups: ['Retirer Salade'],
     });
+  });
 });
