@@ -13,14 +13,15 @@ import FoodStick from '../FoodStick/FoodStick';
  * @param {String} name name of a specific food
  * @param {String} color color code of the current food category
  * @param {Object} food Object with all selected food details
+ * @param {[Object]} foods Object array of all foods in a category, used by background
  * @param {String} route route containing the category of the food, used for navigation
  */
-function FoodButton({id, name, color, food, route}) {
+function FoodButton({id, name, color, food, foods, route}) {
     const navigate = useNavigate();
 
     //called when clicked on a specific food, redirects to the food page
     const handleClick = () => {
-        navigate(route + id, {state: {id: id, food: food, color: color}})
+        navigate(route + id, {state: {id: id, food: food, foods: foods, color: color}})
     }
 
     return (
@@ -44,6 +45,7 @@ FoodButton.propTypes = {
     name: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
     food: PropTypes.object.isRequired,
+    foods: PropTypes.array.isRequired,
     route: PropTypes.string.isRequired,
 }
 

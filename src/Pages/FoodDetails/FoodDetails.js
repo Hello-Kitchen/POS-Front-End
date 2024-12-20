@@ -13,14 +13,14 @@ import ModifButton from "../../Components/FoodElem/ModifButton/ModifButton";
 function FoodDetails() {
 
     const location = useLocation();
-    const {id, food, color} = location.state || {};
+    const {id, food, foods, color} = location.state || {};
     const {orderDetails, setOrderDetails} = useOutletContext();
 
     if (food != null) {
       return (
           <div className="h-full w-full grid grid-flow-row grid-rows-6">
               <DetailList details={food.details} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />
-              <ModifButton id={id} food={food} color={color} />
+              <ModifButton id={id} food={food} foods={foods} color={color} />
           </div>
       )
     }

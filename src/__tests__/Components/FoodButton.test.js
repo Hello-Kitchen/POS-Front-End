@@ -18,6 +18,7 @@ describe('FoodButton', () => {
         name: 'Burger Miam',
         color: 'purple',
         food: {details: [], ingredients: []},
+        foods: ['Burger Miam', 'Burger Gourmet'],
         route: '/category/0/2',
     };
 

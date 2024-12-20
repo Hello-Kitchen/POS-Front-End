@@ -9,14 +9,15 @@ import { useNavigate } from "react-router-dom";
  * 
  * @component ModifButton
  * @param {Object} food Current selected food object
+ * @param {[Object]} foods Object array of all foods in a category, used by background
  * @param {string} color Color code of the food category
  */
-function ModifButton({food, color}) {
+function ModifButton({food, foods, color}) {
 
     const navigate = useNavigate();
     //Function called on button click, navigates to the food ingredients modification page
     const handleClick = () => {
-        navigate("modification", {state: {food: food, color: color}})
+        navigate("modification", {state: {food: food, foods: foods, color: color}})
     }
 
     return (
@@ -38,6 +39,7 @@ function ModifButton({food, color}) {
 
 ModifButton.propTypes = {
     food: PropTypes.object.isRequired,
+    foods: PropTypes.array.isRequired,
     color: PropTypes.string.isRequired
 }
 
