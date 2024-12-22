@@ -47,7 +47,7 @@ describe('CategoryButton', () => {
         fireEvent.click(screen.getByRole('button'));
 
         expect(mockNavigate).toHaveBeenCalledWith('/category/0', {
-            state: { food: ['Burger Miam', 'Burger Gourmet'], color: 'red'},
+            state: { foods: ['Burger Miam', 'Burger Gourmet'], color: 'red'},
         });
     });
 });

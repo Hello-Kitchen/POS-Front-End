@@ -29,7 +29,13 @@ module.exports = {
       'grey-bg': '#D9D9D9',
     },
     extend: {
+      inset: {
+        'food-top': '20.333%',
+        '1/5': '20%',
+        '2/5': '40%'
+      },
       height: {
+        'food-top': '20.333%',
         'lh': '7%',
         'lf': '13%',
         'pos-button': '11%',

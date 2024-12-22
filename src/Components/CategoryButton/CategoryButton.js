@@ -24,7 +24,7 @@ function CategoryButton({id, name, color, food, route}) {
 
     //navigates to the category page
     const handleClick = () => {
-        navigate(route + id, {state: {food: food, color: color}})
+        navigate(route + id, {state: {foods: food, color: color}})
     }
     return (
         <div className={`${color} col-span-1 row-span-1`}>

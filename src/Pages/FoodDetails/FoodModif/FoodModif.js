@@ -3,8 +3,7 @@ import React from 'react';
 import { useLocation, useOutletContext } from "react-router-dom";
 
 import ModifBackButton from "../../../Components/FoodElem/ModifButton/ModifBackButton";
-
-import IngredientList from '../../../Components/FoodElem/Ingredientlist/IngredientList';
+import IngredientList from "../../../Components/FoodElem/Ingredientlist/IngredientList";
 
 /**
  * Component : Page, Component displaying the ingredient page of a food based on the router location
