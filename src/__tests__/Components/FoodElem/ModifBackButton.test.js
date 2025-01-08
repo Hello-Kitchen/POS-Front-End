@@ -1,8 +1,7 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ModifBackButton from '../../../Components/FoodElem/ModifButton/ModifBackButton';
-import { useNavigate } from 'react-router-dom';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
