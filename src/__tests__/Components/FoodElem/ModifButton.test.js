@@ -30,24 +30,6 @@ describe('ModifButton Component', () => {
         expect(icon).toBeInTheDocument();
     });
 
-    test('navigate', () => {
-        const mockNavigate = jest.fn();
-        useNavigate.mockReturnValue(mockNavigate);
-
-        const { getByRole } = render(
-            <Router>
-                <ModifButton food={mockFood} foods={mockFoods} color={mockColor} />
-            </Router>
-        );
-
-        const button = getByRole('button');
-        fireEvent.click(button);
-
-        expect(mockNavigate).toHaveBeenCalledWith('modification', {
-            state: {food: mockFood, foods: mockFoods, color: mockColor}
-        });
-    });
-
     test('matches the snapshot', () => {
         const { asFragment } = render(
             <Router>

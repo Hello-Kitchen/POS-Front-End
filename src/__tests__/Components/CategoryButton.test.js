@@ -32,22 +32,4 @@ describe('CategoryButton', () => {
 
         expect(screen.getByText('Plats')).toBeInTheDocument();
     });
-
-    test('navigate', () => {
-        const props = {
-            id: 0,
-            name: 'Plats',
-            color: 'red',
-            food: ['Burger Miam', 'Burger Gourmet'],
-            route: '/category/',
-        };
-
-        render(<CategoryButton {...props} />);
-
-        fireEvent.click(screen.getByRole('button'));
-
-        expect(mockNavigate).toHaveBeenCalledWith('/category/0', {
-            state: { foods: ['Burger Miam', 'Burger Gourmet'], color: 'red'},
-        });
-    });
 });

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useNavigate } from "react-router-dom";
-
 import FoodStick from '../FoodStick/FoodStick';
 
 /**
@@ -12,24 +10,17 @@ import FoodStick from '../FoodStick/FoodStick';
  * @param {Number} id id of the specific food
  * @param {String} name name of a specific food
  * @param {String} color color code of the current food category
- * @param {Object} food Object with all selected food details
- * @param {[Object]} foods Object array of all foods in a category, used by background
  * @param {String} route route containing the category of the food, used for navigation
+ * @param {function} handleClick function used to redirect to the food page
  */
-function FoodButton({id, name, color, food, foods, route}) {
-    const navigate = useNavigate();
-
-    //called when clicked on a specific food, redirects to the food page
-    const handleClick = () => {
-        navigate(route + id, {state: {id: id, food: food, foods: foods, color: color}})
-    }
+function FoodButton({id, name, color, handleClick}) {
 
     return (
         <div className="bg-white col-span-1 row-span-1 grid grid-cols-12 border-b-2 border-b-white">
             <FoodStick color={color} />
             <button 
                 className="h-full w-full col-span-11"
-                onClick={() => handleClick()}
+                onClick={() => handleClick(id)}
                 type="button"
             >
                 <h1 className="text-3xl font-bold text-black text-left">
@@ -44,9 +35,8 @@ FoodButton.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
-    food: PropTypes.object.isRequired,
-    foods: PropTypes.array.isRequired,
     route: PropTypes.string.isRequired,
+    handleClick: PropTypes.func.isRequired,
 }
 
 export default FoodButton;

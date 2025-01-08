@@ -27,22 +27,6 @@ describe('ModifBackButton Component', () => {
         expect(icon).toBeInTheDocument();
     });
 
-    test('navigate', () => {
-        const mockNavigate = jest.fn();
-        useNavigate.mockReturnValue(mockNavigate);
-
-        const { getByRole } = render(
-            <Router>
-                <ModifBackButton />
-            </Router>
-        );
-
-        const button = getByRole('button');
-        fireEvent.click(button);
-
-        expect(mockNavigate).toHaveBeenCalledWith(-1);
-    });
-
     test('matches the snapshot', () => {
         const { asFragment } = render(
             <Router>

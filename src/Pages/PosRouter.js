@@ -6,10 +6,6 @@ import Loading from './Loading/Loading';
 import Dashboard from './Dashboard/Dashboard';
 import Pay from './Pay/Pay';
 import Layout from './Layout';
-import CategoryLayout from './CategoryList/CategoryLayout';
-import FoodLayout from './FoodDetails/FoodLayout';
-import FoodDetails from './FoodDetails/FoodDetails';
-import FoodModif from './FoodDetails/FoodModif/FoodModif';
 
 let data =
   [
@@ -54,14 +50,8 @@ function PosRouter() {
           <Route path="/" element={<Login />} />
           <Route path="/loading" element={<Loading />} />
           <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}>
-            <Route index element={<Dashboard />} />
+            <Route index element={<Dashboard setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />} />
             <Route path="/dashboard/pay" element={<Pay />} />
-            <Route path="/dashboard/category/:id" element={<CategoryLayout />}>
-              <Route path="/dashboard/category/:id/:id" element={<FoodLayout />}>
-                <Route path="/dashboard/category/:id/:id" element={<FoodDetails />}/>
-                <Route path="/dashboard/category/:id/:id/modification" element={<FoodModif />}/>
-              </Route>
-            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
