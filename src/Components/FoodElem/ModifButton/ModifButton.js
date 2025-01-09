@@ -2,22 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { GoArrowUp } from "react-icons/go";
-import { useNavigate } from "react-router-dom";
 
 /**
  * Footer Component : used to change page from the detail modification page of a food to the ingredient modification page
  * 
  * @component ModifButton
- * @param {Object} food Current selected food object
- * @param {[Object]} foods Object array of all foods in a category, used by background
- * @param {string} color Color code of the food category
+ * @param {function} openModif function used to open the modification page
  */
-function ModifButton({food, foods, color}) {
+function ModifButton({openModif}) {
 
-    const navigate = useNavigate();
     //Function called on button click, navigates to the food ingredients modification page
     const handleClick = () => {
-        navigate("modification", {state: {food: food, foods: foods, color: color}})
+        openModif();
     }
 
     return (
@@ -38,9 +34,7 @@ function ModifButton({food, foods, color}) {
 
 
 ModifButton.propTypes = {
-    food: PropTypes.object.isRequired,
-    foods: PropTypes.array.isRequired,
-    color: PropTypes.string.isRequired
+    openModif: PropTypes.func.isRequired,
 }
 
 export default ModifButton;

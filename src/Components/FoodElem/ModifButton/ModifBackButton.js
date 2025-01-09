@@ -1,19 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { GoArrowDown } from "react-icons/go";
-import { useNavigate } from "react-router-dom";
 
 /**
  * Header Component : used to change page from the ingredient modification page of a food to the detail modification page
  * 
  * @component ModifButton
+ * @param {function} closeModif function used to close the modification page
  */
-function ModifBackButton() {
+function ModifBackButton({closeModif}) {
 
-    const navigate = useNavigate();
     //Function called on button click, navigates to the previous page, the food detail page
     const handleClick = () => {
-        navigate(-1)
+        closeModif();
     }
 
     return (
@@ -32,5 +32,8 @@ function ModifBackButton() {
     )
 }
 
+ModifBackButton.propTypes = {
+    closeModif: PropTypes.func.isRequired,
+}
 
 export default ModifBackButton;

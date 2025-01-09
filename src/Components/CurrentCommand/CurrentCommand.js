@@ -142,7 +142,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             channel: orders[3].channel,
             number: (orders[3].channel === "En salle") ? `Table ${orders[0].nb}` : `${orders[0].nb}`,
             part: 1,
-            food_ordered: orderedFood
+            food_ordered: orderedFood,
+            served: false,
         };
 
         console.log(obj);

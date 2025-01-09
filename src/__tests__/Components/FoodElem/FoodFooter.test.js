@@ -51,6 +51,7 @@ describe('FoodFooter Component', () => {
                     setOrders={setOrders}
                     orderDetails={orderDetails}
                     setOrderDetails={setOrderDetails}
+                    closeDetail={() => {}}
                 />
             </Wrapper>
         );
@@ -71,6 +72,7 @@ describe('FoodFooter Component', () => {
                     setOrders={setOrders}
                     orderDetails={orderDetails}
                     setOrderDetails={setOrderDetails}
+                    closeDetail={() => {}}
                 />
             </Wrapper>
         );

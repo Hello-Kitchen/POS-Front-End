@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useNavigate, useLocation } from "react-router-dom";
-
 /**
  * Footer Component : 
  *  
@@ -13,21 +11,13 @@ import { useNavigate, useLocation } from "react-router-dom";
  * @param {function} setOrders state function used to update the current order when the food is added
  * @param {Object} orderDetails Object used to persist detail and ingredient choices of a current food
  * @param {function} setOrderDetails state function to update the orderDetails object
+ * @param {function} closeDetail function used to reset the current order details and redirects to the dashboard page
  */
-function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails}) {
-
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { pathname } = location;
-
+function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails, closeDetail}) {
     //function used to reset the current order details and redirects to the dashboard page, used by the "Annuler" button
     const handleBackClick = () => {
         setOrderDetails({details: [], sups: []});
-        if (pathname.endsWith("modification")) {
-            navigate(-3)
-        } else {
-            navigate(-2)
-        }
+        closeDetail();
     }
 
     //formats the detail list of a selected food
@@ -73,11 +63,7 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails})
             return updatedOrders;
         });
         setOrderDetails({details: [], sups: []});
-        if (pathname.endsWith("modification")) {
-            navigate(-3)
-        } else {
-            navigate(-2)
-        }
+        closeDetail();
     }
 
     return (
@@ -98,7 +84,8 @@ FoodFooter.propTypes = {
     price: PropTypes.number.isRequired,
     setOrders: PropTypes.func.isRequired,
     orderDetails: PropTypes.object.isRequired,
-    setOrderDetails: PropTypes.func.isRequired
+    setOrderDetails: PropTypes.func.isRequired,
+    closeDetail: PropTypes.func.isRequired,
 }
 
 export default FoodFooter;

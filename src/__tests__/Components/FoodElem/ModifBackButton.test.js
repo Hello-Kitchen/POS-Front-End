@@ -1,8 +1,7 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ModifBackButton from '../../../Components/FoodElem/ModifButton/ModifBackButton';
-import { useNavigate } from 'react-router-dom';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -25,22 +24,6 @@ describe('ModifBackButton Component', () => {
 
         const icon = button.querySelector('svg');
         expect(icon).toBeInTheDocument();
-    });
-
-    test('navigate', () => {
-        const mockNavigate = jest.fn();
-        useNavigate.mockReturnValue(mockNavigate);
-
-        const { getByRole } = render(
-            <Router>
-                <ModifBackButton />
-            </Router>
-        );
-
-        const button = getByRole('button');
-        fireEvent.click(button);
-
-        expect(mockNavigate).toHaveBeenCalledWith(-1);
     });
 
     test('matches the snapshot', () => {
