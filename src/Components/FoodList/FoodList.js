@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import FoodButton from "../../Components/FoodButton/FoodButton";
 import FoodElem from "../FoodElem/FoodElem";
+import FoodListHeader from "./FoodListHeader";
 
 /**
  * Component : Component displaying all food related to a category of a restaurant
@@ -14,8 +15,10 @@ import FoodElem from "../FoodElem/FoodElem";
  * @param {function} setOrders state function used to update the current order when the food is added
  * @param {Object} orderDetails Object used to persist detail and ingredient choices of a current food
  * @param {function} setOrderDetails state function to update the orderDetails object
+ * @param {String} name name of the category
+ * @param {function} onBackClick function to go back to the previous
  */
-function FoodList({ foods, color, setOrders, orderDetails, setOrderDetails }) {
+function FoodList({ foods, color, setOrders, orderDetails, setOrderDetails, name, onBackClick }) {
   const [selectedFood, setSelectedFood] = useState();
 
   const handleFoodClick = (food) => {
@@ -37,8 +40,15 @@ function FoodList({ foods, color, setOrders, orderDetails, setOrderDetails }) {
 
   return (
     <div className="h-full w-full overflow-hidden">
-      <div className={`h-full grid grid-cols-4 grid-rows-8 content-start bg-grey-bg overflow-auto transition-all duration-200 ${selectedFood ? "blur-sm" : ""}`}>
-        {foodButtons}
+      <div className={`h-full w-full bg-grey-bg transition-all duration-200 ${selectedFood ? "blur-sm" : ""}`}>
+        <FoodListHeader
+          color={color}
+          name={name}
+          onBackClick={onBackClick}
+        />
+        <div className="h-[95%] grid grid-cols-4 grid-rows-8 content-start overflow-auto">
+          {foodButtons}
+        </div>
       </div>
       {selectedFood && (
         <div>
@@ -66,6 +76,8 @@ FoodList.propTypes = {
   setOrders: PropTypes.func.isRequired,
   orderDetails: PropTypes.array.isRequired,
   setOrderDetails: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onBackClick: PropTypes.func.isRequired,
 };
 
 export default FoodList;
