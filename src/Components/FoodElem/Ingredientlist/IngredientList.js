@@ -113,7 +113,7 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
 
     const handleInputSubmit = (message) => {
         let cpy = orderDetails
-        cpy.sups.push("Note " + message)
+        cpy.sups.push(message)
         setOrderDetails({details: orderDetails.details, sups: cpy.sups})
     };
 
