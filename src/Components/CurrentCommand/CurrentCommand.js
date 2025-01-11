@@ -59,7 +59,9 @@ const Order = ({ order, border, config }) => (
         {order.mods_ingredients && order.mods_ingredients.map((sup, index) => (
             <Sup key={index} text={sup} />
         ))}
-        {order.note && <Note text={order.note} />}
+        {order.note && order.note.map((note, index) => (
+            <Note key={index} text={note} />
+        ))}
         {!config.payement && order.stop && <Stop />}
     </div>
 )

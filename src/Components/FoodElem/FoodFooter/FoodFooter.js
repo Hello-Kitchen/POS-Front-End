@@ -46,7 +46,22 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails, 
                 case "Allergie":
                     res.push({type: "ALL", ingredient: info[1]});
                     break;
-                    default: break;
+                default: break;
+            }
+        })
+        return res;
+    }
+
+    const getAllNotes = (base) => {
+        let res = []
+        base.forEach((e) => {
+            let info = e.split(" ");
+            switch (info[0]) {
+                case "Note":
+                    info.shift();
+                    res.push(info.join(" "));
+                    break;
+                default: break;
             }
         })
         return res;
@@ -56,7 +71,8 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails, 
     const addToOrder = () => {
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);
-        let current = {food: id, plat: name, price: String(price), details: details, mods_ingredients: sups};
+        let notes = getAllNotes(orderDetails.sups);
+        let current = {food: id, plat: name, price: String(price), details: details, mods_ingredients: sups, note: notes};
         setOrders(prevOrders => {
             let updatedOrders = [...prevOrders];
             updatedOrders[1] = [...updatedOrders[1], current];
