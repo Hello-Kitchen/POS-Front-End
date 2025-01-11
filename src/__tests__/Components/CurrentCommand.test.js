@@ -22,14 +22,13 @@ describe('CurrentCommand', () => {
         [
             {
                 food: 2,
-                plat: "Burger Miam",
+                name: "Burger Miam",
                 price: '17.99',
                 details: ['Frites'],
                 mods_ingredients: [{type: 'ADD', ingredient: 'Fromage'}],
                 stop: false
             },
         ],
-        {id_restaurant: 1},
         {channel: "En Salle"},
     ];
     const config = {

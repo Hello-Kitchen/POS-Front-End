@@ -52,7 +52,7 @@ const Stop = () => (
  */
 const Order = ({ order, border, config }) => (
     <div className={`w-full h-auto p-2 ${border ? 'border-t border-t-kitchen-yellow' : ''}`}>
-        {order.plat && order.price && <Food name={order.plat} price={order.price} />}
+        {order.name && order.price && <Food name={order.name} price={order.price} />}
         {order.details && order.details.map((detail, index) => (
             <Detail key={index} text={detail} />
         ))}
@@ -125,7 +125,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 return;
             }
             let newObj = Object.keys(order).reduce((acc, key) => {
-                if (key !== "plat" && key !== "price") {
+                if (key !== "name" && key !== "price") {
                     acc[key] = order[key];
                 }
                 return acc;
@@ -139,8 +139,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
     
         let obj = {
             date: new Date().toISOString(),
-            channel: orders[3].channel,
-            number: (orders[3].channel === "En salle") ? `Table ${orders[0].nb}` : `${orders[0].nb}`,
+            channel: orders[2].channel,
+            number: orders[0].nb,
             part: 1,
             food_ordered: orderedFood,
             served: false,

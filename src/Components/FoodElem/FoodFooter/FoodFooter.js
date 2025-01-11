@@ -56,7 +56,7 @@ function FoodFooter({id, name, price, setOrders, orderDetails, setOrderDetails, 
     const addToOrder = () => {
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);
-        let current = {food: id, plat: name, price: String(price), details: details, mods_ingredients: sups};
+        let current = {food: id, name: name, price: String(price), details: details, mods_ingredients: sups};
         setOrders(prevOrders => {
             let updatedOrders = [...prevOrders];
             updatedOrders[1] = [...updatedOrders[1], current];
