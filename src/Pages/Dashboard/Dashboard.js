@@ -161,21 +161,15 @@ function Dashboard({ setOrders, orderDetails, setOrderDetails }) {
     <div className="h-full w-3/4">
       {selectedCategory ? (
         <div className="h-full w-full">
-          <div
-            className="h-5 w-full bg-black text-white"
-            onClick={() => setSelectedCategory(null)}
-          >
-            TMP BACK BTN
-          </div>
-          <div className="h-full w-full">
-            <FoodList
-              foods={categoryFood}
-              color={colors[selectedCategory]}
-              setOrders={setOrders}
-              orderDetails={orderDetails}
-              setOrderDetails={setOrderDetails}
-            />
-          </div>
+          <FoodList
+            foods={categoryFood}
+            color={colors[selectedCategory] != null ? colors[selectedCategory] : colors[0]}
+            setOrders={setOrders}
+            orderDetails={orderDetails}
+            setOrderDetails={setOrderDetails}
+            name={JSON.parse(data).find((elem) => elem.id === selectedCategory).name}
+            onBackClick={() => setSelectedCategory(null)}
+          />
         </div>
       ) : (
         <div className="h-full grid grid-cols-2 grid-rows-8 content-start">
