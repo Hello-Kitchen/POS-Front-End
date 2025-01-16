@@ -74,7 +74,7 @@ FoodList.propTypes = {
   foods: PropTypes.array.isRequired,
   color: PropTypes.string.isRequired,
   setOrders: PropTypes.func.isRequired,
-  orderDetails: PropTypes.array.isRequired,
+  orderDetails: PropTypes.object.isRequired,
   setOrderDetails: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   onBackClick: PropTypes.func.isRequired,

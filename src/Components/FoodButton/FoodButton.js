@@ -35,7 +35,6 @@ FoodButton.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
-    route: PropTypes.string.isRequired,
     handleClick: PropTypes.func.isRequired,
 }
 
