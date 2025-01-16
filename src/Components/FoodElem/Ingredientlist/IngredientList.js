@@ -104,20 +104,59 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
         })))
     }
 
+    const [noteBool, setNoteBool] = useState(false);
+    const [noteValue, setNoteValue] = useState('');
+
+    const handleInputChange = (event) => {
+        setNoteValue(event.target.value);
+    };
+
+    const handleInputSubmit = (message) => {
+        let cpy = orderDetails
+        cpy.sups.push(message)
+        setOrderDetails({details: orderDetails.details, sups: cpy.sups})
+    };
+
+    const handleNoteClick = () => {
+        noteBool ? setNoteBool(false) : setNoteBool(true);
+    }
+
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+        if (noteValue.trim() !== '') {
+            handleInputSubmit(noteValue);
+            setNoteValue('');
+        }
+    };
+
     const noteButton = (
-        <div className={`w-full row-span-1 grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6`} >
-            <div className='col-span-10'>
-                <h1 className="text-3xl text-black float-left ml-4">
-                    Note
-                </h1>
-            </div>
-            <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
-                <button className='text-3xl border-4 border-kitchen-food-detail-selected text-white col-start-3 justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-detail-selected h-current-cmd-content'>
-                    Ajouter
-                </button>
-            </div>
+        
+        <div className={`h-15 w-full row-span-1 grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6`}>
+            <form onSubmit={handleFormSubmit} className="h-full w-full col-span-12 grid grid-flow-col grid-cols-12">
+                {noteBool === false &&
+                    <div className='col-span-10'>
+                        <h1 className="text-3xl text-black float-left ml-4">
+                            Note
+                        </h1>
+                    </div>
+                }
+                {noteBool === true &&
+                    <input
+                        type="text"
+                        className="text-2xl col-span-10 border-2 rounded-full focus:outline-none px-4 float-left mt-1 mb-1 w-full"
+                        placeholder="Note"
+                        value={noteValue}
+                        onChange={handleInputChange}
+                    />
+                }
+                <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
+                    <button type="submit" onClick={() => handleNoteClick()} className="text-3xl border-4 border-kitchen-food-detail-selected text-white col-start-3 justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-detail-selected h-current-cmd-content">
+                        Ajouter
+                    </button>
+                </div>
+            </form>
         </div>
-    )
+    );
 
     const choice = fullData.map((elem) =>
         <div key={elem.id} className={`${elem.color} h-15 w-full grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6 mb-1`} >
