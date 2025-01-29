@@ -98,6 +98,7 @@ const Layout = ({
             { nb: data.number },
             orderedFoods,
             { channel: data.channel },
+            { orderId: data.id },
           ]);
         })
         .catch((error) => {
