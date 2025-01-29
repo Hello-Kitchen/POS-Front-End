@@ -146,22 +146,42 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             served: false,
         };
 
-        console.log(obj);
-        const data = fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem("token")}` },
-            body: JSON.stringify(obj)
-        })
-        .then(response => {
-            if (response.status === 401) {
-              navigate("/", {state: {error: "Unauthorized access. Please log in."}});
-              throw new Error("Unauthorized access. Please log in.");
-            }
-            return response.json();
-        })
-        .catch(error => {
-            console.log(error);
-        });
+        console.log(orders);
+        
+        let data = {};
+
+        if (orders[3].orderId !== null) {
+            data = fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/${orders[3].orderId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
+                body: JSON.stringify(obj)
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    navigate("/", { state: { error: "Unauthorized access. Please log in." } });
+                    throw new Error("Unauthorized access. Please log in.");
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        } else {
+            data = fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
+                body: JSON.stringify(obj)
+            })
+            .then(response => {
+                if (response.status === 401) {
+                  navigate("/", {state: {error: "Unauthorized access. Please log in."}});
+                  throw new Error("Unauthorized access. Please log in.");
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
         
         setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.id }));
     }

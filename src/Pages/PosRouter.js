@@ -7,6 +7,9 @@ import Dashboard from './Dashboard/Dashboard';
 import Pay from './Pay/Pay';
 import Layout from './Layout';
 
+
+// Initial data for the orders
+// TMP : To be replaced when the 'New order' button is implemented
 let data =
   [
     { nb: '42' },
@@ -14,6 +17,7 @@ let data =
     ],
     { id_restaurant: 4 },
     { channel: "Sur place" },
+    { orderId: null }
   ];
 
 /**

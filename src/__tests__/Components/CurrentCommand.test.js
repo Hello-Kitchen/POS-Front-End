@@ -30,6 +30,7 @@ describe('CurrentCommand', () => {
             },
         ],
         {channel: "En Salle"},
+        {orderId: null}
     ];
     const config = {
         firstSend: true,
