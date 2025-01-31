@@ -86,8 +86,8 @@ const Layout = ({
           const orderedFoods = [];
           const parts = Object.keys(groupedByPart).sort((a, b) => a - b); // Sort parts by number
           parts.forEach((part, index) => {
-            orderedFoods.push(...groupedByPart[part]); 
-            if (index < parts.length - 1) {
+            orderedFoods.push(...groupedByPart[part]);
+            if (index < parts.length - 1 && index > data.part) {
               orderedFoods.push({stop: true});
             }
           });
@@ -100,12 +100,14 @@ const Layout = ({
             { channel: data.channel },
             { orderId: data.id },
           ]);
+          config.id_order = data.id;
+          setConfig(config);
         })
         .catch((error) => {
           console.log(error);
         });
     }
-  }, [selectedOrder, setOrders]);
+  }, [selectedOrder, setOrders, config, setConfig]);
 
   return (
     <div className="column w-full h-full">
