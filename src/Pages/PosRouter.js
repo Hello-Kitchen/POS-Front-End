@@ -15,7 +15,6 @@ let data =
     { nb: '42' },
     [
     ],
-    { id_restaurant: 4 },
     { channel: "Sur place" },
     { orderId: null }
   ];
