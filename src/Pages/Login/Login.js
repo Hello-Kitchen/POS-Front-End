@@ -11,7 +11,7 @@ import bcrypt from "bcryptjs-react";
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [restaurantID, setRestaurantID] = useState('');
+    const [restaurantID, setRestaurantID] = useState(localStorage.getItem('restaurantID') || '');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState();
@@ -71,6 +71,7 @@ const Login = () => {
                             name="restaurantID"
                             className="w-4/6 p-2.5 rounded-2xl border border-kitchen-blue"
                             onChange={(e) => setRestaurantID(e.target.value)}
+                            value={restaurantID}
                         />
                     </div>
                     <div className="mb-4">
