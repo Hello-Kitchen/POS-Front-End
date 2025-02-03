@@ -41,6 +41,7 @@ module.exports = {
       },
       boxShadow: {
         'inner-top-lg': 'inset 0 5px 5px rgba(0, 0, 0, 0.3)',
+        'inner-right-lg': 'inset -5px 0 5px rgba(0, 0, 0, 0.3)',
         "button": "inset 0 10px 20px -20px rgba(0,0,0,1)",
       },
       colors: {
