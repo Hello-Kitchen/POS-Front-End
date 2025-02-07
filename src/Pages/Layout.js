@@ -87,7 +87,7 @@ const Layout = ({
           const parts = Object.keys(groupedByPart).sort((a, b) => a - b); // Sort parts by number
           parts.forEach((part, index) => {
             orderedFoods.push(...groupedByPart[part]);
-            if (index + 1 >= data.part && index != parts.length - 1) {
+            if (index + 1 >= data.part && index !== parts.length - 1) {
               orderedFoods.push({stop: true});
             }
           });
