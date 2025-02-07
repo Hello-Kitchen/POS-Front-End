@@ -15,7 +15,7 @@ function Loading({id}) {
     //Will stock it as an object in the local storage under "data"
     //Then redirect to the dashboard once it's loaded.
     useEffect(() => {
-      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/${process.env.REACT_APP_NBR_RESTAURANT}`, {headers: {
+      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/${localStorage.getItem("restaurantID")}`, {headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       }})
       .then((response) => {

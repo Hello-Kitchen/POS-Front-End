@@ -57,7 +57,7 @@ const Layout = ({
     if (selectedOrder !== "") {
       setActiveTab("");
       fetch(
-        `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${process.env.REACT_APP_NBR_RESTAURANT}/orders/${selectedOrder}`,
+        `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/${selectedOrder}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
