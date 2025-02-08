@@ -44,7 +44,7 @@ const Stop = () => (
 
 /**
  * Component : Component used by the Content component. Displays the content of the related order
- * 
+ *
  * @component Order
  * @param {Object} orders current order
  * @param {Boolean} border boolean used to separate orders
@@ -66,7 +66,7 @@ const Order = ({ order, border, config }) => (
 
 /**
  * Component : Component used by the CurrentCommand. Displays the content of the current orders
- * 
+ *
  * @component Content
  * @param {[Object]} orders arrays of current order
  * @param {Boolean} stop boolean used to know if the order has a stop
@@ -99,7 +99,7 @@ const Content = ({ orders, stop, config }) => (
 
 /**
  * Component : Footer Component of the CurrentCommand component. Displays the informations of the command, not the content, and handles PUT databases calls when the order is complete.
- * 
+ *
  * @component Footer
  * @param {Object} config state of the current order
  * @param {[Object]} orders arrays of current order
@@ -110,7 +110,7 @@ const Content = ({ orders, stop, config }) => (
  * @param {[Number]} payList List of all current transactions
  */
 function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
-  
+
     const navigate = useNavigate();
 
     async function sendFirstOrder() {
@@ -118,7 +118,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             return;
         let stopCounter = 1;
         const orderedFood = [];
-    
+
         const promises = orders[1].map(async (order) => {
             if (order.stop) {
                 stopCounter++;
@@ -134,9 +134,9 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             newObj['is_ready'] = false;
             orderedFood.push(newObj);
         });
-    
+
         await Promise.all(promises);
-    
+
         let obj = {
             date: new Date().toISOString(),
             channel: orders[2].channel,
@@ -147,7 +147,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         };
 
         console.log(orders);
-        
+
         let data = {};
 
         if (orders[3].orderId !== null) {
@@ -182,7 +182,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 console.log(error);
             });
         }
-        
+        console.log(data)
         setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.id }));
     }
 
@@ -190,7 +190,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         const newOrders = [...orders];
         const index = newOrders[1].findIndex(item => item.stop === true);
         if (index !== -1) {
-            fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/orders/next/${config.id_order}`, {
+            fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${process.env.REACT_APP_NBR_RESTAURANT}/orders/next/${config.id_order}`, {
                 method: 'PUT',
                 headers: {Authorization: `Bearer ${localStorage.getItem("token")}` },
             })
@@ -199,7 +199,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                   navigate("/", {state: {error: "Unauthorized access. Please log in."}});
                   throw new Error("Unauthorized access. Please log in.");
                 }
-                return response.json();
             })
             .catch(error => {
                 console.log(error);
@@ -245,7 +244,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 
 /**
  * Component : Main Component displaying all the information of the current command.
- * 
+ *
  * @component CurrentCommand
  * @param {[Object]} orders arrays of current order
  * @param {Object} config state of the current order
