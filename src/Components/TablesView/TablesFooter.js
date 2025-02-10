@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import FooterButton from "./FooterButtons";
 import Tables from "./Tables";
 
+/**
+ * TablesFooter component rendering the table pages footer buttons.
+ * @returns {JSX.Element} The rendered TablesFooter component.
+ */
 export default function TablesFooter() {
 
     const [activeButton, setActiveButton] = useState("None");

@@ -2,6 +2,10 @@ import React from "react";
 
 import TablesFooter from "./TablesFooter";
 
+/**
+ * TableView component rendering the table page.
+ * @returns {JSX.Element} The rendered TablesView component.
+ */
 export default function TablesView() {
 
     return (
@@ -12,5 +16,3 @@ export default function TablesView() {
         </div>
     );
 }
-
-TablesView.propTypes = {}

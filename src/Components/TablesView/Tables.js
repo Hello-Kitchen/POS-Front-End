@@ -2,6 +2,10 @@ import React from "react";
 
 import CustomImage from "./CustomImage";
 
+/**
+ * Tables component rendering the available draggable tables in the table footer.
+ * @returns {JSX.Element} The rendered Tables component.
+ */
 export default function Tables() {
 
     return (

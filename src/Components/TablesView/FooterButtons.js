@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 
 import CustomImage from "./CustomImage";
 
+/**
+ * FooterButton component renderinga generic table page footer button. It's given type changes the behaviour of the button.
+ *
+ * @param {string} url - the url of the button image from the public local storage.
+ * @param {string} type - the type of the button (ex: "Fuse", "Sep", "Edit"...)
+ * @param {string} activeButton - the current active button type of the footer. Only a signle button can be active.
+ * @param {function} setActiveButton - use state function used to change the current active button.
+ * @returns {JSX.Element} The rendered FooterButton component.
+ */
 export default function FooterButton({url, type, activeButton, setActiveButton}) {
 
     const [isActive, setIsActive] = useState(false);
@@ -16,6 +25,7 @@ export default function FooterButton({url, type, activeButton, setActiveButton})
         }
     };
 
+    //if the activeButton variable is updated, changes the state (boolean and background color) of all the buttons.
     useEffect(() => {
         if (activeButton === type) {
             setIsActive(true)
@@ -25,8 +35,6 @@ export default function FooterButton({url, type, activeButton, setActiveButton})
             setBackground("bg-kitchen-blue")
         }
     }, [type, activeButton, isActive]);
-
-    console.log(isActive ? `./icon-drag/active-${url}` : `./icon-drag/${url}`)
 
     return (
         <div id={type} className={`${background} flex-1 h-full w-full flex flex-col justify-center items-center col-span-1 shadow-button`}>
