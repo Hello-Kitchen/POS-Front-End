@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import LayoutHeader from "../Components/LayoutHeader/LayoutHeader";
 import CurrentCommand from "../Components/CurrentCommand/CurrentCommand";
 import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
+import TablesView from "../Components/TablesView/TablesView";
 import OrdersView from "../Components/OrdersView/OrdersView";
 
 /**
@@ -138,6 +139,9 @@ const Layout = ({
               setOrderDetails,
             }}
           />
+        )}
+        {activeTab === "TABLES" && (
+          <TablesView />
         )}
         {activeTab === "COMMANDES" && (
           <OrdersView orderSelect={setSelectedOrder} />
