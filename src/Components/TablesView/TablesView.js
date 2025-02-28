@@ -44,7 +44,7 @@ export default function TablesView() {
 
     const doesOverlap = (x, y, board) => {
         let check = false
-        board.map((table) => {
+        board.forEach((table) => {
             if (x < table.left + table.w && x + table.w > table.left && y < table.top + table.h && y + table.h > table.top) {
                 check = true
             }
@@ -84,7 +84,7 @@ export default function TablesView() {
 
     const boardElem = board.map((table) => (
         <DroppableTable key={table.id} table={table} inEdit={inEdit} />
-    ))
+    ));
 
     return (
         <div className="h-full grid grid-flow-row grid-rows-10">
