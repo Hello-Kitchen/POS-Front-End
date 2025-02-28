@@ -82,16 +82,14 @@ export default function TablesView() {
       useEffect(() => {
     }, [board]);
 
+    const boardElem = board.map((table) => (
+        <DroppableTable key={table.id} table={table} inEdit={inEdit} />
+    ))
+
     return (
         <div className="h-full grid grid-flow-row grid-rows-10">
             <div id="drop-area" ref={drop} className="row-span-9">
-                {board.map((table) => (
-                    <DroppableTable
-                        key={table.id}
-                        table={table}
-                        inEdit={inEdit}
-                    />
-                ))}
+                {boardElem}
             </div>
             <TablesFooter setInEdit={setInEdit} />
         </div>
