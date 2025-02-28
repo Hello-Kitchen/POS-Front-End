@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 import FooterButton from "./FooterButtons";
 import Tables from "./Tables";
 
 /**
  * TablesFooter component rendering the table pages footer buttons.
+ * @param {function} setInEdit - useState functions used to change the behaviour of tables.
  * @returns {JSX.Element} The rendered TablesFooter component.
  */
-export default function TablesFooter() {
+function TablesFooter({setInEdit}) {
 
     const [activeButton, setActiveButton] = useState("None");
+
+    useEffect(() => {
+        if (activeButton === "Edit") {
+            setInEdit(true)
+        } else {
+            setInEdit(false)
+        }
+    }, [activeButton, setInEdit]);
 
     return (
         <div className="row-span-1 bg-kitchen-blue shadow-button grid grid-flow-col grid-cols-12">
@@ -39,3 +49,9 @@ export default function TablesFooter() {
         </div>
     );
 }
+
+TablesFooter.propTypes = {
+    setInEdit: PropTypes.func.isRequired
+}
+
+export default TablesFooter;

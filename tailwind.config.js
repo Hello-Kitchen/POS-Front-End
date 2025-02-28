@@ -52,6 +52,7 @@ module.exports = {
         'kitchen-orange': '#F2762E',
         'kitchen-red': '#D91604',
         'kitchen-beige': '#D98282',
+        'kitchen-green': '#8DED74',
         'kitchen-food-detail': '#4958A6',
         'kitchen-food-detail-selected': '#FF9900',
         'kitchen-food-ingredient-green': '#2FE900',

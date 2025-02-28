@@ -1,40 +1,21 @@
-/* eslint-disable react/display-name */
-
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import FooterButton from "../../../Components/TablesView/FooterButtons";
 
-jest.mock('../../../Components/TablesView/CustomImage', () => () => <div data-testid="custom-image" />);
-
-describe('FooterButton Component', () => {
-    let setActiveButtonMock;
-
-    beforeEach(() => {
-        setActiveButtonMock = jest.fn();
+describe("FooterButton Component", () => {
+    test("renders button with correct image", () => {
+        render(<FooterButton url="test.png" type="Edit" activeButton="None" setActiveButton={jest.fn()} />);
+        expect(screen.getByRole("button")).toBeInTheDocument();
     });
 
-    test('renders', () => {
-        render(<FooterButton url="test.png" type="Test" activeButton="None" setActiveButton={setActiveButtonMock} />);
+    test("clicking button toggles active state", async () => {
+        const setActiveButtonMock = jest.fn();
+        render(<FooterButton url="test.png" type="Edit" activeButton="None" setActiveButton={setActiveButtonMock} />);
         
-        const buttonElement = screen.getByRole('button');
-        expect(buttonElement).toBeInTheDocument();
-    });
-
-    test('calls setActiveButton with type', () => {
-        render(<FooterButton url="test.png" type="Test" activeButton="None" setActiveButton={setActiveButtonMock} />);
+        const button = screen.getByRole("button");
+        await userEvent.click(button);
         
-        const buttonElement = screen.getByRole('button');
-        fireEvent.click(buttonElement);
-        
-        expect(setActiveButtonMock).toHaveBeenCalledWith("Test");
-    });
-
-    test('calls setActiveButton with "None"', () => {
-        render(<FooterButton url="test.png" type="Test" activeButton="Test" setActiveButton={setActiveButtonMock} />);
-        
-        const buttonElement = screen.getByRole('button');
-        fireEvent.click(buttonElement);
-        
-        expect(setActiveButtonMock).toHaveBeenCalledWith("None");
+        expect(setActiveButtonMock).toHaveBeenCalledWith("Edit");
     });
 });

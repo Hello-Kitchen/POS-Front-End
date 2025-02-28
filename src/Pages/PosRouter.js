@@ -7,6 +7,8 @@ import Dashboard from './Dashboard/Dashboard';
 import Pay from './Pay/Pay';
 import Layout from './Layout';
 
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 // Initial data for the orders
 // TMP : To be replaced when the 'New order' button is implemented
@@ -48,16 +50,18 @@ function PosRouter() {
 
   if (ready) {
     return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/loading" element={<Loading />} />
-          <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}>
-            <Route index element={<Dashboard setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />} />
-            <Route path="/dashboard/pay" element={<Pay />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <DndProvider backend={HTML5Backend}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/loading" element={<Loading />} />
+            <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}>
+              <Route index element={<Dashboard setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />} />
+              <Route path="/dashboard/pay" element={<Pay />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </DndProvider>
     );
   }
 }
