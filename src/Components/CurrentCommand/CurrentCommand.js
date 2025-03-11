@@ -190,7 +190,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         const newOrders = [...orders];
         const index = newOrders[1].findIndex(item => item.stop === true);
         if (index !== -1) {
-            fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${process.env.REACT_APP_NBR_RESTAURANT}/orders/next/${config.id_order}`, {
+            fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/next/${config.id_order}`, {
                 method: 'PUT',
                 headers: {Authorization: `Bearer ${localStorage.getItem("token")}` },
             })
