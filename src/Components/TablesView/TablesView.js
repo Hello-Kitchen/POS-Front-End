@@ -62,17 +62,17 @@ export default function TablesView() {
 
     const addTable = (type, left, top, containerRect) => {
         setBoard((prevBoard) => {
-            if (doesOverlap(left, top, prevBoard)) {
-                return prevBoard;
-            }    
             const table = TableList.find((table) => table.type === type);
-            if (outOfBounds(left, top, table, containerRect)) {
-                return prevBoard;
-            }
-            const id = prevBoard.length
             if (table) {
                 left = left - (table.w / 4);
                 top = top - (table.h / 4);
+                if (doesOverlap(left, top, prevBoard)) {
+                    return prevBoard;
+                }
+                if (outOfBounds(left, top, table, containerRect)) {
+                    return prevBoard;
+                }
+                const id = prevBoard.length
                 return [...prevBoard, { ...table, id, left, top }];
             }
             return prevBoard;
