@@ -34,7 +34,7 @@ export default function FooterButton({url, type, activeButton, setActiveButton})
             setIsActive(false)
             setBackground("bg-kitchen-blue")
         }
-    }, [type, activeButton, isActive]);
+    }, [type, activeButton]);
 
     return (
         <div id={type} className={`${background} flex-1 h-full w-full flex flex-col justify-center items-center col-span-1 shadow-button`}>
