@@ -1,10 +1,11 @@
+/* eslint-disable */
+
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ManagerView from "../Pages/Manager/ManagerView";
-import MenuListLine from "../Components/MenuListLine/MenuListLine";
 
 // Mock the MenuListLine component
-jest.mock("../../Components/MenuListLine/MenuListLine", () => ({ title, onClick }) => (
+jest.mock("../Components/MenuListLine/MenuListLine", () => ({ title, onClick }) => (
     <div data-testid="menu-list-line" onClick={onClick}>
         {title}
     </div>

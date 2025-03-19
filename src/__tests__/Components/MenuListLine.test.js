@@ -1,7 +1,8 @@
+/* eslint-disable */
+
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import MenuListLine from '../../Components/MenuListLine/MenuListLine';
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 
 describe('MenuListLine Component', () => {
     it('renders the title correctly', () => {
