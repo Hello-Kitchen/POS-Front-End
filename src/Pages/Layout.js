@@ -7,6 +7,7 @@ import CurrentCommand from "../Components/CurrentCommand/CurrentCommand";
 import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
 import TablesView from "../Components/TablesView/TablesView";
 import OrdersView from "../Components/OrdersView/OrdersView";
+import ManagerView from "./Manager/ManagerView";
 
 /**
  * Component : Main Layout of the POS Application, Main Component.
@@ -145,6 +146,9 @@ const Layout = ({
         )}
         {activeTab === "COMMANDES" && (
           <OrdersView orderSelect={setSelectedOrder} />
+        )}
+        {activeTab === "GESTION" && (
+          <ManagerView />
         )}
       </div>
       <LayoutFooter
