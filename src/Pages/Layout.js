@@ -113,7 +113,7 @@ const Layout = ({
 
   return (
     <div className="column w-full h-full">
-      <LayoutHeader textLeft="05 - Francois Dupont" textCenter="Caisse 1" />
+      <LayoutHeader textCenter="Caisse 1" />
       <div className="w-full h-4/5">
         <CurrentCommand
           orders={orders}

@@ -44,6 +44,7 @@ const Login = () => {
                 if (data.access_token) {
                     localStorage.setItem('restaurantID', restaurantID);
                     localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('userInfo', JSON.stringify({ id: data.id.toString().padStart(3, '0'), firstname: data.firstname, lastname: data.lastname }));
                     navigate('/loading');
                 }
             })
