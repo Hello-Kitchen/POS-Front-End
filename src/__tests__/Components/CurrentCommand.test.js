@@ -23,9 +23,11 @@ describe('CurrentCommand', () => {
             {
                 food: 2,
                 name: "Burger Miam",
-                price: '17.99',
+                price: 17.99,
                 details: ['Frites'],
-                mods_ingredients: [{type: 'ADD', ingredient: 'Fromage'}],
+                mods_ingredients: ['ADD Fromage'],
+                number: 1,
+                category: 1,
                 stop: false
             },
         ],
@@ -62,6 +64,78 @@ describe('CurrentCommand', () => {
         const sendButton = screen.getByText('Envoyer');
         expect(stopButton).toBeInTheDocument();
         expect(sendButton).toBeInTheDocument();
+    });
+
+    test('displays edit buttons', () => {
+        render(
+            <CurrentCommand
+                orders={orders}
+                config={config}
+                setConfig={mockSetConfig}
+                setOrders={mockSetOrders}
+                price={price}
+                priceLess={priceLess}
+                payList={payList}
+            />
+        );
+        const foodName = screen.getByText('1x Burger Miam');
+        fireEvent.click(foodName);
+
+        expect(screen.getByText('Modifier')).toBeInTheDocument();
+        expect(screen.getByText('+')).toBeInTheDocument();
+        expect(screen.getByText('-')).toBeInTheDocument();
+    });
+
+    test('increments quantity', () => {
+        render(
+            <CurrentCommand
+                orders={orders}
+                config={config}
+                setConfig={mockSetConfig}
+                setOrders={mockSetOrders}
+                price={price}
+                priceLess={priceLess}
+                payList={payList}
+            />
+        );
+        fireEvent.click(screen.getByText('1x Burger Miam'));
+        fireEvent.click(screen.getByText('+'));
+        expect(mockSetOrders).toHaveBeenCalledTimes(1);
+    });
+
+    test('decrements quantity', () => {
+        render(
+            <CurrentCommand
+                orders={orders}
+                config={config}
+                setConfig={mockSetConfig}
+                setOrders={mockSetOrders}
+                price={price}
+                priceLess={priceLess}
+                payList={payList}
+            />
+        );
+
+        fireEvent.click(screen.getByText('1x Burger Miam'));
+        fireEvent.click(screen.getByText('-'));
+        expect(mockSetOrders).toHaveBeenCalledTimes(2);
+    });
+
+    test('opens modification', () => {
+        render(
+            <CurrentCommand
+                orders={orders}
+                config={config}
+                setConfig={mockSetConfig}
+                setOrders={mockSetOrders}
+                price={price}
+                priceLess={priceLess}
+                payList={payList}
+            />
+        );
+        fireEvent.click(screen.getByText('1x Burger Miam'));
+        fireEvent.click(screen.getByText('Modifier'));
+        expect(screen.getByText('Modifier')).toBeInTheDocument();
     });
 
     test('call `sendFirstOrder`', async () => {

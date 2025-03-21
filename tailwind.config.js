@@ -61,6 +61,7 @@ module.exports = {
         'kitchen-food-ingredient-red-selected': '#F5AFAF',
         'kitchen-button-red': '#D91604',
         'kitchen-button-green': '#2FE900',
+        'kitchen-button-darkgreen': '#62B73A',
         'kitchen-button-orange': '#FF9900',
         'category-red': '#D91604',
         'category-purple': '#C442C7',

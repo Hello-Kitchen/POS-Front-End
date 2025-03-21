@@ -21,6 +21,8 @@ function FoodList({
   setOrderDetails,
   selectedFood,
   setSelectedFood,
+  inEdit,
+  setInEdit,
 }) {
   const [modifModale, setModifModale] = useState(false);
 
@@ -72,13 +74,13 @@ function FoodList({
         )}
       </div>
       <FoodFooter
-        id={selectedFood.id}
-        name={selectedFood.name}
-        price={selectedFood.price}
+        food={selectedFood}
         setOrders={setOrders}
         orderDetails={orderDetails}
         setOrderDetails={setOrderDetails}
         closeDetail={closeDetail}
+        inEdit={inEdit}
+        setInEdit={setInEdit}
       />
     </div>
   );
@@ -92,6 +94,8 @@ FoodList.propTypes = {
   setOrderDetails: PropTypes.func.isRequired,
   selectedFood: PropTypes.object.isRequired,
   setSelectedFood: PropTypes.func.isRequired,
+  inEdit: PropTypes.bool.isRequired,
+  setInEdit: PropTypes.func.isRequired,
 };
 
 export default FoodList;

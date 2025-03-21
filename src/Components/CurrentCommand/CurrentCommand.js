@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { GoArrowRight } from "react-icons/go";
@@ -8,12 +8,20 @@ const Header = ({ orders }) => (
     <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders[0].nb}`}</div>
 )
 
-const Food = ({ name, price }) => (
-    <div className='w-full flex flex-row justify-between'>
-        <div className='flex text-24px text-white font-light'>1x {name}</div>
-        <div className='flex text-24px justify-end text-white font-light'>{price}€</div>
-    </div>
-)
+function Food ({ name, price, quantity, edit, setEdit }) {
+    const handleOrderEdit = () => {
+        if (edit === false)
+            setEdit(true);
+        else
+            setEdit(false);
+    };
+    return (
+        <div onClick={() => handleOrderEdit()} className='w-full flex flex-row justify-between'>
+            <div className='flex text-24px text-white font-light'>{quantity}x {name}</div>
+            <div className='flex text-24px justify-end text-white font-light'>{price}€</div>
+        </div>
+    )
+}
 
 const Detail = ({ text }) => (
     <div className="w-full flex flex-row gap-2 pl-3 items-center">
@@ -42,6 +50,53 @@ const Stop = () => (
     </div>
 )
 
+function Edit({order, setOrders}) {
+
+    const addOrderQuantity = () => {
+        setOrders((prevOrders) => {
+            return prevOrders.map((item, index) => {
+                if (index === 1) {
+                    return item.map((obj) =>
+                        obj === order ? {...obj, number: obj.number + 1} : obj
+                    );
+                }
+                return item;
+            })
+        })
+    };
+    const delOrderQuantity = () => {
+        setOrders((prevOrders) => {
+            return prevOrders.map((item, index) => {
+                if (index === 1) {
+                    return item.map((obj) =>
+                        obj === order ? {...obj, number: obj.number - 1} : obj
+                    ).filter((obj) => obj.number > 0);
+                }
+                return item;
+            });
+        });
+    };
+
+    const modifyFoodOrder = () => {
+        setOrders((prevOrders) => {
+            if (prevOrders.length >= 5) {
+                return prevOrders.map((item, index) =>
+                    index === 4 ? { ...order } : item
+                );
+            }
+            return [...prevOrders, { ...order }];
+        });
+    };
+
+    return (
+        <div className='w-full h-10 pl-1 mt-2 flex flex-row justify-center self-center items-center bg-white rounded-lg'>
+            <button onClick={() => addOrderQuantity()} className='text-2xl font-semibold text-white w-1/5 h-5/6 mr-1 bg-kitchen-button-darkgreen rounded-l-md'>+</button>
+            <button onClick={() => delOrderQuantity()} className='text-2xl font-semibold text-white w-1/5 h-5/6 bg-kitchen-button-red'>-</button>
+            <button onClick={() => modifyFoodOrder()} className='text-2xl font-semibold text-kitchen-blue w-3/5 h-5/6 bg-white'>Modifier</button>
+        </div>
+    )
+}
+
 /**
  * Component : Component used by the Content component. Displays the content of the related order
  *
@@ -49,10 +104,16 @@ const Stop = () => (
  * @param {Object} orders current order
  * @param {Boolean} border boolean used to separate orders
  * @param {Object} config state of the current order
+ * @param {function} setOrders state function used to update the current order when the food is added
  */
-const Order = ({ order, border, config }) => (
+
+function Order({ order, border, config, setOrders }) {
+    
+    const [edit, setEdit] = useState(false)
+    
+    return (
     <div className={`w-full h-auto p-2 ${border ? 'border-t border-t-kitchen-yellow' : ''}`}>
-        {order.name && order.price && <Food name={order.name} price={order.price} />}
+        {order.name && order.price && order.number && <Food name={order.name} price={order.price} quantity={order.number} edit={edit} setEdit={setEdit} />}
         {order.details && order.details.map((detail, index) => (
             <Detail key={index} text={detail} />
         ))}
@@ -61,8 +122,10 @@ const Order = ({ order, border, config }) => (
         ))}
         {order.note && <Note text={order.note} />}
         {!config.payement && order.stop && <Stop />}
+        {edit && <Edit order={order} setOrders={setOrders} />}
     </div>
-)
+    )
+}
 
 /**
  * Component : Component used by the CurrentCommand. Displays the content of the current orders
@@ -71,27 +134,28 @@ const Order = ({ order, border, config }) => (
  * @param {[Object]} orders arrays of current order
  * @param {Boolean} stop boolean used to know if the order has a stop
  * @param {Object} config state of the current order
+ * @param {Function} setOrders state function to update the current orders
  */
-const Content = ({ orders, stop, config }) => (
+const Content = ({ orders, stop, config, setOrders }) => (
     <div className={!config.payement ? 'w-full flex flex-col overflow-auto scrollbar-hide' : 'w-full min-h-[h-current-cmd-content] flex flex-col overflow-auto scrollbar-hide border-b-4 border-kitchen-yellow box-border border-solid'}>
         {
             orders[1].map((order, index) => {
                 if (index === 0) {
-                    return <Order key={index} order={order} border={false} config={config} />
+                    return <Order key={index} order={order} border={false} config={config} setOrders={setOrders} />
                 }
                 if (!config.payement && order.stop === true) {
                     stop = true;
-                    return <Order key={index} order={order} border={false} config={config} />
+                    return <Order key={index} order={order} border={false} config={config} setOrders={setOrders} />
                 }
                 if (config.payement && order.stop === true)
                     return null
                 if (!config.payement && stop === true) {
                     stop = false;
-                    return <Order key={index} order={order} border={false} config={config} />
+                    return <Order key={index} order={order} border={false} config={config} setOrders={setOrders} />
                 }
                 else {
                     stop = false;
-                    return <Order key={index} order={order} border={true} config={config} />
+                    return <Order key={index} order={order} border={true} config={config} setOrders={setOrders} />
                 }
             })}
     </div>
@@ -120,21 +184,25 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         const orderedFood = [];
 
         const promises = orders[1].map(async (order) => {
-            if (order.stop) {
-                stopCounter++;
-                return;
-            }
-            let newObj = Object.keys(order).reduce((acc, key) => {
-                if (key !== "name" && key !== "price") {
-                    acc[key] = order[key];
+            const number = order.number;
+            delete order.number;
+            delete order.category;
+            for (let i = 0; i !== number; i++) {
+                if (order.stop) {
+                    stopCounter++;
+                    return;
                 }
-                return acc;
-            }, {});
-            newObj['part'] = stopCounter;
-            newObj['is_ready'] = false;
-            orderedFood.push(newObj);
+                let newObj = Object.keys(order).reduce((acc, key) => {
+                    if (key !== "name" && key !== "price") {
+                        acc[key] = order[key];
+                    }
+                    return acc;
+                }, {});
+                newObj['part'] = stopCounter;
+                newObj['is_ready'] = false;
+                orderedFood.push(newObj);
+            }
         });
-
         await Promise.all(promises);
 
         let obj = {
@@ -145,8 +213,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             food_ordered: orderedFood,
             served: false,
         };
-
-        console.log(orders);
 
         let data = {};
 
@@ -272,7 +338,10 @@ Header.propTypes = {
 
 Food.propTypes = {
     name: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    edit: PropTypes.bool.isRequired,
+    setEdit: PropTypes.func.isRequired,
 }
 
 Detail.propTypes = {
@@ -287,10 +356,16 @@ Note.propTypes = {
     text: PropTypes.string.isRequired,
 }
 
+Edit.propTypes = {
+    order: PropTypes.object.isRequired,
+    setOrders: PropTypes.func.isRequired,
+}
+
 Order.propTypes = {
     order: PropTypes.object.isRequired,
     border: PropTypes.bool.isRequired,
     config: PropTypes.object.isRequired,
+    setOrders: PropTypes.func.isRequired,
 }
 
 Content.propTypes = {
