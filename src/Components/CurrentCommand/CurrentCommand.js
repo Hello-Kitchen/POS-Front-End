@@ -182,7 +182,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 console.log(error);
             });
         }
-        console.log(data)
         setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.id }));
     }
 
