@@ -56,7 +56,7 @@ function PosRouter() {
             <Route path="/" element={<Login />} />
             <Route path="/loading" element={<Loading />} />
             <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}>
-              <Route index element={<Dashboard setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />} />
+              <Route index element={<Dashboard orders={orders} setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />} />
               <Route path="/dashboard/pay" element={<Pay />} />
             </Route>
           </Routes>

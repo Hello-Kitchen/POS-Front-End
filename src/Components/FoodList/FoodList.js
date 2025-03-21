@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 
@@ -12,18 +12,57 @@ import FoodListHeader from "./FoodListHeader";
  * @component CategoryList
  * @param {Array} foods list of all food of a category
  * @param {String} color color code of the category
+ * @param {[Object]} orders current order
  * @param {function} setOrders state function used to update the current order when the food is added
  * @param {Object} orderDetails Object used to persist detail and ingredient choices of a current food
  * @param {function} setOrderDetails state function to update the orderDetails object
  * @param {String} name name of the category
  * @param {function} onBackClick function to go back to the previous
  */
-function FoodList({ foods, color, setOrders, orderDetails, setOrderDetails, name, onBackClick }) {
+function FoodList({ foods, color, orders, setOrders, orderDetails, setOrderDetails, name, onBackClick }) {
   const [selectedFood, setSelectedFood] = useState();
+  const [inEdit, setInEdit] = useState(false);
 
   const handleFoodClick = (food) => {
     setSelectedFood(foods.find((f) => f.id === food));
   };
+
+  const transformOrder = (order, categoryDetails) => {
+    const modTypeMap = {
+        ADD: "Supplément",
+        DEL: "Retirer",
+        ALL: "Allergie",
+    };
+
+    let detailsTemp = []
+    categoryDetails.forEach((category) => {
+      const selectedDetails = order.details.filter(detail => category.data.includes(detail));
+      if (selectedDetails.length > 0) {
+        detailsTemp.push({name: category.name, list: selectedDetails})
+      }
+    })
+    return {
+        details: detailsTemp,
+        sups: [...order.mods_ingredients.map((mod) => `${modTypeMap[mod.type] || mod.type} ${mod.ingredient}`),
+            ...(order.note ? [order.note] : []),
+        ],
+    };
+  };
+
+  useEffect(() => {
+    if (orders.length > 4) {
+      console.log("Par hasard, je reviens ici ?")
+      const baseFood = foods.find((food) => food.id === orders[4].food);
+      if (baseFood) {
+        setSelectedFood(baseFood)
+        setOrderDetails(transformOrder(orders[4], baseFood.details))
+        setInEdit(true)
+      }
+    } else {
+      setSelectedFood(null)
+      setInEdit(false)
+    }
+  }, [orders, foods, setOrderDetails]);
 
   //maps all food of a category
   const foodButtons = foods.map((food) => (
@@ -62,6 +101,8 @@ function FoodList({ foods, color, setOrders, orderDetails, setOrderDetails, name
               setOrderDetails={setOrderDetails}
               selectedFood={selectedFood}
               setSelectedFood={setSelectedFood}
+              inEdit={inEdit}
+              setInEdit={setInEdit}
             />
           </div>
         </div>
@@ -73,6 +114,7 @@ function FoodList({ foods, color, setOrders, orderDetails, setOrderDetails, name
 FoodList.propTypes = {
   foods: PropTypes.array.isRequired,
   color: PropTypes.string.isRequired,
+  orders: PropTypes.array.isRequired,
   setOrders: PropTypes.func.isRequired,
   orderDetails: PropTypes.object.isRequired,
   setOrderDetails: PropTypes.func.isRequired,
