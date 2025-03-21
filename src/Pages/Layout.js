@@ -160,6 +160,7 @@ const Layout = ({
         setOrders={setOrders}
         activeTab={activeTab}
         updateActiveTab={updateActiveTab}
+        setSelectedOrder={setSelectedOrder}
       />
     </div>
   );
