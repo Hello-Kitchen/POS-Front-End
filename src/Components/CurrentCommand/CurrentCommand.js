@@ -125,9 +125,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 return;
             }
             let newObj = Object.keys(order).reduce((acc, key) => {
-                if (key !== "name" && key !== "price") {
+                if (key !== "name")
                     acc[key] = order[key];
-                }
                 return acc;
             }, {});
             newObj['part'] = stopCounter;
