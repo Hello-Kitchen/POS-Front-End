@@ -66,21 +66,9 @@ export default function OrdersView({ orderSelect }) {
             chronoString = String(minutes).padStart(2, "0") + "m";
           }
 
-          switch (order.channel) {
-            case "Sur place":
-                channel = "Table " + order.number;
-                break;
-            case "A emporter":
-                channel = "N°" + order.number;
-                break;
-            default:
-                channel = order.number;
-                break;
-          }
-
           return {
             id: order.id,
-            number: channel, 
+            number: order.number, 
             channel: order.channel,
             time: String(time.getHours()).padStart(2, "0") + "h" + String(time.getMinutes()).padStart(2, "0"),
             chrono: chronoString,

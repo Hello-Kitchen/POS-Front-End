@@ -14,7 +14,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 // TMP : To be replaced when the 'New order' button is implemented
 let data =
   [
-    { nb: '42' },
+    { nb: 'Table 42' },
     [
     ],
     { channel: "Sur place" },

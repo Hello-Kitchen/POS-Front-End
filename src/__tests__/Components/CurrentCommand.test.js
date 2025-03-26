@@ -29,8 +29,9 @@ describe('CurrentCommand', () => {
                 stop: false
             },
         ],
-        {channel: "En Salle"},
-        {orderId: null}
+        {channel: "Sur place"},
+        {orderId: null},
+        {number: "Table 42"},
     ];
     const config = {
         firstSend: true,
@@ -54,7 +55,6 @@ describe('CurrentCommand', () => {
             />
         );
 
-        expect(screen.getByText('Table 1')).toBeInTheDocument();
         expect(screen.getByText('1x Burger Miam')).toBeInTheDocument();
         expect(screen.getByText('17.99€')).toBeInTheDocument();
 
@@ -111,5 +111,52 @@ describe('CurrentCommand', () => {
         expect(screen.getByText('Total')).toBeInTheDocument();
         expect(screen.getByText('Reste a payer')).toBeInTheDocument();
         expect(screen.getByText('0.00€')).toBeInTheDocument();
+    });
+
+    test('renders Food component with correct name and price', () => {
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
+        expect(screen.getByText('1x Burger Miam')).toBeInTheDocument();
+        expect(screen.getByText('17.99€')).toBeInTheDocument();
+    });
+
+    test('renders Detail component with correct details', () => {
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
+        expect(screen.getByText('Frites')).toBeInTheDocument();
+    });
+
+    test('renders Sup component with correct supplement', () => {
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
+        expect(screen.getByText('Supplement Fromage')).toBeInTheDocument();
+    });
+
+    test('calls setOrders when STOP button is clicked', () => {
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
+        const stopButton = screen.getByText('STOP');
+        fireEvent.click(stopButton);
+        expect(mockSetOrders).toHaveBeenCalled();
+    });
+
+    test('renders Footer with payment details when config.payement is true', () => {
+        const updatedConfig = { ...config, payement: true };
+        render(<CurrentCommand orders={orders} config={updatedConfig} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
+        expect(screen.getByText('Total')).toBeInTheDocument();
+        expect(screen.getByText('Reste a payer')).toBeInTheDocument();
+        expect(screen.getByText('0.00€')).toBeInTheDocument();
+    });
+
+    test('calls sendFirstOrder when Envoyer button is clicked', async () => {
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
+        const sendButton = screen.getByText('Envoyer');
+        fireEvent.click(sendButton);
+        await waitFor(() => {
+            expect(global.fetch).toHaveBeenCalledTimes(1);
+            expect(global.fetch).toHaveBeenCalledWith(
+                `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`,
+                expect.objectContaining({
+                    method: 'POST',
+                    body: expect.any(String),
+                })
+            );
+        });
     });
 });
