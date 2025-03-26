@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import ButtonSet from '../FooterButton/FooterButton';
 import PropTypes from 'prop-types';
+import ModalNewOrder from './ModalNewOrder';
 
 const NewTicket = () => (
     <div className='w-full h-full bg-kitchen-blue flex flex-col justify-center items-center'>
@@ -33,14 +34,15 @@ const NewTicket = () => (
  */
 function Footer({ buttons, price, config, setConfig, priceLess, setOrders, activeTab, updateActiveTab, setSelectedOrder }) {
     const navigate = useNavigate();
+    const [isModalOpen, setModalOpen] = useState(false);
 
     return (
-        <div className='w-full h-lf flex flex-row'>
+        <div className=' relative w-full h-lf flex flex-row'>
             <div className='w-3/4 h-full bg-kitchen-yellow flex flex-row gap-0.5'>
                 <div className='w-full bg-kitchen-yellow flex flex-row justify-between'>
                     <ButtonSet buttons={buttons} activeTab={activeTab} updateActiveTab={updateActiveTab} />
                 </div>
-                <div data-testid="new-ticket" className='w-1/10 h-full bg-kitchen-yellow flex cursor-pointer' onClick={() => {setOrders([{nb: "42"}, [], {channel: "En salle"}, {orderId: null}]);setConfig({payement: false, firstSend: true, id_order: null}); setSelectedOrder("")}}>
+                <div data-testid="new-ticket" className='w-1/10 h-full bg-kitchen-yellow flex cursor-pointer' onClick={() => {setModalOpen(!isModalOpen)}}>
                     <NewTicket />
                 </div>
             </div>
@@ -57,6 +59,7 @@ function Footer({ buttons, price, config, setConfig, priceLess, setOrders, activ
                     </div>
                 </div>
             )}
+            {isModalOpen && (<ModalNewOrder setModalOpen={setModalOpen} setConfig={setConfig} setOrders={setOrders} setSelectedOrder={setSelectedOrder}></ModalNewOrder>)}
         </div>
     );
 }
