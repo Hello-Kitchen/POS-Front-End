@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { GoArrowRight } from "react-icons/go";
@@ -127,6 +127,64 @@ function Order({ order, border, config, setOrders }) {
     )
 }
 
+function mergeAllDuplicatesBetweenStops(items) {
+    const result = [];
+    let currentGroup = [];
+    
+    for (const item of items) {
+      if (item.stop) {
+        // Traiter le groupe complet entre les stops
+        if (currentGroup.length > 0) {
+          result.push(...mergeAllDuplicatesInGroup(currentGroup));
+        }
+        // Ajouter le stop au résultat
+        result.push(item);
+        // Réinitialiser le groupe
+        currentGroup = [];
+      } else {
+        // Ajouter à l'ensemble actuel
+        currentGroup.push(item);
+      }
+    }
+    
+    // Traiter le dernier groupe s'il reste des éléments
+    if (currentGroup.length > 0) {
+      result.push(...mergeAllDuplicatesInGroup(currentGroup));
+    }
+    
+    return result;
+  }
+  
+  function mergeAllDuplicatesInGroup(group) {
+    const itemMap = new Map();
+    
+    for (const item of group) {
+      const key = createItemKey(item);
+      
+      if (itemMap.has(key)) {
+        // Fusionner avec l'élément existant
+        const existing = itemMap.get(key);
+        existing.number += item.number; // Somme les quantités
+      } else {
+        // Ajouter comme nouvel élément (cloné pour éviter les références)
+        itemMap.set(key, {...item});
+      }
+    }
+    
+    return Array.from(itemMap.values());
+  }
+  
+  function createItemKey(item) {
+    return JSON.stringify({
+      food: item.food,
+      name: item.name,
+      price: item.price,
+      details: item.details.sort(), // Tri pour l'ordre des détails
+      mods_ingredients: item.mods_ingredients.sort(),
+      category: item.category
+    });
+}
+
 /**
  * Component : Component used by the CurrentCommand. Displays the content of the current orders
  *
@@ -139,7 +197,7 @@ function Order({ order, border, config, setOrders }) {
 const Content = ({ orders, stop, config, setOrders }) => (
     <div className={!config.payement ? 'w-full flex flex-col overflow-auto scrollbar-hide' : 'w-full min-h-[h-current-cmd-content] flex flex-col overflow-auto scrollbar-hide border-b-4 border-kitchen-yellow box-border border-solid'}>
         {
-            orders[1].map((order, index) => {
+            mergeAllDuplicatesBetweenStops(orders[1]).map((order, index) => {
                 if (index === 0) {
                     return <Order key={index} order={order} border={false} config={config} setOrders={setOrders} />
                 }
