@@ -55,7 +55,6 @@ export default function OrdersView({ orderSelect }) {
           const time = new Date(order.date);
           const chronoMs = Date.now() - time.getTime();
           let chronoString = "";
-          let channel = '';
       
           const hours = Math.floor(chronoMs / (1000 * 60 * 60));
           const minutes = Math.floor((chronoMs % (1000 * 60 * 60)) / (1000 * 60));
