@@ -259,12 +259,12 @@ function IngredientManagement({ setAlert }) {
                 icon={<SaveIcon />}
                 label="Sauvegarder"
                 onClick={handleSaveClick(id)}
-              />,
+              />
               <GridActionsCellItem
                 icon={<CancelIcon />}
                 label="Annuler"
                 onClick={handleCancelClick(id)}
-              />,
+              />
             </div>
           ];
         }
@@ -274,12 +274,12 @@ function IngredientManagement({ setAlert }) {
               icon={<EditIcon />}
               label="Éditer"
               onClick={handleEditClick(id)}
-            />,
+            />
             <GridActionsCellItem
               icon={<DeleteIcon />}
               label="Supprimer"
               onClick={handleDeleteClick(id)}
-            />,
+            />
           </div>
         ];
       },
