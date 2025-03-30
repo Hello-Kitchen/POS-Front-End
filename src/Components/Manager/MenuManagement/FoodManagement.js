@@ -124,7 +124,7 @@ function FoodManagement({setAlert}) {
       setFoodLoading(false);
     });
   
-  }, [navigate]);
+  }, [navigate, setAlert]);
 
   useEffect(() => {
     fetchData();

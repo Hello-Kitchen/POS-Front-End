@@ -65,7 +65,7 @@ function DetailManagement({setAlert}) {
           setDetailsLoading(false);
         });
       
-      }, [navigate]);
+      }, [navigate, setAlert]);
     
       useEffect(() => {
         fetchData();

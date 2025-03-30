@@ -35,7 +35,7 @@ function SideViewFood({selectedFood, foodDetails, foodIngredients, foodCategorie
   const sendFood = () => {
     setSendLoading(true);
     fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/food/${newFood.id === -1 ? '' : selectedFood.id}`, {
-      method: selectedFood.id === -1 ? 'POST' : 'PUT',
+      method: newFood.id === -1 ? 'POST' : 'PUT',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem("token")}`,
