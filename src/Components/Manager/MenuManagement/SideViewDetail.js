@@ -125,7 +125,7 @@ function SideViewDetail({ selectedDetail, setAlert, refreshData }) {
                   }}
                 >
                   <MenuItem value="text">Texte</MenuItem>
-                  <MenuItem value="food">Plat</MenuItem>
+                  <MenuItem value="food" disabled>Plat</MenuItem>
                 </Select>
                 <TextField
                   value={detail.name}
