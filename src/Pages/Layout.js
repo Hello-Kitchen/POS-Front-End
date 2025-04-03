@@ -7,12 +7,12 @@ import CurrentCommand from "../Components/CurrentCommand/CurrentCommand";
 import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
 import TablesView from "../Components/TablesView/TablesView";
 import OrdersView from "../Components/OrdersView/OrdersView";
+import ManagerView from "./Manager/ManagerView";
 
 /**
  * Component : Main Layout of the POS Application, Main Component.
  *
  * @component Layout
- * @param {[Object]} orders current order
  * @param {Number} price full price of the current order
  * @param {Object} config state of the current order
  * @param {Function} setConfig state function to update the config of the current order
@@ -23,6 +23,10 @@ import OrdersView from "../Components/OrdersView/OrdersView";
  * @param {Function} setPayList state function to update the payList
  * @param {Object} orderDetails Object of the selected food
  * @param {Function} setOrderDetails state function used to update the selected food
+ * @param {[Object]} orders current order
+ * @param {Function} setOrders state function used to update the current order
+ * @param {[Object]} tableBoard Array Object of the current POS tables
+ * @param {Function} setTableBoard state function used to update the tables board
  */
 const Layout = ({
   price,
@@ -35,7 +39,9 @@ const Layout = ({
   orderDetails,
   setOrderDetails,
   orders,
-  setOrders
+  setOrders,
+  tableBoard,
+  setTableBoard
 }) => {
   const [activeTab, setActiveTab] = useState("");
   const [selectedOrder, setSelectedOrder] = useState("");
@@ -112,17 +118,19 @@ const Layout = ({
 
   return (
     <div className="column w-full h-full">
-      <LayoutHeader textLeft="05 - Francois Dupont" textCenter="Caisse 1" />
+      <LayoutHeader textCenter="Caisse 1" />
       <div className="w-full h-4/5">
-        <CurrentCommand
-          orders={orders}
-          config={config}
-          setConfig={setConfig}
-          setOrders={setOrders}
-          price={price}
-          priceLess={priceLess}
-          payList={payList}
-        />
+        {activeTab !== "TABLES" && (
+          <CurrentCommand
+            orders={orders}
+            config={config}
+            setConfig={setConfig}
+            setOrders={setOrders}
+            price={price}
+            priceLess={priceLess}
+            payList={payList}
+          />
+        )}
         {activeTab === "" && (
           <Outlet
             context={{
@@ -141,10 +149,13 @@ const Layout = ({
           />
         )}
         {activeTab === "TABLES" && (
-          <TablesView />
+          <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} />
         )}
         {activeTab === "COMMANDES" && (
           <OrdersView orderSelect={setSelectedOrder} />
+        )}
+        {activeTab === "GESTION" && (
+          <ManagerView />
         )}
       </div>
       <LayoutFooter
@@ -156,6 +167,7 @@ const Layout = ({
         setOrders={setOrders}
         activeTab={activeTab}
         updateActiveTab={updateActiveTab}
+        setSelectedOrder={setSelectedOrder}
       />
     </div>
   );
@@ -173,6 +185,8 @@ Layout.propTypes = {
   setPriceLess: PropTypes.func.isRequired,
   orderDetails: PropTypes.object.isRequired,
   setOrderDetails: PropTypes.func.isRequired,
+  tableBoard: PropTypes.array.isRequired,
+  setTableBoard: PropTypes.func.isRequired,
 };
 
 export default Layout;

@@ -55,7 +55,6 @@ export default function OrdersView({ orderSelect }) {
           const time = new Date(order.date);
           const chronoMs = Date.now() - time.getTime();
           let chronoString = "";
-          let channel = '';
       
           const hours = Math.floor(chronoMs / (1000 * 60 * 60));
           const minutes = Math.floor((chronoMs % (1000 * 60 * 60)) / (1000 * 60));
@@ -66,21 +65,9 @@ export default function OrdersView({ orderSelect }) {
             chronoString = String(minutes).padStart(2, "0") + "m";
           }
 
-          switch (order.channel) {
-            case "Sur place":
-                channel = "Table " + order.number;
-                break;
-            case "A emporter":
-                channel = "N°" + order.number;
-                break;
-            default:
-                channel = order.number;
-                break;
-          }
-
           return {
             id: order.id,
-            number: channel, 
+            number: order.number, 
             channel: order.channel,
             time: String(time.getHours()).padStart(2, "0") + "h" + String(time.getMinutes()).padStart(2, "0"),
             chrono: chronoString,

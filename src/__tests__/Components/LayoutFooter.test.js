@@ -184,4 +184,34 @@ describe('Footer Component', () => {
 
         expect(setOrders).toHaveBeenCalledWith([{nb: "42"}, [], {id_restaurant: 4}, {channel: "En salle"}]);
     });
+
+    test("Open the modal when new order button is clicked", () => {
+        const mockSetOrders = jest.fn();
+        const mockSetConfig = jest.fn();
+        const mockSetSelectedOrder = jest.fn();
+        const mockButtons = [];
+        const mockUpdateActiveTab = jest.fn();
+        const mockSetModalOpen = jest.fn();
+
+        const { getByTestId } = render(
+            <Footer
+            buttons={mockButtons}
+            price={0}
+            config={{ payement: false, firstSend: true, id_order: null }}
+            setConfig={mockSetConfig}
+            priceLess={0}
+            setOrders={mockSetOrders}
+            activeTab={0}
+            updateActiveTab={mockUpdateActiveTab}
+            setSelectedOrder={mockSetSelectedOrder}
+            setModalOpen={mockSetModalOpen}
+            />
+          );
+      
+          // Find the NewTicket element and click on it
+          const newTicketElement = getByTestId('new-ticket');
+          fireEvent.click(newTicketElement);
+      
+          expect(screen.getByText("DIRECT")).toBeInTheDocument();
+    });
 });

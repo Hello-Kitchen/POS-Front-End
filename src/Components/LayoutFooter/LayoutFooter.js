@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import ButtonSet from '../FooterButton/FooterButton';
 import PropTypes from 'prop-types';
+import ModalNewOrder from './ModalNewOrder';
 
 const NewTicket = () => (
     <div className='w-full h-full bg-kitchen-blue flex flex-col justify-center items-center'>
@@ -29,26 +30,19 @@ const NewTicket = () => (
  * @param {Function} setOrders state function to update the current orders
  * @param {String} activeTab currently active tab
  * @param {Function} updateActiveTab function to update active tab
+ * @param {Function} setSelectedOrder function to update selected order
  */
-function Footer({ buttons, price, config, setConfig, priceLess, setOrders, activeTab, updateActiveTab }) {
+function Footer({ buttons, price, config, setConfig, priceLess, setOrders, activeTab, updateActiveTab, setSelectedOrder }) {
     const navigate = useNavigate();
+    const [isModalOpen, setModalOpen] = useState(false);
 
     return (
-        <div className='w-full h-lf flex flex-row'>
+        <div className=' relative w-full h-lf flex flex-row'>
             <div className='w-3/4 h-full bg-kitchen-yellow flex flex-row gap-0.5'>
-                {/* <div className='w-9/10 h-full bg-kitchen-yellow flex flex-row justify-between gap-0.5'>
-                    {buttons.map(buttonKey => {
-                        const ButtonComponent = Object.prototype.hasOwnProperty.call(buttonComponents, buttonKey) ? buttonComponents[buttonKey] : ButtonEmpty;
-                        return <ButtonComponent key={buttonKey} />;
-                    })}
-                </div>
-                <div className='w-1/10 h-full bg-kitchen-yellow flex'>
-                    <NewTicket />
-                </div> */}
                 <div className='w-full bg-kitchen-yellow flex flex-row justify-between'>
                     <ButtonSet buttons={buttons} activeTab={activeTab} updateActiveTab={updateActiveTab} />
                 </div>
-                <div className='w-1/10 h-full bg-kitchen-yellow flex'>
+                <div data-testid="new-ticket" className='w-1/10 h-full bg-kitchen-yellow flex cursor-pointer' onClick={() => {setModalOpen(!isModalOpen)}}>
                     <NewTicket />
                 </div>
             </div>
@@ -65,6 +59,7 @@ function Footer({ buttons, price, config, setConfig, priceLess, setOrders, activ
                     </div>
                 </div>
             )}
+            {isModalOpen && (<ModalNewOrder setModalOpen={setModalOpen} setConfig={setConfig} setOrders={setOrders} setSelectedOrder={setSelectedOrder}></ModalNewOrder>)}
         </div>
     );
 }
@@ -78,6 +73,7 @@ Footer.propTypes = {
     setOrders: PropTypes.func.isRequired,
     activeTab: PropTypes.string.isRequired,
     updateActiveTab: PropTypes.func.isRequired,
+    setSelectedOrder: PropTypes.func.isRequired,
 }
 
 export default Footer;

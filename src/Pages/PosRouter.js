@@ -14,7 +14,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 // TMP : To be replaced when the 'New order' button is implemented
 let data =
   [
-    { nb: '42' },
+    { nb: 'Table 42' },
     [
     ],
     { channel: "Sur place" },
@@ -35,6 +35,7 @@ function PosRouter() {
   const [payList, setPayList] = useState([]);
   const [ready, setReady] = useState(false);
   const [orderDetails, setOrderDetails] = useState({details: [], sups: []});
+  const [tableBoard, setTableBoard] = useState([]);
 
   //update the price of the current order every time the order is updated
   useEffect(() => {
@@ -55,8 +56,8 @@ function PosRouter() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/loading" element={<Loading />} />
-            <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}>
-              <Route index element={<Dashboard orders={orders} setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />} />
+            <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} tableBoard={tableBoard} setTableBoard={setTableBoard} />}>
+              <Route index element={<Dashboard setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />} />
               <Route path="/dashboard/pay" element={<Pay />} />
             </Route>
           </Routes>

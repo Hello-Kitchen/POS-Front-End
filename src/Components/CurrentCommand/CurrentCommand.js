@@ -5,7 +5,7 @@ import { GoArrowRight } from "react-icons/go";
 import PropTypes from 'prop-types';
 
 const Header = ({ orders }) => (
-    <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders[0].nb}`}</div>
+    <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`${orders[0].nb}`}</div>
 )
 
 function Food ({ name, price, quantity, edit, setEdit }) {
@@ -248,7 +248,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 console.log(error);
             });
         }
-        console.log(data)
         setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.id }));
     }
 

@@ -30,8 +30,9 @@ const formatDate = (date) => {
  * @param {String} textCenter Number and name of logged in user
  * @param {String} textLeft number of the current active POS
  */
-function LayoutHeader({textCenter, textLeft}) {
+function LayoutHeader({textCenter}) {
     const [currentTime, setCurrentTime] = useState(new Date());
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -44,7 +45,7 @@ function LayoutHeader({textCenter, textLeft}) {
     return (
       <div className='w-full h-lh bg-kitchen-blue p-1'>
         <div className='w-full h-full flex justify-between items-center'>
-            {<SideText text={textLeft}/>}
+            {<SideText text={`${userInfo.id} - ${userInfo.firstname} ${userInfo.lastname}`}/>}
             {<CenterText text={textCenter}/>}
             {<SideText text={formatDate(currentTime)}/>}
         </div>
@@ -62,7 +63,6 @@ SideText.propTypes = {
 
 LayoutHeader.propTypes = {
     textCenter: PropTypes.string.isRequired,
-    textLeft: PropTypes.string.isRequired,
 }
 
 export default LayoutHeader;
