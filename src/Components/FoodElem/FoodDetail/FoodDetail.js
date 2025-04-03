@@ -17,7 +17,7 @@ function FoodDetail({ name, data, multiple, orderDetails, setOrderDetails }) {
         const existingDetail = orderDetails.details.find(detail => detail.name === name);
         const selectedItems = existingDetail ? existingDetail.list : [];
         return data.map(item => ({
-            name: item,
+            name: item.name,
             selected: selectedItems.includes(item),
             color: selectedItems.includes(item)
                 ? 'bg-kitchen-food-detail-selected'
