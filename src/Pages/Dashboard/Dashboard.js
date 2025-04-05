@@ -59,7 +59,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
       const updatedFoods = await Promise.all(
         apiFoods.map(async (apiFood) => {
           const localFood = localFoods.find(
-            (localFood) => localFood.id === apiFood.id
+            (localFood) => localFood === apiFood
           );
   
           // If food already exists in the cache
@@ -144,7 +144,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
 
         const updatedData = data.map((apiCategory) => {
           const localCategory = localData.find(
-            (localCategory) => localCategory.id === apiCategory.id
+            (localCategory) => localCategory.id === apiCategory.id && localCategory.name === apiCategory.name
           );
           // If the category already exists
           if (localCategory) {
