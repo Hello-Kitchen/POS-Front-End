@@ -120,7 +120,7 @@ const Layout = ({
     <div className="column w-full h-full">
       <LayoutHeader textCenter="Caisse 1" />
       <div className="w-full h-4/5">
-        {activeTab !== "TABLES" && activeTab !== 'GESTION' && (
+        {activeTab !== "TABLES" && (
           <CurrentCommand
             orders={orders}
             config={config}

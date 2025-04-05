@@ -3,13 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
     "@eslint/compat": "^1.1.0",
-    "@mui/icons-material": "^7.0.1",
-    "@mui/lab": "^7.0.0-beta.10",
-    "@mui/material": "^7.0.1",
-    "@mui/x-data-grid": "^7.28.2",
     "@testing-library/user-event": "^13.5.0",
     "bcryptjs-react": "^2.4.6",
     "eslint-plugin-jest": "^25.7.0",
