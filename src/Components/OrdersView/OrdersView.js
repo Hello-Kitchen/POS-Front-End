@@ -75,7 +75,6 @@ export default function OrdersView({ orderSelect }) {
         });
       
         setOrders(orders);
-        console.log(data);
       })
       .catch((error) => {
         console.log(error);

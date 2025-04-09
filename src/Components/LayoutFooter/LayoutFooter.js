@@ -31,10 +31,25 @@ const NewTicket = () => (
  * @param {String} activeTab currently active tab
  * @param {Function} updateActiveTab function to update active tab
  * @param {Function} setSelectedOrder function to update selected order
+ * @param {Array} payDetail array of payed orders
+ * @param {Function} setPriceLess state function to update the priceLess of the current order
+ * @param {Function} setPayList state function to update the payList of the current order
  */
-function Footer({ buttons, price, config, setConfig, priceLess, setOrders, activeTab, updateActiveTab, setSelectedOrder }) {
+function Footer({ buttons, price, config, setConfig, priceLess, setOrders, activeTab, updateActiveTab, setSelectedOrder, payDetail, setPriceLess, setPayList }) {
     const navigate = useNavigate();
     const [isModalOpen, setModalOpen] = useState(false);
+
+    const handlePayement = async () => {
+        const body = { value: payDetail, user: Number(JSON.parse(localStorage.getItem("userInfo")).id), discount: 0 };
+        await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/payment/${config.id_order}`, {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+    }
 
     return (
         <div className=' relative w-full h-lf flex flex-row'>
@@ -54,7 +69,7 @@ function Footer({ buttons, price, config, setConfig, priceLess, setOrders, activ
                 </div>
             ) : (
                 <div className='w-1/4 h-full bg-kitchen-yellow flex justify-center items-center p-3 shadow-[inset_0_10px_50px_-20px_rgba(0,0,0,0.7)]'>
-                    <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue cursor-pointer' onClick={() => { setConfig(prevConfig => ({ ...prevConfig, payement: !prevConfig.payement })); setOrders([{nb: "42"}, [], {id_restaurant: 4}, {channel: "En salle"}]); navigate(!config.payement ? '/dashboard/pay' : '/dashboard'); }}>
+                    <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue cursor-pointer' onClick={() => { handlePayement(); setPriceLess(0); setPayList([]); setConfig(prevConfig => ({ ...prevConfig, payement: !prevConfig.payement })); setOrders([{nb: "42"}, [], {id_restaurant: 4}, {channel: "En salle"}]); navigate(!config.payement ? '/dashboard/pay' : '/dashboard'); }}>
                         Terminée
                     </div>
                 </div>
@@ -74,6 +89,9 @@ Footer.propTypes = {
     activeTab: PropTypes.string.isRequired,
     updateActiveTab: PropTypes.func.isRequired,
     setSelectedOrder: PropTypes.func.isRequired,
+    payDetail: PropTypes.array.isRequired,
+    setPriceLess: PropTypes.func.isRequired,
+    setPayList: PropTypes.func.isRequired,
 }
 
 export default Footer;

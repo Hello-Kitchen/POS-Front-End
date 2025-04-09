@@ -20,8 +20,8 @@ function Dashboard({ setOrders, orderDetails, setOrderDetails }) {
   const [categoryFood, setCategoryFood] = useState();
 
   useEffect(() => {
-    setPriceLess(price);
-    setPayList([]);
+    // setPriceLess(price);
+    // setPayList([]);
   }, [price, setPriceLess, setPayList]);
 
   const handleCategoryClick = async (id) => {
