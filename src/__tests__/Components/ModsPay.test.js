@@ -7,11 +7,12 @@ const mockGetElementById = jest.fn();
 global.document.getElementById = mockGetElementById;
 
 describe('ModsPay Component', () => {
-    let setPayListMock, setPriceLessMock;
+    let setPayListMock, setPriceLessMock, setPayDetailMock;
 
     beforeEach(() => {
         setPayListMock = jest.fn();
         setPriceLessMock = jest.fn();
+        setPayDetailMock = jest.fn();
         mockGetElementById.mockReturnValue({
             innerHTML: ''
         });
@@ -31,6 +32,8 @@ describe('ModsPay Component', () => {
                 priceLess={100}
                 payList={[]}
                 setPriceLess={setPriceLessMock}
+                setPayDetail={setPayDetailMock}
+                payDetail={[]}
             />
         );
 
@@ -49,6 +52,8 @@ describe('ModsPay Component', () => {
                 priceLess={100}
                 payList={[]}
                 setPriceLess={setPriceLessMock}
+                setPayDetail={setPayDetailMock}
+                payDetail={[]}
             />
         );
 
@@ -108,6 +113,8 @@ describe('ModsPay Component', () => {
                 priceLess={0}
                 payList={[]}
                 setPriceLess={setPriceLessMock}
+                setPayDetail={setPayDetailMock}
+                payDetail={[]}
             />
         );
 
