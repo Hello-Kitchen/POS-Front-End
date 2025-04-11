@@ -179,7 +179,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             .catch(error => {
                 console.log(error);
             });
-            data.id = data.sequence_value;
+            data.id = data.orderId;
         }
         setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.id }));
     }
