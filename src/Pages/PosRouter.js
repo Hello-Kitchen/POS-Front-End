@@ -33,6 +33,7 @@ function PosRouter() {
   const [orders, setOrders] = useState(data);
   const [priceLess, setPriceLess] = useState(price);
   const [payList, setPayList] = useState([]);
+  const [payDetail, setPayDetail] = useState([]);
   const [ready, setReady] = useState(false);
   const [orderDetails, setOrderDetails] = useState({details: [], sups: []});
   const [tableBoard, setTableBoard] = useState([]);
@@ -56,7 +57,7 @@ function PosRouter() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/loading" element={<Loading />} />
-            <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} tableBoard={tableBoard} setTableBoard={setTableBoard} />}>
+            <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} tableBoard={tableBoard} setTableBoard={setTableBoard} payDetail={payDetail} setPayDetail={setPayDetail} />}>
               <Route index element={<Dashboard setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />} />
               <Route path="/dashboard/pay" element={<Pay />} />
             </Route>
