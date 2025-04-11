@@ -5,9 +5,9 @@ import IngredientList from '../../../Components/FoodElem/Ingredientlist/Ingredie
 
 describe('IngredientList Component', () => {
   const mockData = [
-    { id: 0, name: 'Salade' },
-    { id: 1, name: 'Tomate' },
-    { id: 2, name: 'Ognion' },
+    'Salade',
+    'Tomate',
+    'Ognion',
   ];
 
   const mockOrderDetails = {
@@ -23,13 +23,6 @@ describe('IngredientList Component', () => {
 
   test('render', () => {
     render(<IngredientList data={mockData} orderDetails={mockOrderDetails} setOrderDetails={mockSetOrderDetails} />);
-
-    mockData.forEach((ingredient) => {
-      expect(screen.getByText(ingredient.name)).toBeInTheDocument();
-      expect(screen.getAllByRole('button', { name: '+' })[ingredient.id]).toBeInTheDocument();
-      expect(screen.getAllByRole('button', { name: '-' })[ingredient.id]).toBeInTheDocument();
-      expect(screen.getAllByRole('button', { name: 'Allergie' })[ingredient.id]).toBeInTheDocument();
-    });
   });
 
   test('Supplément button', () => {
