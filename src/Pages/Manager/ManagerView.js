@@ -2,6 +2,7 @@ import React from "react";
 import MenuListLine from "../../Components/MenuListLine/MenuListLine";
 import AccountManagement from "./AccountManagement";
 import MenuManagement from "./MenuManagement";
+import UserManagement from "./UserManagement";
 
 /**
  * ManagerView component renders a user interface for managing different aspects of the application.
@@ -41,7 +42,7 @@ function ManagerView(){
                         <div className="w-full">
                             <MenuListLine title={"Menu manager"} onClick={() => setManagerMenuOpen(false)} open={true}/>
                             <MenuListLine title={"Gestion du menu"} onClick={() => setSubmenuOpened('Gestion du menu')}/>
-                            <MenuListLine title={"Gestion des utilisateurs"} />
+                            <MenuListLine title={"Gestion des utilisateurs"} onClick={() => setSubmenuOpened('Gestion des utilisateurs')} />
                         </div>
                     ) : (
                         <div className="flex flex-col h-full">
@@ -60,6 +61,9 @@ function ManagerView(){
             )}
             {submenuOpened === 'Gestion du menu' && (
                 <MenuManagement onClickBack={() => setSubmenuOpened('')}/>
+            )}
+            {submenuOpened === 'Gestion des utilisateurs' && (
+                <UserManagement onClickBack={() => setSubmenuOpened('')}/>
             )}
         </div>
     );
