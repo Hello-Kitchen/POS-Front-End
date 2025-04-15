@@ -14,7 +14,7 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
     const [fullData, setFullData] = useState(data.map((elem => {
         return {
             id: elem.id,
-            name: elem.name,
+            name: elem,
             color_add: 'bg-kitchen-food-ingredient-green',
             color_del: 'bg-kitchen-food-ingredient-red',
             color_all: 'bg-kitchen-food-ingredient-red',
@@ -158,8 +158,9 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
         </div>
     );
 
+    let i = 0
     const choice = fullData.map((elem) =>
-        <div key={elem.id} className={`${elem.color} h-15 w-full grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6 mb-1`} >
+        <div key={i += 1} className={`${elem.color} h-15 w-full grid grid-flow-col grid-cols-12 colbottom-0 content-center pl-6 pr-6 mb-1`} >
             <div className='h-full col-span-10'>
                 <h1 className="text-3xl text-black float-left ml-4">
                     {elem.name}

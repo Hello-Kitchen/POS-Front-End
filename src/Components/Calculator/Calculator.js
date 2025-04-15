@@ -42,8 +42,10 @@ function ButtonBox({ children }) {
  * @param {Function} setPriceLess state function to update full price of the current order
  * @param {[Number]} payList List of all current transactions
  * @param {Function} setPayList state function to update the payList
+ * @param {Array} payDetail List of all current payed orders
+ * @param {Function} setPayDetail state function to update the payDetail
  */
-function Calculator({ priceLess, setPriceLess, payList, setPayList }) {
+function Calculator({ priceLess, setPriceLess, payList, setPayList, payDetail, setPayDetail }) {
     const [calc, setCalc] = useState({ sign: "", num: 0, res: 0 });
     const [display, setDisplay] = useState(false);
 
@@ -52,12 +54,19 @@ function Calculator({ priceLess, setPriceLess, payList, setPayList }) {
         let elem = document.getElementsByClassName('select-mod')[0];
         if (elem && calc.res !== "Erreur" && priceLess > 0) {
             const text = elem.id;
+            if (text === "Titres-Restaurant") {
+                setPayDetail([...payDetail, {value: Number(calc.res.toString().split(' ').join('')).toString(), type: "tr"}]);
+            } else if (text === "Especes") {
+                setPayDetail([...payDetail, {value: Number(calc.res.toString().split(' ').join('')).toString(), type: "cash"}]);
+            } else {
+                setPayDetail([...payDetail, {value: Number(calc.res.toString().split(' ').join('')).toString(), type: "cb"}]);
+            }
             const newDiv = <div key={payList.length} className='flex flex-row justify-between w-full'><div className='text-white font-normal text-20px'>{text}</div><div className='text-white font-normal text-20px'>{Number(calc.res.toString().split(' ').join('')).toFixed(2).toString()}€</div></div>
             setPayList([...payList, newDiv]);
             setPriceLess(prevPriceLess => (Number(prevPriceLess) - Number(calc.res.toString().split(' ').join(''))));
         }
         setDisplay(false);
-    }, [calc.res, payList, setPayList, setPriceLess, priceLess]);
+    }, [calc.res, payList, setPayList, setPriceLess, priceLess, payDetail, setPayDetail]);
 
     useEffect(() => {
         if (display)
@@ -191,6 +200,8 @@ Calculator.propTypes = {
     priceLess: PropTypes.number.isRequired,
     payList: PropTypes.array.isRequired,
     setPayList: PropTypes.func.isRequired,
+    payDetail: PropTypes.array.isRequired,
+    setPayDetail: PropTypes.func.isRequired,
 }
 
 Screen.propTypes = {

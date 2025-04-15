@@ -23,7 +23,6 @@ function ModalNewOrder({setModalOpen, setOrders, setConfig, setSelectedOrder}) {
             return response.json();
           })
           .then(data => {
-            console.log(data);
             if (orderType === "eatin") {
               setOrders([{nb: `Table ${data}`}, [], {channel: "Sur place"}, {orderId: null}]);
             }

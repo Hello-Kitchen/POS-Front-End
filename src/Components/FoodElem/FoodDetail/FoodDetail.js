@@ -18,8 +18,8 @@ function FoodDetail({ name, data, multiple, orderDetails, setOrderDetails }) {
         const selectedItems = existingDetail ? existingDetail.list : [];
         return data.map(item => ({
             name: item.name,
-            selected: selectedItems.includes(item),
-            color: selectedItems.includes(item)
+            selected: selectedItems.includes(item.name),
+            color: selectedItems.includes(item.name)
                 ? 'bg-kitchen-food-detail-selected'
                 : 'bg-kitchen-food-detail',
         }));

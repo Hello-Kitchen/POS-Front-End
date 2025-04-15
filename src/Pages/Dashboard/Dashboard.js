@@ -29,8 +29,8 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
   }, [orders, data]);
 
   useEffect(() => {
-    setPriceLess(price);
-    setPayList([]);
+    // setPriceLess(price);
+    // setPayList([]);
   }, [price, setPriceLess, setPayList]);
 
   const handleCategoryClick = async (id) => {

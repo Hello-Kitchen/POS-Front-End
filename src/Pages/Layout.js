@@ -27,6 +27,8 @@ import ManagerView from "./Manager/ManagerView";
  * @param {Function} setOrders state function used to update the current order
  * @param {[Object]} tableBoard Array Object of the current POS tables
  * @param {Function} setTableBoard state function used to update the tables board
+ * @param {Array} payDetail Array Object of the current payed orders
+ * @param {Function} setPayDetail state function used to update the payed orders
  */
 const Layout = ({
   price,
@@ -41,7 +43,9 @@ const Layout = ({
   orders,
   setOrders,
   tableBoard,
-  setTableBoard
+  setTableBoard,
+  payDetail,
+  setPayDetail,
 }) => {
   const [activeTab, setActiveTab] = useState("");
   const [selectedOrder, setSelectedOrder] = useState("");
@@ -57,7 +61,7 @@ const Layout = ({
   };
 
   useEffect(() => {
-    console.log(orders);
+    // console.log(orders);
     }, [orders]);
 
   useEffect(() => {
@@ -78,7 +82,6 @@ const Layout = ({
           return response.json();
         })
         .then((data) => {
-          console.log(data);
 
           // Group food by parts
           const groupedByPart = data.food_ordered.reduce((groups, food) => {
@@ -99,7 +102,6 @@ const Layout = ({
             }
           });
 
-          console.log("Ordered Foods:", orderedFoods);
 
           setOrders([
             { nb: data.number },
@@ -145,6 +147,8 @@ const Layout = ({
               setPayList,
               orderDetails,
               setOrderDetails,
+              payDetail,
+              setPayDetail,
             }}
           />
         )}
@@ -168,6 +172,9 @@ const Layout = ({
         activeTab={activeTab}
         updateActiveTab={updateActiveTab}
         setSelectedOrder={setSelectedOrder}
+        payDetail={payDetail}
+        setPriceLess={setPriceLess}
+        setPayList={setPayList}
       />
     </div>
   );
@@ -187,6 +194,8 @@ Layout.propTypes = {
   setOrderDetails: PropTypes.func.isRequired,
   tableBoard: PropTypes.array.isRequired,
   setTableBoard: PropTypes.func.isRequired,
+  payDetail: PropTypes.array.isRequired,
+  setPayDetail: PropTypes.func.isRequired,
 };
 
 export default Layout;
