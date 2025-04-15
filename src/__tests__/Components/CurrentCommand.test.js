@@ -25,7 +25,7 @@ describe('CurrentCommand', () => {
                 name: "Burger Miam",
                 price: 17.99,
                 details: ['Frites'],
-                mods_ingredients: ['ADD Fromage'],
+                mods_ingredients: [{ type: "ADD", ingredient: "Fromage" }],
                 number: 1,
                 category: 1,
                 stop: false
