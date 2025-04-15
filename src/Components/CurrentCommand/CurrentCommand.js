@@ -187,16 +187,22 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 
         const promises = orders[1].map(async (order) => {
             const number = order.number;
-            delete order.number;
-            delete order.category;
+            let cleanOrder = {
+                food: order.food,
+                name: order.name,
+                details: order.details,
+                mods_ingredients: order.mods_ingredients,
+                note: order.note,
+                price: order.price,
+            }
             for (let i = 0; i !== number; i++) {
                 if (order.stop) {
                     stopCounter++;
                     return;
                 }
-                let newObj = Object.keys(order).reduce((acc, key) => {
+                let newObj = Object.keys(cleanOrder).reduce((acc, key) => {
                     if (key !== "name" && key !== "price") {
-                        acc[key] = order[key];
+                        acc[key] = cleanOrder[key];
                     }
                     return acc;
                 }, {});
