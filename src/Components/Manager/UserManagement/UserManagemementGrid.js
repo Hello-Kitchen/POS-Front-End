@@ -160,7 +160,7 @@ function UserManagemementGrid({setAlert}) {
             />
           </div>
         </div>
-        {selectedUser && (<Slide in={selectedUser} direction="left">
+        {selectedUser && (<Slide in={selectedUser ? true : false} direction="left">
           <div className="w-1/4 h-full pb-5 px-3">
             <div className="flex justify-between items-center">
             <p className="text-2xl">{selectedUser.name !== '' ? selectedUser.username : 'Nouvel utilisateur'}</p>
