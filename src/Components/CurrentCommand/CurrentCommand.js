@@ -12,7 +12,7 @@ function Food ({ name, price, quantity }) {
     return (
         <div className='w-full flex flex-row justify-between'>
             <div className='flex text-24px text-white font-light'>{quantity}x {name}</div>
-            <div className='flex text-24px justify-end text-white font-light'>{price}€</div>
+            <div className='flex text-24px justify-end text-white font-light'>{price * quantity}€</div>
         </div>
     )
 }

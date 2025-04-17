@@ -42,8 +42,11 @@ function PosRouter() {
   useEffect(() => {
     let tmp = 0;
     for (let i = 0; i < orders[1].length; i++) {
-      if (orders[1][i].price)
-        tmp += Number(orders[1][i].price);
+      if (orders[1][i].price) {
+        for (let j = 0; j < orders[1][i].number; j++) {
+          tmp += Number(orders[1][i].price);
+        }
+      }
     }
     setPrice(tmp);
     setPriceLess(tmp);
