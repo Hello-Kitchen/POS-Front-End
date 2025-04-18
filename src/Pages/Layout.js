@@ -60,6 +60,26 @@ const Layout = ({
     setActiveTab(newTab);
   };
 
+  const reformatOrder = (order) => {
+    let cleanOrder = {
+      food: order.food,
+      name: order.name,
+      details: order.details,
+      mods_ingredients: order.mods_ingredients,
+      note: order.note,
+      price: order.price,
+      number: order.part,
+    }
+    return cleanOrder;
+  };
+
+  const formatAll = (orders) => {
+    let newOrders = orders.map((order) => {
+      return reformatOrder(order)
+    })
+    return newOrders;
+  }
+
   useEffect(() => {
     // console.log(orders);
     }, [orders]);
@@ -105,7 +125,7 @@ const Layout = ({
 
           setOrders([
             { nb: data.number },
-            orderedFoods,
+            formatAll(orderedFoods),
             { channel: data.channel },
             { orderId: data.id },
           ]);
