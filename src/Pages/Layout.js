@@ -80,15 +80,10 @@ const Layout = ({
     return newOrders;
   }
 
-  useEffect(() => {
-    // console.log(orders);
-    }, [orders]);
-
-  useEffect(() => {
-    if (selectedOrder !== "") {
+    const getRecallOrder = (orderId) => {
       setActiveTab("");
       fetch(
-        `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/${selectedOrder}`,
+        `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/${orderId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -135,8 +130,14 @@ const Layout = ({
         .catch((error) => {
           console.log(error);
         });
+  }
+
+
+  useEffect(() => {
+    if (selectedOrder !== "") {
+      getRecallOrder(selectedOrder);
     }
-  }, [selectedOrder, setOrders, config, setConfig, formatAll]);
+  }, [selectedOrder]);
 
   return (
     <div className="column w-full h-full">
@@ -176,7 +177,7 @@ const Layout = ({
           <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} />
         )}
         {activeTab === "COMMANDES" && (
-          <OrdersView orderSelect={setSelectedOrder} />
+          <OrdersView orderSelect={getRecallOrder} />
         )}
         {activeTab === "GESTION" && (
           <ManagerView />

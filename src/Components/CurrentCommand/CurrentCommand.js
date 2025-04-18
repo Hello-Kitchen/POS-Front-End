@@ -76,8 +76,8 @@ function Edit({order, setOrders}) {
             if (prevOrders.length >= 5) {
                 return prevOrders.map((item, index) =>
                     index === 4 ? { ...order } : item
-                );
-            }
+            );
+        }
             return [...prevOrders, { ...order }];
         });
     };
@@ -222,10 +222,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             served: false,
         };
 
-        let data = {};
-
         if (orders[3].orderId !== null) {
-            data = await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/${orders[3].orderId}`, {
+            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/${orders[3].orderId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
@@ -235,12 +233,13 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                     navigate("/", { state: { error: "Unauthorized access. Please log in." } });
                     throw new Error("Unauthorized access. Please log in.");
                 }
+                setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: orders[3].orderId }));
             })
             .catch(error => {
                 console.log(error);
             });
         } else {
-            data = await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`, {
+            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
@@ -252,12 +251,13 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 }
                 return response.json();
             })
+            .then(data => {
+                setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.orderId }));
+            })
             .catch(error => {
                 console.log(error);
             });
-            data.id = data.orderId;
         }
-        setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.id }));
     }
 
     async function sendOtherOrder() {

@@ -24,7 +24,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
     if (orders.length > 4) {
       const obj = JSON.parse(data).find((elem) => elem.food.find((f) => f.id === orders[4].food));
       setCategoryFood(obj.food)
-      setSelectedCategory(orders[4].category)
+      setSelectedCategory(obj.id)
     }
   }, [orders, data]);
 
