@@ -136,7 +136,7 @@ const Layout = ({
           console.log(error);
         });
     }
-  }, [selectedOrder, setOrders, config, setConfig]);
+  }, [selectedOrder, setOrders, config, setConfig, formatAll]);
 
   return (
     <div className="column w-full h-full">
