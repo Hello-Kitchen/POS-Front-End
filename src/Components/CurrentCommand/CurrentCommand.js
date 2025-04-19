@@ -201,8 +201,12 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                     return;
                 }
                 let newObj = Object.keys(cleanOrder).reduce((acc, key) => {
-                    if (key !== "name" && key !== "price") {
-                        acc[key] = cleanOrder[key];
+                    if (key !== "name") {
+                        if (key === "price") {
+                            acc[key] = String(cleanOrder[key])
+                        } else {
+                            acc[key] = cleanOrder[key];
+                        }
                     }
                     return acc;
                 }, {});
