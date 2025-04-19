@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -73,14 +73,14 @@ const Layout = ({
     return cleanOrder;
   };
 
-  const formatAll = (orders) => {
+  const formatAll = useCallback((orders) => {
     let newOrders = orders.map((order) => {
       return reformatOrder(order)
     })
     return newOrders;
-  }
+  }, []);
 
-    const getRecallOrder = (orderId) => {
+    const getRecallOrder = useCallback((orderId) => {
       setActiveTab("");
       fetch(
         `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/${orderId}`,
@@ -130,14 +130,14 @@ const Layout = ({
         .catch((error) => {
           console.log(error);
         });
-  }
+  }, [setOrders, setConfig, config, formatAll]);
 
 
   useEffect(() => {
     if (selectedOrder !== "") {
       getRecallOrder(selectedOrder);
     }
-  }, [selectedOrder]);
+  }, [selectedOrder, getRecallOrder]);
 
   return (
     <div className="column w-full h-full">
