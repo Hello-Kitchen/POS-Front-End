@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import CategoryButton from "../../Components/CategoryButton/CategoryButton";
@@ -16,7 +15,6 @@ import FoodList from "../../Components/FoodList/FoodList";
  */
 function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
   const data = localStorage.getItem("data");
-  const { setPriceLess, price, setPayList } = useOutletContext();
   const [selectedCategory, setSelectedCategory] = useState();
   const [categoryFood, setCategoryFood] = useState();
 
@@ -27,11 +25,6 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
       setSelectedCategory(obj.id)
     }
   }, [orders, data]);
-
-  useEffect(() => {
-    // setPriceLess(price);
-    // setPayList([]);
-  }, [price, setPriceLess, setPayList]);
 
   const handleCategoryClick = async (id) => {
     const localFoods = JSON.parse(data).find((elem) => elem.id === id).food;
