@@ -4,74 +4,121 @@ import userEvent from "@testing-library/user-event";
 import DroppableTable from "../../../Components/TablesView/DroppableTable";
 
 describe("DroppableTable Component", () => {
-    test("renders DroppableTable", () => {
-        const table = { id: 1, type: "circle", w: 100, h: 100, left: 50, top: 50, plates: 2, time: "00:00" };
-        render(<DroppableTable table={table} inEdit={false} editTable={{}} setEditTable={() => {}} setOrders={() => {}} />);
-        
+    const baseTable = {id: "1", type: "circle", w: 100, h: 100, left: 50, top: 50, plates: 2, time: "00:00"};
+
+    test("renders DroppableTable in non-edit mode", () => {
+        render(
+            <DroppableTable
+                table={baseTable}
+                inEdit={false}
+                editTable={{}}
+                inFuse={{type: "None", fusedList: [], sepList: []}}
+                setInFuse={() => {}}
+                setEditTable={() => {}}
+                setOrders={() => {}}
+            />
+        );
+
         expect(screen.getByText("1")).toBeInTheDocument();
         expect(screen.getByText("2 couv.")).toBeInTheDocument();
         expect(screen.getByText("Dispo.")).toBeInTheDocument();
     });
 
-    test("renders DroppableTable edit mode", () => {
-        const table = { id: 1, type: "circle", w: 100, h: 100, left: 50, top: 50, plates: 2, time: "00:00" };
-        render(<DroppableTable table={table} inEdit={true} editTable={{}} setEditTable={() => {}} setOrders={() => {}} />);
-        
+    test("renders DroppableTable in edit mode", () => {
+        render(
+            <DroppableTable
+                table={baseTable}
+                inEdit={true}
+                editTable={{}}
+                inFuse={{type: "None", fusedList: [], sepList: []}}
+                setInFuse={() => {}}
+                setEditTable={() => {}}
+                setOrders={() => {}}
+            />
+        );
+
         expect(screen.getByText("1")).toBeInTheDocument();
         expect(screen.getByText("2 couv.")).toBeInTheDocument();
     });
 
-    test("clicking table updates editTable", async () => {
+    test("clicking table in edit mode sets editTable and changes border", async () => {
         const setEditTable = jest.fn();
-        const setOrders = jest.fn();
-        const table = { id: 1, type: "circle", w: 100, h: 100, left: 50, top: 50, plates: 2, time: "00:00" };
         const { container } = render(
             <DroppableTable
-                table={table}
+                table={baseTable}
                 inEdit={true}
                 editTable={{}}
+                inFuse={{type: "None", fusedList: [], sepList: []}}
+                setInFuse={() => {}}
                 setEditTable={setEditTable}
-                setOrders={setOrders}
+                setOrders={() => {}}
             />
         );
-        
+
         const tableElement = screen.getByText("1");
         await userEvent.click(tableElement);
-        expect(setEditTable).toHaveBeenCalledWith(table);
+
+        expect(setEditTable).toHaveBeenCalledWith(baseTable);
         expect(container.firstChild).toHaveClass("border-kitchen-button-orange");
     });
 
-    test("clicking table updates orders", async () => {
-        const setEditTable = jest.fn();
+    test("clicking table when not in edit triggers order update", async () => {
         const setOrders = jest.fn();
-        const table = { id: 1, type: "circle", w: 100, h: 100, left: 50, top: 50, plates: 2, time: "00:00" };
         render(
             <DroppableTable
-                table={table}
+                table={baseTable}
                 inEdit={false}
                 editTable={{}}
-                setEditTable={setEditTable}
+                inFuse={{type: "None", fusedList: [], sepList: []}}
+                setInFuse={() => {}}
+                setEditTable={() => {}}
                 setOrders={setOrders}
             />
         );
-        
+
         const tableElement = screen.getByText("1");
         await userEvent.click(tableElement);
 
         expect(setOrders).toHaveBeenCalledWith(expect.any(Function));
     });
 
-    test("renders correct time", () => {
-        const table = { id: 1, type: "rectangle", w: 100, h: 100, left: 50, top: 50, plates: 2, time: "15:30" };
+    test("clicking table when inFuse.type is Fuse updates fusedList", async () => {
+        const setInFuse = jest.fn();
+        const inFuseState = {type: "Fuse", fusedList: [], sepList: []};
+
         render(
             <DroppableTable
-                table={table}
+                table={baseTable}
                 inEdit={false}
                 editTable={{}}
+                inFuse={inFuseState}
+                setInFuse={setInFuse}
                 setEditTable={() => {}}
                 setOrders={() => {}}
             />
         );
+
+        const tableElement = screen.getByText("1");
+        await userEvent.click(tableElement);
+
+        expect(setInFuse).toHaveBeenCalledWith(expect.any(Function));
+    });
+
+    test("renders correct time", () => {
+        const tableWithTime = {...baseTable, time: "15:30"};
+
+        render(
+            <DroppableTable
+                table={tableWithTime}
+                inEdit={false}
+                editTable={{}}
+                inFuse={{type: "None", fusedList: [], sepList: []}}
+                setInFuse={() => {}}
+                setEditTable={() => {}}
+                setOrders={() => {}}
+            />
+        );
+
         expect(screen.getByText("15:30")).toBeInTheDocument();
     });
 });
