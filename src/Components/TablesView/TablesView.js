@@ -9,9 +9,9 @@ import { ItemTypes } from "./Constants";
 import DroppableTable from "./DroppableTable";
 
 const TableList = [
-    {type: "square", plates: 2, w: 100, h: 100, time: "00:00"},
-    {type: "circle", plates: 2, w: 100, h: 100, time: "00:00"},
-    {type: "rectangle", plates: 4, w: 200, h: 100, time: "00:00"}
+    {type: "square", plates: 2, w: 100, h: 100, time: "00:00", fused: false},
+    {type: "circle", plates: 2, w: 100, h: 100, time: "00:00", fused: false},
+    {type: "rectangle", plates: 4, w: 200, h: 100, time: "00:00", fused: false}
 ]
 
 /**
@@ -25,6 +25,7 @@ const TableList = [
 export default function TablesView({ orders, setOrders, board, setBoard }) {
 
     const [inEdit, setInEdit] = useState(false);
+    const [inFuse, setInFuse] = useState({type: "None", fusedList: [], sepList: []});
     const [editTable, setEditTable] = useState({id: -1, plates: 0});
 
     const drop = useDrop(() => ({
@@ -92,7 +93,7 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
     }, [inEdit]);
 
     const boardElem = board.map((table) => (
-        <DroppableTable key={table.id} table={table} inEdit={inEdit} editTable={editTable} setEditTable={setEditTable} setOrders={setOrders} />
+        <DroppableTable key={table.id} table={table} inEdit={inEdit} editTable={editTable} inFuse={inFuse} setInFuse={setInFuse} setEditTable={setEditTable} setOrders={setOrders} />
     ));
 
     return (
@@ -101,7 +102,7 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
                 <div id="drop-area" ref={drop} className="row-span-9">
                     {boardElem}
                 </div>
-                <TablesFooter setInEdit={setInEdit} />
+                <TablesFooter setInEdit={setInEdit} inFuse={inFuse} setInFuse={setInFuse} setBoard={setBoard} />
             </div>
             <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} />
         </div>
