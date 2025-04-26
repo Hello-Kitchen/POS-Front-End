@@ -228,7 +228,6 @@ const Content = ({ orders, stop, config, setOrders }) => (
 function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
 
     const navigate = useNavigate();
-    console.log(orders[1])
     async function sendFirstOrder() {
         if (orders[1].length < 1)
             return;
