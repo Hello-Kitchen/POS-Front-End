@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { GoArrowRight } from "react-icons/go";
@@ -129,6 +129,56 @@ function Order({ order, border, config, setOrders }) {
     )
 }
 
+function mergeAllDuplicatesBetweenStops(items) {
+    const result = [];
+    let currentGroup = [];
+
+    for (const item of items) {
+        if (item.stop) {
+            if (currentGroup.length > 0) {
+                result.push(...mergeAllDuplicatesInGroup(currentGroup));
+            }
+            result.push(item);
+            currentGroup = [];
+        } else {
+            currentGroup.push(item);
+        }
+    }
+
+    if (currentGroup.length > 0) {
+        result.push(...mergeAllDuplicatesInGroup(currentGroup));
+    }
+
+    return result;
+}
+
+function mergeAllDuplicatesInGroup(group) {
+    const itemMap = new Map();
+    
+    for (const item of group) {
+        const key = createItemKey(item);
+        
+        if (itemMap.has(key)) {
+            const existing = itemMap.get(key);
+            existing.number += item.number;
+        } else {
+            itemMap.set(key, {...item});
+        }
+    }
+    
+    return Array.from(itemMap.values());
+}
+
+function createItemKey(item) {
+    return JSON.stringify({
+        name: item.name,
+        price: item.price,
+        details: item.details ? [...item.details].sort() : [],
+        mods_ingredients: item.mods_ingredients ? [...item.mods_ingredients].sort() : [],
+        category: item.category
+    });
+}
+
 /**
  * Component : Component used by the CurrentCommand. Displays the content of the current orders
  *
@@ -178,7 +228,6 @@ const Content = ({ orders, stop, config, setOrders }) => (
 function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
 
     const navigate = useNavigate();
-
     async function sendFirstOrder() {
         if (orders[1].length < 1)
             return;
@@ -333,6 +382,9 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
  * @param {[Number]} payList List of all current transactions
  */
 function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
+    useEffect(() => {
+        orders[1] = mergeAllDuplicatesBetweenStops(orders[1]);
+      }, [orders]);
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className={!config.payement ? 'w-full max-h-[85%] float-right px-2 gap-3 flex flex-col' : 'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
