@@ -36,7 +36,9 @@ function FoodList({ foods, color, orders, setOrders, orderDetails, setOrderDetai
 
     let detailsTemp = []
     categoryDetails.forEach((category) => {
-      const selectedDetails = order.details.filter(detail => category.data.includes(detail));
+      const selectedDetails = order.details.filter(detail => 
+        category.data.some(item => item.name === detail)
+      );
       if (selectedDetails.length > 0) {
         detailsTemp.push({name: category.name, list: selectedDetails})
       }
@@ -51,7 +53,6 @@ function FoodList({ foods, color, orders, setOrders, orderDetails, setOrderDetai
 
   useEffect(() => {
     if (orders.length > 4) {
-      console.log("Par hasard, je reviens ici ?")
       const baseFood = foods.find((food) => food.id === orders[4].food);
       if (baseFood) {
         setSelectedFood(baseFood)

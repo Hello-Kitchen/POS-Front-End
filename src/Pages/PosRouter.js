@@ -14,7 +14,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 // TMP : To be replaced when the 'New order' button is implemented
 let data =
   [
-    { nb: '42' },
+    { nb: 'Table 42' },
     [
     ],
     { channel: "Sur place" },
@@ -33,15 +33,20 @@ function PosRouter() {
   const [orders, setOrders] = useState(data);
   const [priceLess, setPriceLess] = useState(price);
   const [payList, setPayList] = useState([]);
+  const [payDetail, setPayDetail] = useState([]);
   const [ready, setReady] = useState(false);
   const [orderDetails, setOrderDetails] = useState({details: [], sups: []});
+  const [tableBoard, setTableBoard] = useState([]);
 
   //update the price of the current order every time the order is updated
   useEffect(() => {
     let tmp = 0;
     for (let i = 0; i < orders[1].length; i++) {
-      if (orders[1][i].price)
-        tmp += Number(orders[1][i].price);
+      if (orders[1][i].price) {
+        for (let j = 0; j < orders[1][i].number; j++) {
+          tmp += Number(orders[1][i].price);
+        }
+      }
     }
     setPrice(tmp);
     setPriceLess(tmp);
@@ -55,7 +60,7 @@ function PosRouter() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/loading" element={<Loading />} />
-            <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />}>
+            <Route path="/dashboard" element={<Layout orders={orders} setOrders={setOrders} price={price} config={config} setConfig={setConfig} priceLess={priceLess} setPriceLess={setPriceLess} payList={payList} setPayList={setPayList} orderDetails={orderDetails} setOrderDetails={setOrderDetails} tableBoard={tableBoard} setTableBoard={setTableBoard} payDetail={payDetail} setPayDetail={setPayDetail} />}>
               <Route index element={<Dashboard orders={orders} setOrders={setOrders} orderDetails={orderDetails} setOrderDetails={setOrderDetails} />} />
               <Route path="/dashboard/pay" element={<Pay />} />
             </Route>

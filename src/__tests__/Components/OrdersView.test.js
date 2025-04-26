@@ -24,8 +24,8 @@ describe('OrdersView Component', () => {
 
     test('filters orders by channel', async () => {
         const orders = [
-            { id: '1', number: '1', channel: 'Sur place', date: new Date().toISOString() },
-            { id: '2', number: '2', channel: 'A emporter', date: new Date().toISOString() },
+            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString() },
+            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString() },
         ];
         global.fetch.mockImplementationOnce(() =>
             Promise.resolve({
@@ -48,7 +48,7 @@ describe('OrdersView Component', () => {
 
     test('calls orderSelect when an order is clicked', async () => {
         const orders = [
-            { id: '1', number: '1', channel: 'Sur place', date: new Date().toISOString() },
+            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString() },
         ];
         global.fetch.mockImplementationOnce(() =>
             Promise.resolve({

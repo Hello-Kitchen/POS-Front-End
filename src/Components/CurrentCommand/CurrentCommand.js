@@ -5,20 +5,14 @@ import { GoArrowRight } from "react-icons/go";
 import PropTypes from 'prop-types';
 
 const Header = ({ orders }) => (
-    <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders[0].nb}`}</div>
+    <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`${orders[0].nb}`}</div>
 )
 
-function Food ({ name, price, quantity, edit, setEdit }) {
-    const handleOrderEdit = () => {
-        if (edit === false)
-            setEdit(true);
-        else
-            setEdit(false);
-    };
+function Food ({ name, price, quantity }) {
     return (
-        <div onClick={() => handleOrderEdit()} className='w-full flex flex-row justify-between'>
+        <div className='w-full flex flex-row justify-between'>
             <div className='flex text-24px text-white font-light'>{quantity}x {name}</div>
-            <div className='flex text-24px justify-end text-white font-light'>{price}€</div>
+            <div className='flex text-24px justify-end text-white font-light'>{price * quantity}€</div>
         </div>
     )
 }
@@ -82,8 +76,8 @@ function Edit({order, setOrders}) {
             if (prevOrders.length >= 5) {
                 return prevOrders.map((item, index) =>
                     index === 4 ? { ...order } : item
-                );
-            }
+            );
+        }
             return [...prevOrders, { ...order }];
         });
     };
@@ -110,18 +104,26 @@ function Edit({order, setOrders}) {
 function Order({ order, border, config, setOrders }) {
     
     const [edit, setEdit] = useState(false)
-    
+
+    const handleOrderEdit = () => {
+        if (edit === false)
+            setEdit(true);
+        else
+            setEdit(false);
+    };
     return (
     <div className={`w-full h-auto p-2 ${border ? 'border-t border-t-kitchen-yellow' : ''}`}>
-        {order.name && order.price && order.number && <Food name={order.name} price={order.price} quantity={order.number} edit={edit} setEdit={setEdit} />}
-        {order.details && order.details.map((detail, index) => (
-            <Detail key={index} text={detail} />
-        ))}
-        {order.mods_ingredients && order.mods_ingredients.map((sup, index) => (
-            <Sup key={index} text={sup} />
-        ))}
-        {order.note && <Note text={order.note} />}
-        {!config.payement && order.stop && <Stop />}
+        <div onClick={() => handleOrderEdit()}>   
+            {order.name && order.price && order.number && <Food name={order.name} price={order.price} quantity={order.number} />}
+            {order.details && order.details.map((detail, index) => (
+                <Detail key={index} text={detail} />
+            ))}
+            {order.mods_ingredients && order.mods_ingredients.map((sup, index) => (
+                <Sup key={index} text={sup} />
+            ))}
+            {order.note && <Note text={order.note} />}
+            {!config.payement && order.stop && <Stop />}
+        </div>
         {edit && <Edit order={order} setOrders={setOrders} />}
     </div>
     )
@@ -243,16 +245,26 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 
         const promises = orders[1].map(async (order) => {
             const number = order.number;
-            delete order.number;
-            delete order.category;
+            let cleanOrder = {
+                food: order.food,
+                name: order.name,
+                details: order.details,
+                mods_ingredients: order.mods_ingredients,
+                note: order.note,
+                price: order.price,
+            }
             for (let i = 0; i !== number; i++) {
                 if (order.stop) {
                     stopCounter++;
                     return;
                 }
-                let newObj = Object.keys(order).reduce((acc, key) => {
-                    if (key !== "name" && key !== "price") {
-                        acc[key] = order[key];
+                let newObj = Object.keys(cleanOrder).reduce((acc, key) => {
+                    if (key !== "name") {
+                        if (key === "price") {
+                            acc[key] = String(cleanOrder[key])
+                        } else {
+                            acc[key] = cleanOrder[key];
+                        }
                     }
                     return acc;
                 }, {});
@@ -272,10 +284,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             served: false,
         };
 
-        let data = {};
-
         if (orders[3].orderId !== null) {
-            data = fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/${orders[3].orderId}`, {
+            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/${orders[3].orderId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
@@ -285,12 +295,13 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                     navigate("/", { state: { error: "Unauthorized access. Please log in." } });
                     throw new Error("Unauthorized access. Please log in.");
                 }
+                setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: orders[3].orderId }));
             })
             .catch(error => {
                 console.log(error);
             });
         } else {
-            data = fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`, {
+            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
@@ -302,12 +313,13 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 }
                 return response.json();
             })
+            .then(data => {
+                setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.orderId }));
+            })
             .catch(error => {
                 console.log(error);
             });
         }
-        console.log(data)
-        setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.id }));
     }
 
     async function sendOtherOrder() {
@@ -335,7 +347,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
     if (!config.payement) {
         return (
             <div className='w-full h-current-cmd-footer border-t border-kitchen-yellow flex flex-row gap-px bg-kitchen-yellow'>
-                <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { if(orders[1].length < 1) return; const newOrders = [...orders]; newOrders[1] = [...newOrders[1], { stop: true }]; console.log(newOrders); setOrders(newOrders); }}>STOP</div>
+                <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { if(orders[1].length < 1) return; const newOrders = [...orders]; newOrders[1] = [...newOrders[1], { stop: true }]; setOrders(newOrders); }}>STOP</div>
                 {config.firstSend ? <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={sendFirstOrder}>Envoyer</div> : <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={sendOtherOrder}>Demander la suite</div>}
             </div>
         )
@@ -398,8 +410,6 @@ Food.propTypes = {
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
-    edit: PropTypes.bool.isRequired,
-    setEdit: PropTypes.func.isRequired,
 }
 
 Detail.propTypes = {

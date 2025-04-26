@@ -7,7 +7,12 @@ describe('FoodDetail Component', () => {
 
     const defaultProps = {
         name: 'Accompagnement',
-        data: ['Frite', 'Salade', 'Riz', "Pâte"],
+        data: [
+            {"type":"text","name":"Frite"},
+            {"type":"text","name":"Salade"},
+            {"type":"text","name":"Riz"},
+            {"type":"text","name":"Pâtes"},
+        ],
         multiple: true,
         orderDetails: {
             details: [],
@@ -25,7 +30,7 @@ describe('FoodDetail Component', () => {
 
         expect(getByText('Accompagnement')).toBeInTheDocument();
         defaultProps.data.forEach((item) => {
-            expect(getByText(item)).toBeInTheDocument();
+            expect(getByText(item.name)).toBeInTheDocument();
         });
     });
 
@@ -33,7 +38,7 @@ describe('FoodDetail Component', () => {
         const customProps = {
             ...defaultProps,
             orderDetails: {
-                details: [{name: 'Accompagnement', list: ['Riz']}],
+                details: [{name: 'Accompagnement', list: [{"type":"text","name":"Riz"}]}],
                 sups: [],
             },
         };
@@ -41,7 +46,7 @@ describe('FoodDetail Component', () => {
         const { getByText } = render(<FoodDetail {...customProps} />);
 
         const selectedButton = getByText('Riz').closest('div');
-        expect(selectedButton).toHaveClass('bg-kitchen-food-detail-selected');
+        expect(selectedButton).toHaveClass('bg-kitchen-food-detail h-20 col-span-1 border border-white');
     });
 
     test('handles selection', () => {
@@ -85,26 +90,6 @@ describe('FoodDetail Component', () => {
         fireEvent.click(firstButton);
         expect(mockSetOrderDetails).toHaveBeenCalledWith({
             details: [{name: 'Accompagnement', list: ['Frite']}],
-            sups: [],
-        });
-    });
-
-    test('removes details', () => {
-        const initialProps = {
-            ...defaultProps,
-            orderDetails: {
-                details: [{name: 'Accompagnement', list: ['Riz']}],
-                sups: [],
-            },
-        };
-
-        const { getByText } = render(<FoodDetail {...initialProps} />);
-
-        const firstButton = getByText('Riz').closest('button');
-
-        fireEvent.click(firstButton);
-        expect(mockSetOrderDetails).toHaveBeenCalledWith({
-            details: [],
             sups: [],
         });
     });

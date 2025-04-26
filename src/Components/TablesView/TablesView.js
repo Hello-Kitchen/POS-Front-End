@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 import { useDrop } from "react-dnd";
 import TablesFooter from "./TablesFooter";
+import TablesPanel from "./TablesPanel";
 
 import { ItemTypes } from "./Constants";
 import DroppableTable from "./DroppableTable";
 
 const TableList = [
-    {type: "square", plates: 2, w: 100, h: 100, time: "00:00"},
-    {type: "circle", plates: 2, w: 100, h: 100, time: "00:00"},
-    {type: "rectangle", plates: 4, w: 200, h: 100, time: "00:00"}
+    {type: "square", plates: 2, w: 100, h: 100, time: "00:00", fused: false},
+    {type: "circle", plates: 2, w: 100, h: 100, time: "00:00", fused: false},
+    {type: "rectangle", plates: 4, w: 200, h: 100, time: "00:00", fused: false}
 ]
 
 /**
  * TableView component rendering the table page.
+ * @param {[Object]} orders current order
+ * @param {Function} setOrders state function used to update the current order
+ * @param {[Object]} board Array Object of the current POS tables
+ * @param {Function} setBoard state function used to update the tables board
  * @returns {JSX.Element} The rendered TablesView component.
  */
-export default function TablesView() {
+export default function TablesView({ orders, setOrders, board, setBoard }) {
 
-    const [board, setBoard] = useState([]);
     const [inEdit, setInEdit] = useState(false);
+    const [inFuse, setInFuse] = useState({type: "None", fusedList: [], sepList: []});
+    const [editTable, setEditTable] = useState({id: -1, plates: 0});
 
     const drop = useDrop(() => ({
         accept: [ItemTypes.CIRCLE, ItemTypes.SQUARE, ItemTypes.RECTANGLE],
@@ -79,21 +86,32 @@ export default function TablesView() {
         });
     };
 
-      useEffect(() => {
-    }, [board]);
+    useEffect(() => {
+        if (inEdit === false) {
+            setEditTable({id: -1, plates: 0})
+        }
+    }, [inEdit]);
 
     const boardElem = board.map((table) => (
-        <DroppableTable key={table.id} table={table} inEdit={inEdit} />
+        <DroppableTable key={table.id} table={table} inEdit={inEdit} editTable={editTable} inFuse={inFuse} setInFuse={setInFuse} setEditTable={setEditTable} setOrders={setOrders} />
     ));
 
     return (
-        <div className="h-full grid grid-flow-row grid-rows-10">
-            <div id="drop-area" ref={drop} className="row-span-9">
-                {boardElem}
+        <div className="h-full grid grid-flow-col grid-cols-4">
+            <div className="col-span-3 grid grid-flow-row grid-rows-10">
+                <div id="drop-area" ref={drop} className="row-span-9">
+                    {boardElem}
+                </div>
+                <TablesFooter setInEdit={setInEdit} inFuse={inFuse} setInFuse={setInFuse} setBoard={setBoard} />
             </div>
-            <TablesFooter setInEdit={setInEdit} />
+            <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} />
         </div>
     );
 }
 
-TablesView.propTypes = {}
+TablesView.propTypes = {
+    orders: PropTypes.array.isRequired,
+    setOrders: PropTypes.func.isRequired,
+    board: PropTypes.array.isRequired,
+    setBoard: PropTypes.func.isRequired,
+}

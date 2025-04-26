@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import CategoryButton from "../../Components/CategoryButton/CategoryButton";
@@ -16,7 +15,6 @@ import FoodList from "../../Components/FoodList/FoodList";
  */
 function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
   const data = localStorage.getItem("data");
-  const { setPriceLess, price, setPayList } = useOutletContext();
   const [selectedCategory, setSelectedCategory] = useState();
   const [categoryFood, setCategoryFood] = useState();
 
@@ -24,14 +22,9 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
     if (orders.length > 4) {
       const obj = JSON.parse(data).find((elem) => elem.food.find((f) => f.id === orders[4].food));
       setCategoryFood(obj.food)
-      setSelectedCategory(orders[4].category)
+      setSelectedCategory(obj.id)
     }
   }, [orders, data]);
-
-  useEffect(() => {
-    setPriceLess(price);
-    setPayList([]);
-  }, [price, setPriceLess, setPayList]);
 
   const handleCategoryClick = async (id) => {
     const localFoods = JSON.parse(data).find((elem) => elem.id === id).food;
@@ -59,7 +52,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
       const updatedFoods = await Promise.all(
         apiFoods.map(async (apiFood) => {
           const localFood = localFoods.find(
-            (localFood) => localFood.id === apiFood.id
+            (localFood) => localFood === apiFood
           );
   
           // If food already exists in the cache
@@ -144,7 +137,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
 
         const updatedData = data.map((apiCategory) => {
           const localCategory = localData.find(
-            (localCategory) => localCategory.id === apiCategory.id
+            (localCategory) => localCategory.id === apiCategory.id && localCategory.name === apiCategory.name
           );
           // If the category already exists
           if (localCategory) {

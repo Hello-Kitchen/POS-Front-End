@@ -67,10 +67,11 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
     const addToOrder = () => {
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);
-        let current = {food: food.id, name: food.name, price: String(food.price), details: details, mods_ingredients: sups.sup, note: sups.note, number: 1, category: food.id_category};
+        let number = 1
         setOrders(prevOrders => {
             let updatedOrders = [...prevOrders];
             if (inEdit) {
+                number = updatedOrders[4].number
                 const index = updatedOrders[1].findIndex(item => JSON.stringify(item) === JSON.stringify(updatedOrders[4]));
                 if (index !== -1) {
                     updatedOrders[1][index] = { ...updatedOrders[1][index], ...current };
@@ -84,6 +85,7 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
             }
             return updatedOrders;
         });
+        let current = {food: food.id, name: food.name, price: String(food.price), details: details, mods_ingredients: sups.sup, note: sups.note, number: number, category: food.id_category};
         setOrderDetails({details: [], sups: []});
         setInEdit(false);
         closeDetail();
