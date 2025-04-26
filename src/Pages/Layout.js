@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -60,15 +60,30 @@ const Layout = ({
     setActiveTab(newTab);
   };
 
-  useEffect(() => {
-    // console.log(orders);
-    }, [orders]);
+  const reformatOrder = (order) => {
+    let cleanOrder = {
+      food: order.food,
+      name: order.name,
+      details: order.details,
+      mods_ingredients: order.mods_ingredients,
+      note: order.note,
+      price: order.price,
+      number: order.part,
+    }
+    return cleanOrder;
+  };
 
-  useEffect(() => {
-    if (selectedOrder !== "") {
+  const formatAll = useCallback((orders) => {
+    let newOrders = orders.map((order) => {
+      return reformatOrder(order)
+    })
+    return newOrders;
+  }, []);
+
+    const getRecallOrder = useCallback((orderId) => {
       setActiveTab("");
       fetch(
-        `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/${selectedOrder}`,
+        `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/${orderId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -105,7 +120,7 @@ const Layout = ({
 
           setOrders([
             { nb: data.number },
-            orderedFoods,
+            formatAll(orderedFoods),
             { channel: data.channel },
             { orderId: data.id },
           ]);
@@ -115,8 +130,14 @@ const Layout = ({
         .catch((error) => {
           console.log(error);
         });
+  }, [setOrders, setConfig, config, formatAll]);
+
+
+  useEffect(() => {
+    if (selectedOrder !== "") {
+      getRecallOrder(selectedOrder);
     }
-  }, [selectedOrder, setOrders, config, setConfig]);
+  }, [selectedOrder, getRecallOrder]);
 
   return (
     <div className="column w-full h-full">
@@ -156,7 +177,7 @@ const Layout = ({
           <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} />
         )}
         {activeTab === "COMMANDES" && (
-          <OrdersView orderSelect={setSelectedOrder} />
+          <OrdersView orderSelect={getRecallOrder} />
         )}
         {activeTab === "GESTION" && (
           <ManagerView />
