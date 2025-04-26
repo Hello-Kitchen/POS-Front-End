@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { GoArrowRight } from "react-icons/go";
@@ -331,14 +331,14 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 console.log(error);
             });
             newOrders[1] = newOrders[1].filter((_, i) => i !== index);
-            setOrders(mergeAllDuplicatesBetweenStops(newOrders[1]));
+            setOrders(newOrders);
         }
     }
 
     if (!config.payement) {
         return (
             <div className='w-full h-current-cmd-footer border-t border-kitchen-yellow flex flex-row gap-px bg-kitchen-yellow'>
-                <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { if(orders[1].length < 1) return; const newOrders = [...orders]; newOrders[1] = [...newOrders[1], { stop: true }]; setOrders(mergeAllDuplicatesBetweenStops(newOrders[1])); }}>STOP</div>
+                <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { if(orders[1].length < 1) return; const newOrders = [...orders]; newOrders[1] = [...newOrders[1], { stop: true }]; setOrders(newOrders); }}>STOP</div>
                 {config.firstSend ? <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={sendFirstOrder}>Envoyer</div> : <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={sendOtherOrder}>Demander la suite</div>}
             </div>
         )
@@ -382,6 +382,9 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
  * @param {[Number]} payList List of all current transactions
  */
 function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
+    useEffect(() => {
+        orders[1] = mergeAllDuplicatesBetweenStops(orders[1]);
+      }, [orders]);
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className={!config.payement ? 'w-full max-h-[85%] float-right px-2 gap-3 flex flex-col' : 'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
