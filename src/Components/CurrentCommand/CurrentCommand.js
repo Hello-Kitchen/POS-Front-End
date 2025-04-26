@@ -132,58 +132,50 @@ function Order({ order, border, config, setOrders }) {
 function mergeAllDuplicatesBetweenStops(items) {
     const result = [];
     let currentGroup = [];
-    
+
     for (const item of items) {
-      if (item.stop) {
-        // Traiter le groupe complet entre les stops
-        if (currentGroup.length > 0) {
-          result.push(...mergeAllDuplicatesInGroup(currentGroup));
+        if (item.stop) {
+            if (currentGroup.length > 0) {
+                result.push(...mergeAllDuplicatesInGroup(currentGroup));
+            }
+            result.push(item);
+            currentGroup = [];
+        } else {
+            currentGroup.push(item);
         }
-        // Ajouter le stop au résultat
-        result.push(item);
-        // Réinitialiser le groupe
-        currentGroup = [];
-      } else {
-        // Ajouter à l'ensemble actuel
-        currentGroup.push(item);
-      }
     }
-    
-    // Traiter le dernier groupe s'il reste des éléments
+
     if (currentGroup.length > 0) {
-      result.push(...mergeAllDuplicatesInGroup(currentGroup));
+        result.push(...mergeAllDuplicatesInGroup(currentGroup));
     }
-    
+
     return result;
-  }
-  
-  function mergeAllDuplicatesInGroup(group) {
+}
+
+function mergeAllDuplicatesInGroup(group) {
     const itemMap = new Map();
     
     for (const item of group) {
-      const key = createItemKey(item);
-      
-      if (itemMap.has(key)) {
-        // Fusionner avec l'élément existant
-        const existing = itemMap.get(key);
-        existing.number += item.number; // Somme les quantités
-      } else {
-        // Ajouter comme nouvel élément (cloné pour éviter les références)
-        itemMap.set(key, {...item});
-      }
+        const key = createItemKey(item);
+        
+        if (itemMap.has(key)) {
+            const existing = itemMap.get(key);
+            existing.number += item.number; // ✅ Just update the merged item's number
+        } else {
+            itemMap.set(key, {...item}); // Clone to avoid modifying original item
+        }
     }
     
     return Array.from(itemMap.values());
-  }
-  
-  function createItemKey(item) {
+}
+
+function createItemKey(item) {
     return JSON.stringify({
-      food: item.food,
-      name: item.name,
-      price: item.price,
-      details: item.details.sort(), // Tri pour l'ordre des détails
-      mods_ingredients: item.mods_ingredients.sort(),
-      category: item.category
+        name: item.name,
+        price: item.price,
+        details: item.details ? [...item.details].sort() : [],
+        mods_ingredients: item.mods_ingredients ? [...item.mods_ingredients].sort() : [],
+        category: item.category
     });
 }
 
@@ -199,7 +191,7 @@ function mergeAllDuplicatesBetweenStops(items) {
 const Content = ({ orders, stop, config, setOrders }) => (
     <div className={!config.payement ? 'w-full flex flex-col overflow-auto scrollbar-hide' : 'w-full min-h-[h-current-cmd-content] flex flex-col overflow-auto scrollbar-hide border-b-4 border-kitchen-yellow box-border border-solid'}>
         {
-            mergeAllDuplicatesBetweenStops(orders[1]).map((order, index) => {
+            orders[1].map((order, index) => {
                 if (index === 0) {
                     return <Order key={index} order={order} border={false} config={config} setOrders={setOrders} />
                 }
@@ -236,7 +228,7 @@ const Content = ({ orders, stop, config, setOrders }) => (
 function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
 
     const navigate = useNavigate();
-
+    console.log(orders[1])
     async function sendFirstOrder() {
         if (orders[1].length < 1)
             return;
@@ -391,6 +383,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
  * @param {[Number]} payList List of all current transactions
  */
 function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
+    orders[1] = mergeAllDuplicatesBetweenStops(orders[1]);
+    setOrders(orders);
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className={!config.payement ? 'w-full max-h-[85%] float-right px-2 gap-3 flex flex-col' : 'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
