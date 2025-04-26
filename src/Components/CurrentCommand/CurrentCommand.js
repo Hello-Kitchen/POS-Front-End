@@ -160,9 +160,9 @@ function mergeAllDuplicatesInGroup(group) {
         
         if (itemMap.has(key)) {
             const existing = itemMap.get(key);
-            existing.number += item.number; // ✅ Just update the merged item's number
+            existing.number += item.number;
         } else {
-            itemMap.set(key, {...item}); // Clone to avoid modifying original item
+            itemMap.set(key, {...item});
         }
     }
     
