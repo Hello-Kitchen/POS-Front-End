@@ -38,9 +38,10 @@ function PlatesButton ({ editTable, setEditTable }) {
  * EditPanel component rendering all the edits of a table
  * @param {Object} editTable Object used to know which table is currently being edited
  * @param {Function} setEditTable state function used to update the table in edit
+ * @param {Function} setBoard state function used to update the full table board
  * @returns {JSX.Element} The rendered EditPanel component.
  */
-function EditPanel ({ editTable, setEditTable }) {
+function EditPanel ({ editTable, setEditTable, setBoard }) {
 
     const [nameBool, setNameBool] = useState(false);
     const [nameValue, setNameValue] = useState('');
@@ -68,6 +69,15 @@ function EditPanel ({ editTable, setEditTable }) {
         }
     }
 
+    const handleTableDelete = () => {
+        if (editTable.id !== -1) {
+            setBoard((prevBoard) => prevBoard.filter(
+                (table) => !(table.left === editTable.left && table.top === editTable.top)
+            ));
+        }
+        setEditTable({id: -1})
+    };
+
     return (
         <div className="h-full">
             <div className={`w-full p-2 items-center border-b-4 border-b-kitchen-yellow`}>
@@ -90,6 +100,7 @@ function EditPanel ({ editTable, setEditTable }) {
                 </form>
             </div>
             <PlatesButton editTable={editTable} setEditTable={setEditTable} />
+            <button onClick={() => handleTableDelete()} className="w-full h-1/3 mt-4 text-white bg-kitchen-button-red font-bold text-3xl items-center justify-center self-center rounded-full">Supprimer</button>
         </div>
     )
 }
@@ -120,7 +131,7 @@ export default function TablesPanel({ orders, editTable, setEditTable, setBoard 
     return (
         <div className='h-full col-span-1 bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className={'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
-                {editTable.id !== -1 ? <EditPanel editTable={editTable} setEditTable={setEditTable} /> : basicTable}
+                {editTable.id !== -1 ? <EditPanel editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} /> : basicTable}
             </div>
         </div>
     );
@@ -134,6 +145,7 @@ PlatesButton.propTypes = {
 EditPanel.propTypes = {
     editTable: PropTypes.object.isRequired,
     setEditTable: PropTypes.func.isRequired,
+    setBoard: PropTypes.func.isRequired,
 }
 
 TablesPanel.propTypes = {
