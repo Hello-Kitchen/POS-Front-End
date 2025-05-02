@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 import { useDrop } from "react-dnd";
 import TablesFooter from "./TablesFooter";
@@ -23,6 +24,8 @@ const TableList = [
  * @returns {JSX.Element} The rendered TablesView component.
  */
 export default function TablesView({ orders, setOrders, board, setBoard }) {
+
+    const navigate = useNavigate();
 
     const [inEdit, setInEdit] = useState(false);
     const [inFuse, setInFuse] = useState({type: "None", fusedList: [], sepList: []});
@@ -91,6 +94,41 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
             setEditTable({id: -1, plates: 0})
         }
     }, [inEdit]);
+
+    useEffect(() => {
+        let configBoard = board.map((table) => {
+            return {
+                x: table.left,
+                y: table.top,
+                name: table.id.toString(),
+                type: table.type,
+                plates: table.plates,
+                time: table.time,
+            }
+        })
+        if (configBoard.length > 0) {
+            const {innerWidth: width, innerHeight: height} = window;
+            let config = {
+                tables: configBoard,
+                width: width,
+                height: height,
+            }
+            fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/pos_config/`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
+                body: JSON.stringify(config)
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    navigate("/", { state: { error: "Unauthorized access. Please log in." } });
+                    throw new Error("Unauthorized access. Please log in.");
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+    }, [board, navigate])
 
     const boardElem = board.map((table) => (
         <DroppableTable key={table.id} table={table} inEdit={inEdit} editTable={editTable} inFuse={inFuse} setInFuse={setInFuse} setEditTable={setEditTable} setOrders={setOrders} />
