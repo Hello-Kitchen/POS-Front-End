@@ -101,7 +101,7 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
                 x: table.left,
                 y: table.top,
                 name: table.id.toString(),
-                id: table.id,
+                id: parseInt(table.id),
                 type: table.type,
                 plates: table.plates,
                 time: table.time,
