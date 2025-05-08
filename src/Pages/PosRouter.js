@@ -37,6 +37,10 @@ function PosRouter() {
   const [ready, setReady] = useState(false);
   const [orderDetails, setOrderDetails] = useState({details: [], sups: []});
   const [tableBoard, setTableBoard] = useState([]);
+  
+  useEffect(() => {
+    localStorage.setItem("tables", JSON.stringify(tableBoard));
+  }, [tableBoard]);
 
   //update the price of the current order every time the order is updated
   useEffect(() => {
