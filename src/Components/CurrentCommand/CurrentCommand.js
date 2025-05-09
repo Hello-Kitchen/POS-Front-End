@@ -285,6 +285,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             served: false,
         };
 
+        console.log(orders.tableId);
+
         if (orders.orderId !== null) {
             await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/${orders.orderId}`, {
                 method: 'PUT',
@@ -302,7 +304,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 console.log(error);
             });
         } else {
-            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/`, {
+            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders${orders.tableId ? `?idTable=${orders.tableId}` : ''}/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
