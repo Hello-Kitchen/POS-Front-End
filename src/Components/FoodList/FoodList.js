@@ -31,7 +31,7 @@ function FoodList({ foods, color, orders, setOrders, orderDetails, setOrderDetai
     const modTypeMap = {
         ADD: "Supplément",
         DEL: "Retirer",
-        ALL: "Allergie",
+        ALE: "Allergie",
     };
 
     let detailsTemp = []
@@ -52,11 +52,11 @@ function FoodList({ foods, color, orders, setOrders, orderDetails, setOrderDetai
   };
 
   useEffect(() => {
-    if (orders.length > 4) {
-      const baseFood = foods.find((food) => food.id === orders[4].food);
+    if (orders.tmp && Object.keys(orders.tmp).length > 0) {
+      const baseFood = foods.find((food) => food.id === orders.tmp.food);
       if (baseFood) {
         setSelectedFood(baseFood)
-        setOrderDetails(transformOrder(orders[4], baseFood.details))
+        setOrderDetails(transformOrder(orders.tmp, baseFood.details))
         setInEdit(true)
       }
     } else {
@@ -115,7 +115,7 @@ function FoodList({ foods, color, orders, setOrders, orderDetails, setOrderDetai
 FoodList.propTypes = {
   foods: PropTypes.array.isRequired,
   color: PropTypes.string.isRequired,
-  orders: PropTypes.array.isRequired,
+  orders: PropTypes.object.isRequired,
   setOrders: PropTypes.func.isRequired,
   orderDetails: PropTypes.object.isRequired,
   setOrderDetails: PropTypes.func.isRequired,

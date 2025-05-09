@@ -9,7 +9,13 @@ function ModalNewOrder({setModalOpen, setOrders, setConfig, setSelectedOrder}) {
 
     const clearOrder = (orderType) => {
         if (orderType === "direct") {
-            setOrders([{nb: "DIRECT"}, [], {channel: "Sur place"}, {orderId: null}]);
+            setOrders({
+              number: "Direct",
+              channel: "Sur place",
+              orderId: null,
+              food: [],
+              tmp: {}
+            });
         } else {
           fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/number?channel=${orderType}`,
           {headers: {
@@ -24,10 +30,22 @@ function ModalNewOrder({setModalOpen, setOrders, setConfig, setSelectedOrder}) {
           })
           .then(data => {
             if (orderType === "eatin") {
-              setOrders([{nb: `Table ${data}`}, [], {channel: "Sur place"}, {orderId: null}]);
+              setOrders({
+                number: `Table ${data}`,
+                channel: "Sur place",
+                orderId: null,
+                food: [],
+                tmp: {}
+              });
             }
             if (orderType === "togo") {
-              setOrders([{nb: `N°${data}`}, [], {channel: "A emporter"}, {orderId: null}]);
+              setOrders({
+                number: `${data}`,
+                channel: "A emporter",
+                orderId: null,
+                food: [],
+                tmp: {}
+              });
             }
           })
         }

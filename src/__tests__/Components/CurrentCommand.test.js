@@ -17,9 +17,11 @@ describe('CurrentCommand', () => {
     const mockSetOrders = jest.fn();
     const mockSetConfig = jest.fn();
 
-    const orders = [
-        {nb: 1},
-        [
+    const orders = {
+        number: "Table 42",
+        channel: "Sur place",
+        orderId: null,
+        food: [
             {
                 food: 2,
                 name: "Burger Miam",
@@ -31,10 +33,9 @@ describe('CurrentCommand', () => {
                 stop: false
             },
         ],
-        {channel: "Sur place"},
-        {orderId: null},
-        {number: "Table 42"},
-    ];
+        tmp: {}
+      }
+
     const config = {
         firstSend: true,
         payement: false,

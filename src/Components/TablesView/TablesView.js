@@ -149,7 +149,7 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
 }
 
 TablesView.propTypes = {
-    orders: PropTypes.array.isRequired,
+    orders: PropTypes.object.isRequired,
     setOrders: PropTypes.func.isRequired,
     board: PropTypes.array.isRequired,
     setBoard: PropTypes.func.isRequired,
