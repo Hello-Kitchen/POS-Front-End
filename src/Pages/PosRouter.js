@@ -13,13 +13,13 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 // Initial data for the orders
 // TMP : To be replaced when the 'New order' button is implemented
 let data =
-  [
-    { nb: 'Table 42' },
-    [
-    ],
-    { channel: "Sur place" },
-    { orderId: null }
-  ];
+  {
+    number: "42",
+    channel: "Sur place",
+    orderId: null,
+    food: [],
+    tmp: {}
+  };
 
 /**
  * Component : Main Component of the POS Application, used as the main Router, handles all initialisation of variables, states and routes needed for the POS.
@@ -36,7 +36,7 @@ function PosRouter() {
   const [payDetail, setPayDetail] = useState([]);
   const [ready, setReady] = useState(false);
   const [orderDetails, setOrderDetails] = useState({details: [], sups: []});
-  const [tableBoard, setTableBoard] = useState([]);
+  const [tableBoard, setTableBoard] = useState(localStorage.getItem("tables") ? JSON.parse(localStorage.getItem("tables")) : []);
   
   useEffect(() => {
     localStorage.setItem("tables", JSON.stringify(tableBoard));
@@ -45,10 +45,10 @@ function PosRouter() {
   //update the price of the current order every time the order is updated
   useEffect(() => {
     let tmp = 0;
-    for (let i = 0; i < orders[1].length; i++) {
-      if (orders[1][i].price) {
-        for (let j = 0; j < orders[1][i].number; j++) {
-          tmp += Number(orders[1][i].price);
+    for (let i = 0; i < orders.food.length; i++) {
+      if (orders.food[i].price) {
+        for (let j = 0; j < orders.food[i].number; j++) {
+          tmp += Number(orders.food[i].price);
         }
       }
     }

@@ -17,9 +17,9 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
     //function used to reset the current order details and redirects to the dashboard page, used by the "Annuler" button
     const handleBackClick = () => {
         setOrders(prevOrders => {
-            let updatedOrders = [...prevOrders];
-            if (updatedOrders.length > 4) {
-                updatedOrders.pop();
+            let updatedOrders = prevOrders;
+            if (updatedOrders.tmp && Object.keys(updatedOrders.tmp).length > 0) {
+                updatedOrders.tmp = {};
             }
             return updatedOrders;
         });
@@ -53,7 +53,7 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
                     res.push({type: "DEL", ingredient: info[1]});
                     break;
                 case "Allergie":
-                    res.push({type: "ALL", ingredient: info[1]});
+                    res.push({type: "ALE", ingredient: info[1]});
                     break;
                 default:
                     note = info.join(" ");
@@ -67,21 +67,21 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
     const addToOrder = () => {
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);
-        let number = 1
+        let number = 1;
         setOrders(prevOrders => {
-            let updatedOrders = [...prevOrders];
+            let updatedOrders = { ...prevOrders };
             if (inEdit) {
-                number = updatedOrders[4].number
-                const index = updatedOrders[1].findIndex(item => JSON.stringify(item) === JSON.stringify(updatedOrders[4]));
+                number = updatedOrders.tmp.number
+                const index = updatedOrders.food.findIndex(item => JSON.stringify(item) === JSON.stringify(updatedOrders.tmp));
                 if (index !== -1) {
-                    updatedOrders[1][index] = { ...updatedOrders[1][index], ...current };
-                    updatedOrders.pop();
+                    updatedOrders.food[index] = { ...updatedOrders.food[index], ...current };
+                    updatedOrders.tmp = {};
                 }
-                if (updatedOrders.length > 4) {
-                    updatedOrders.pop();
+                if (updatedOrders.tmp && Object.keys(updatedOrders.tmp).length > 0) {
+                    updatedOrders.tmp = {};
                 }
             } else {
-                updatedOrders[1] = [...updatedOrders[1], current];
+                updatedOrders.food = [...updatedOrders.food, current];
             }
             return updatedOrders;
         });

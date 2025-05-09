@@ -4,9 +4,23 @@ import { useNavigate } from "react-router-dom";
 import { GoArrowRight } from "react-icons/go";
 import PropTypes from 'prop-types';
 
-const Header = ({ orders }) => (
-    <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{orders[2].channel === "Sur place" ? `Table ${orders[0].nb}` : orders[0].nb}</div>
-)
+const Header = ({ orders }) => {
+    const orderNumber = () => {
+        if (orders.channel === "Sur place" && orders.number !== "DIRECT") {
+            return `Table ${orders.number}`;
+        } else if (orders.channel === "Sur place" && orders.number === "DIRECT") {
+            return `Direct`;
+        } else if (orders.channel === "A emporter") {
+            return `N°${orders.number}`;
+        } else {
+            return `${orders.number}`;
+        }
+    }
+
+    return (
+        <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{orderNumber()}</div>
+    );
+};
 
 function Food ({ name, price, quantity }) {
     return (
@@ -26,7 +40,7 @@ const Detail = ({ text }) => (
 
 const Sup = ({ text }) => (
     <div className="w-full flex flex-row gap-2 pl-3 items-center">
-        <div className="flex text-20px text-white font-light">{text.type === 'ADD' ? `Supplement ${text.ingredient}` : text.type === 'ALL' ? `Allergie ${text.ingredient}` : text.type === 'DEL' ? `Sans ${text.ingredient}` : ``}</div>
+        <div className="flex text-20px text-white font-light">{text.type === 'ADD' ? `Supplement ${text.ingredient}` : text.type === 'ALE' ? `Allergie ${text.ingredient}` : text.type === 'DEL' ? `Sans ${text.ingredient}` : ``}</div>
     </div>
 )
 
@@ -48,37 +62,33 @@ function Edit({order, setOrders}) {
 
     const addOrderQuantity = () => {
         setOrders((prevOrders) => {
-            return prevOrders.map((item, index) => {
-                if (index === 1) {
-                    return item.map((obj) =>
-                        obj === order ? {...obj, number: obj.number + 1} : obj
-                    );
-                }
-                return item;
-            })
-        })
+            return {...prevOrders, food: prevOrders.food.map((item) => {
+                    if (item === order) {
+                        return { ...item, number: item.number + 1 };
+                    }
+                    return item;
+                })
+            };
+        });
     };
     const delOrderQuantity = () => {
         setOrders((prevOrders) => {
-            return prevOrders.map((item, index) => {
-                if (index === 1) {
-                    return item.map((obj) =>
-                        obj === order ? {...obj, number: obj.number - 1} : obj
-                    ).filter((obj) => obj.number > 0);
-                }
-                return item;
-            });
+            return {...prevOrders, food: prevOrders.food.map((item) => {
+                    if (item === order) {
+                        return { ...item, number: item.number - 1 };
+                    }
+                    return item;
+                }).filter((item) => item.number > 0)
+            };
         });
     };
 
     const modifyFoodOrder = () => {
         setOrders((prevOrders) => {
-            if (prevOrders.length >= 5) {
-                return prevOrders.map((item, index) =>
-                    index === 4 ? { ...order } : item
-            );
+            if (prevOrders.tmp && Object.keys(prevOrders.tmp).length > 0) {
+                return {...prevOrders, tmp: prevOrders.tmp};
         }
-            return [...prevOrders, { ...order }];
+            return {...prevOrders, tmp: order };
         });
     };
 
@@ -191,7 +201,7 @@ function createItemKey(item) {
 const Content = ({ orders, stop, config, setOrders }) => (
     <div className={!config.payement ? 'w-full flex flex-col overflow-auto scrollbar-hide' : 'w-full min-h-[h-current-cmd-content] flex flex-col overflow-auto scrollbar-hide border-b-4 border-kitchen-yellow box-border border-solid'}>
         {
-            orders[1].map((order, index) => {
+            orders.food.map((order, index) => {
                 if (index === 0) {
                     return <Order key={index} order={order} border={false} config={config} setOrders={setOrders} />
                 }
@@ -229,12 +239,12 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 
     const navigate = useNavigate();
     async function sendFirstOrder() {
-        if (orders[1].length < 1)
+        if (orders.food.length < 1)
             return;
         let stopCounter = 1;
         const orderedFood = [];
 
-        const promises = orders[1].map(async (order) => {
+        const promises = orders.food.map(async (order) => {
             const number = order.number;
             let cleanOrder = {
                 food: order.food,
@@ -268,15 +278,15 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 
         let obj = {
             date: new Date().toISOString(),
-            channel: orders[2].channel,
-            number: orders[0].nb,
+            channel: orders.channel,
+            number: orders.number,
             part: 1,
             food_ordered: orderedFood,
             served: false,
         };
 
-        if (orders[3].orderId !== null) {
-            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/${orders[3].orderId}`, {
+        if (orders.orderId !== null) {
+            await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/${orders.orderId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
@@ -286,7 +296,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                     navigate("/", { state: { error: "Unauthorized access. Please log in." } });
                     throw new Error("Unauthorized access. Please log in.");
                 }
-                setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: orders[3].orderId }));
+                setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: orders.orderId }));
             })
             .catch(error => {
                 console.log(error);
@@ -315,7 +325,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
 
     async function sendOtherOrder() {
         const newOrders = [...orders];
-        const index = newOrders[1].findIndex(item => item.stop === true);
+        const index = newOrders.food.findIndex(item => item.stop === true);
         if (index !== -1) {
             fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/next/${config.id_order}`, {
                 method: 'PUT',
@@ -330,15 +340,23 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             .catch(error => {
                 console.log(error);
             });
-            newOrders[1] = newOrders[1].filter((_, i) => i !== index);
+            newOrders.food = newOrders.food.filter((_, i) => i !== index);
             setOrders(newOrders);
         }
+    }
+
+    const addStop = () => {
+        if(orders.food.length < 1)
+            return;
+        const newOrders = {...orders};
+        newOrders.food = [...newOrders.food, { stop: true }];
+        setOrders(newOrders);
     }
 
     if (!config.payement) {
         return (
             <div className='w-full h-current-cmd-footer border-t border-kitchen-yellow flex flex-row gap-px bg-kitchen-yellow'>
-                <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => { if(orders[1].length < 1) return; const newOrders = [...orders]; newOrders[1] = [...newOrders[1], { stop: true }]; setOrders(newOrders); }}>STOP</div>
+                <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={() => (addStop())}>STOP</div>
                 {config.firstSend ? <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={sendFirstOrder}>Envoyer</div> : <div className='w-1/2 h-full bg-kitchen-blue flex items-center justify-center text-white font-bold text-testpx text-center cursor-pointer' onClick={sendOtherOrder}>Demander la suite</div>}
             </div>
         )
@@ -383,7 +401,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
  */
 function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
     useEffect(() => {
-        orders[1] = mergeAllDuplicatesBetweenStops(orders[1]);
+        orders.food = mergeAllDuplicatesBetweenStops(orders.food);
       }, [orders]);
     return (
         <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
@@ -397,12 +415,12 @@ function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess
 }
 
 Header.propTypes = {
-    orders: PropTypes.array.isRequired,
+    orders: PropTypes.object.isRequired,
 }
 
 Food.propTypes = {
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    price: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
 }
 
@@ -411,7 +429,7 @@ Detail.propTypes = {
 }
 
 Sup.propTypes = {
-    text: PropTypes.string.isRequired,
+    text: PropTypes.object.isRequired,
 }
 
 Note.propTypes = {
@@ -431,7 +449,7 @@ Order.propTypes = {
 }
 
 Content.propTypes = {
-    orders: PropTypes.array.isRequired,
+    orders: PropTypes.object.isRequired,
     stop: PropTypes.bool.isRequired,
     config: PropTypes.object.isRequired,
     setOrders: PropTypes.func.isRequired,
@@ -439,7 +457,7 @@ Content.propTypes = {
 }
 
 Footer.propTypes = {
-    orders: PropTypes.array.isRequired,
+    orders: PropTypes.object.isRequired,
     config: PropTypes.object.isRequired,
     setOrders: PropTypes.func.isRequired,
     setConfig: PropTypes.func.isRequired,
@@ -449,7 +467,7 @@ Footer.propTypes = {
 }
 
 CurrentCommand.propTypes = {
-    orders: PropTypes.array.isRequired,
+    orders: PropTypes.object.isRequired,
     config: PropTypes.object.isRequired,
     setConfig: PropTypes.func.isRequired,
     setOrders: PropTypes.func.isRequired,

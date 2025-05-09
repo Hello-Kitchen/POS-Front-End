@@ -117,7 +117,7 @@ function EditPanel ({ editTable, setEditTable, setBoard }) {
 export default function TablesPanel({ orders, editTable, setEditTable, setBoard }) {
 
     const basicTable = (
-        <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders[0].nb}`}</div>
+        <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders.number}`}</div>
     )
 
     useEffect(() => {
@@ -149,7 +149,7 @@ EditPanel.propTypes = {
 }
 
 TablesPanel.propTypes = {
-    orders: PropTypes.array.isRequired,
+    orders: PropTypes.object.isRequired,
     editTable: PropTypes.object.isRequired,
     setEditTable: PropTypes.func.isRequired,
     setBoard: PropTypes.func.isRequired

@@ -67,7 +67,7 @@ const Layout = ({
       details: order.details,
       mods_ingredients: order.mods_ingredients,
       note: order.note,
-      price: order.price,
+      price: order.price.toString(),
       number: order.part,
     }
     return cleanOrder;
@@ -117,13 +117,12 @@ const Layout = ({
             }
           });
 
-
-          setOrders([
-            { nb: data.number },
-            formatAll(orderedFoods),
-            { channel: data.channel },
-            { orderId: data.id },
-          ]);
+          setOrders({
+            number: data.number,
+            channel: data.channel,
+            orderId: data.id,
+            food: formatAll(orderedFoods),
+          })
           config.id_order = data.id;
           setConfig(config);
         })
@@ -202,7 +201,7 @@ const Layout = ({
 };
 
 Layout.propTypes = {
-  orders: PropTypes.array.isRequired,
+  orders: PropTypes.object.isRequired,
   price: PropTypes.number.isRequired,
   config: PropTypes.object.isRequired,
   setConfig: PropTypes.func.isRequired,

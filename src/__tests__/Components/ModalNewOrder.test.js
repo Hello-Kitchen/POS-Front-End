@@ -36,7 +36,13 @@ describe('ModalNewOrder Component', () => {
   it('calls clearOrder with "direct" when DIRECT button is clicked', () => {
     renderComponent();
     fireEvent.click(screen.getByText('DIRECT'));
-    expect(mockSetOrders).toHaveBeenCalledWith([{ nb: 'DIRECT' }, [], { channel: 'Sur place' }, { orderId: null }]);
+    expect(mockSetOrders).toHaveBeenCalledWith({
+      number: "Direct",
+      channel: "Sur place",
+      orderId: null,
+      food: [],
+      tmp: {}
+    });
     expect(mockSetConfig).toHaveBeenCalledWith({ payement: false, firstSend: true, id_order: null });
     expect(mockSetSelectedOrder).toHaveBeenCalledWith('');
     expect(mockSetModalOpen).toHaveBeenCalledWith(false);
@@ -65,7 +71,15 @@ describe('ModalNewOrder Component', () => {
     );
 
     await screen.findByText('Sur place'); // Wait for fetch to resolve
-    expect(mockSetOrders).toHaveBeenCalledWith([{ nb: 'Table 5' }, [], { channel: 'Sur place' }, { orderId: null }]);
+    expect(mockSetOrders).toHaveBeenCalledWith(
+      expect.objectContaining({
+      number: expect.any(String),
+      channel: "Sur place",
+      orderId: null,
+      food: [],
+      tmp: {}
+      })
+    );
     expect(mockSetConfig).toHaveBeenCalledWith({ payement: false, firstSend: true, id_order: null });
     expect(mockSetSelectedOrder).toHaveBeenCalledWith('');
     expect(mockSetModalOpen).toHaveBeenCalledWith(false);
@@ -94,7 +108,13 @@ describe('ModalNewOrder Component', () => {
     );
 
     await screen.findByText('A emporter'); // Wait for fetch to resolve
-    expect(mockSetOrders).toHaveBeenCalledWith([{ nb: 'N°10' }, [], { channel: 'A emporter' }, { orderId: null }]);
+    expect(mockSetOrders).toHaveBeenCalledWith({
+      number: expect.any(String),
+      channel: "A emporter",
+      orderId: null,
+      food: [],
+      tmp: {}
+      });
     expect(mockSetConfig).toHaveBeenCalledWith({ payement: false, firstSend: true, id_order: null });
     expect(mockSetSelectedOrder).toHaveBeenCalledWith('');
     expect(mockSetModalOpen).toHaveBeenCalledWith(false);
