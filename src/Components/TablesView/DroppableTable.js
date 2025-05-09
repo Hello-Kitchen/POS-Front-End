@@ -42,7 +42,7 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
             setBorder("border-kitchen-button-orange")
             setEditTable(table)
         } else {
-            setOrders((Order) => ({...Order, number: table.id.toString()}));
+            setOrders((Order) => ({...Order, number: table.id.toString(), tableId: table.id}));
         }
     };
 
