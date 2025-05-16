@@ -498,7 +498,7 @@ Footer.propTypes = {
     price: PropTypes.number.isRequired,
     priceLess: PropTypes.number.isRequired,
     payList: PropTypes.array.isRequired,
-    setBoard: PropTypes. func.isRequired,
+    setBoard: PropTypes.func.isRequired,
 }
 
 CurrentCommand.propTypes = {
@@ -509,7 +509,7 @@ CurrentCommand.propTypes = {
     price: PropTypes.number.isRequired,
     priceLess: PropTypes.number.isRequired,
     payList: PropTypes.array.isRequired,
-    setBoard: PropTypes. func.isRequired,
+    setBoard: PropTypes.func.isRequired,
 }
 
 export default CurrentCommand;
