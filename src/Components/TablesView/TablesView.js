@@ -105,6 +105,7 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
                 type: table.type,
                 plates: table.plates,
                 time: table.time,
+                orderId: table.orderId ? table.orderId : null,
             }
         })
         if (configBoard.length > 0) {

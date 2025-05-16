@@ -41,6 +41,7 @@ function Loading({setTableBoard}) {
             w: table.type === "rectangle" ? 200 : 100,
             h: 100,
             time: table.time,
+            orderId: table.orderId ? table.orderId : null,
             fused: false
           }
         })

@@ -235,7 +235,7 @@ const Content = ({ orders, stop, config, setOrders }) => (
  * @param {Number} priceLess full price of the current order
  * @param {[Number]} payList List of all current transactions
  */
-function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
+function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList, setBoard }) {
 
     const navigate = useNavigate();
     async function sendFirstOrder() {
@@ -316,6 +316,40 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             })
             .then(data => {
                 setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.orderId }));
+            })
+            .then(() => {
+                fetch(
+                    `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/pos_config/`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                      },
+                    }
+                  )
+                  .then((response) => {
+                    if (response.status === 401) {
+                      throw new Error("Unauthorized access. Please log in.");
+                    }
+                    return response.json();
+                  })
+                  .then((data) => {
+                    const { innerWidth: width, innerHeight: height } = window;
+                    const tables = data.tables.map((table) => {
+                      return {
+                        type: table.type,
+                        id: table.name,
+                        left: width / (data.width / table.x),
+                        top: height / (data.height / table.y),
+                        plates: table.plates,
+                        w: table.type === "rectangle" ? 200 : 100,
+                        h: 100,
+                        time: table.time,
+                        orderId: table.orderId ? table.orderId : null,
+                        fused: false
+                      }
+                    })
+                    setBoard(tables);
+                })
             })
             .catch(error => {
                 console.log(error);
@@ -399,7 +433,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
  * @param {Number} priceLess full price of the current order
  * @param {[Number]} payList List of all current transactions
  */
-function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
+function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList, setBoard }) {
     useEffect(() => {
         orders.food = mergeAllDuplicatesBetweenStops(orders.food);
       }, [orders]);
@@ -409,7 +443,7 @@ function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess
                 <Header orders={orders} />
                 <Content orders={orders} stop={false} config={config} setOrders={setOrders} setConfig={setConfig} />
             </div>
-            <Footer config={config} orders={orders} setOrders={setOrders} setConfig={setConfig} price={price} priceLess={priceLess} payList={payList} />
+            <Footer config={config} orders={orders} setOrders={setOrders} setConfig={setConfig} price={price} priceLess={priceLess} payList={payList} setBoard={setBoard} />
         </div>
     )
 }
