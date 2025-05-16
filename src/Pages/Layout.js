@@ -173,7 +173,7 @@ const Layout = ({
           />
         )}
         {activeTab === "TABLES" && (
-          <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} />
+          <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} orderSelect={getRecallOrder} />
         )}
         {activeTab === "COMMANDES" && (
           <OrdersView orderSelect={getRecallOrder} />
