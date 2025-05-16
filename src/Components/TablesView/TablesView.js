@@ -153,4 +153,5 @@ TablesView.propTypes = {
     setOrders: PropTypes.func.isRequired,
     board: PropTypes.array.isRequired,
     setBoard: PropTypes.func.isRequired,
+    orderSelect: PropTypes.func.isRequired,
 }

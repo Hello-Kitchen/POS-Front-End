@@ -84,6 +84,7 @@ DroppableTable.propTypes = {
     setInFuse: PropTypes.func.isRequired,
     setEditTable: PropTypes.func.isRequired,
     setOrders: PropTypes.func.isRequired,
+    orderSelect: PropTypes.func.isRequired,
 }
 
 export default DroppableTable;
