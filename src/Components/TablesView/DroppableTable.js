@@ -46,6 +46,23 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
         }
     };
 
+    const getElapsedTime = (isoString) => {
+        const start = new Date(isoString);
+        if (isNaN(start)) return "00:00";
+    
+        const now = new Date();
+        let diffMs = now - start;
+    
+        if (diffMs < 0) diffMs = 0;
+    
+        const diffMins = Math.floor(diffMs / 60000);
+        const hours = Math.floor(diffMins / 60).toString().padStart(2, '0');
+        const minutes = (diffMins % 60).toString().padStart(2, '0');
+    
+        return `${hours}:${minutes}`;
+    }
+    
+
     useEffect(() => {
         if (!inFuse.fusedList.includes(table)) {
             if (table.time === "00:00") {
@@ -68,7 +85,7 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
             <div className={`${table.type === "circle" ? "text-xl" : "text-2xl"} row-span-1 self-center`}>{table.plates} {table.type === "rectangle" ? "couverts" : "couv."}</div>
             {inEdit === false ? table.time === "00:00" ?
                 <div className="row-span-1 self-center text-1xl">{table.type === "rectangle" ? "Disponible" : "Dispo."}</div>
-                : <div className="row-span-1 text-1xl">{table.time}</div> 
+                : <div className="row-span-1 text-1xl">{getElapsedTime(table.time)}</div> 
                 : <div/>}
         </div>
     );
