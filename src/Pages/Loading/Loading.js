@@ -5,14 +5,11 @@ import { useNavigate } from "react-router-dom";
  * Fetches the table board configuration from the backend API and updates the state with the processed table data.
  *
  * @function
- * @param {Object} params - The parameters object.
- * @param {Function} params.setTableBoard - The state setter function to update the table board.
+ * @param {Function} setTableBoard - The state setter function to update the table board.
  * @returns {void}
  *
- * @throws {Error} Throws an error if the response status is 401 (Unauthorized).
- *
  * @example
- * loadTableBoard({ setTableBoard });
+ * loadTableBoard(setTableBoard);
  */
 export function loadTableBoard (setTableBoard) {
   fetch(
