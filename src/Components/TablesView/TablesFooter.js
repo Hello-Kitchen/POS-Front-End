@@ -12,7 +12,7 @@ import Tables from "./Tables";
  * @param {Function} setBoard state function used to update the tables board
  * @returns {JSX.Element} The rendered TablesFooter component.
  */
-function TablesFooter({setInEdit, inFuse, setInFuse, setBoard}) {
+function TablesFooter({setDataToBeSaved, setInEdit, inFuse, setInFuse, setBoard}) {
 
     const [activeButton, setActiveButton] = useState("None");
 
@@ -73,6 +73,7 @@ function TablesFooter({setInEdit, inFuse, setInFuse, setBoard}) {
                 };
             });
         }
+        setDataToBeSaved(true)
     };
 
     const onSepAdd = () => {
@@ -112,6 +113,7 @@ function TablesFooter({setInEdit, inFuse, setInFuse, setBoard}) {
                 sepList: newSepList,
             };
         });
+        setDataToBeSaved(true)
     };
 
     const onDel = () => {
@@ -148,6 +150,7 @@ function TablesFooter({setInEdit, inFuse, setInFuse, setBoard}) {
 }
 
 TablesFooter.propTypes = {
+    setDataToBeSaved: PropTypes.func.isRequired,
     setInEdit: PropTypes.func.isRequired,
     inFuse: PropTypes.object.isRequired,
     setInFuse: PropTypes.func.isRequired,
