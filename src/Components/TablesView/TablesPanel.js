@@ -114,7 +114,7 @@ function EditPanel ({ editTable, setEditTable, setBoard }) {
  * @param {Function} setOrders state function used to update the current order
  * @returns {JSX.Element} The rendered TablesPanel component.
  */
-export default function TablesPanel({ orders, editTable, setEditTable, setBoard }) {
+export default function TablesPanel({ setDataToBeSaved, orders, editTable, setEditTable, setBoard }) {
 
     const basicTable = (
         <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders.number}`}</div>
@@ -131,7 +131,7 @@ export default function TablesPanel({ orders, editTable, setEditTable, setBoard 
     return (
         <div className='h-full col-span-1 bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className={'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
-                {editTable.id !== -1 ? <EditPanel editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} /> : basicTable}
+                {editTable.id !== -1 ? <EditPanel setDataToBeSaved={setDataToBeSaved} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} /> : basicTable}
             </div>
         </div>
     );
@@ -143,12 +143,14 @@ PlatesButton.propTypes = {
 }
 
 EditPanel.propTypes = {
+    setDataToBeSaved: PropTypes.func.isRequired,
     editTable: PropTypes.object.isRequired,
     setEditTable: PropTypes.func.isRequired,
     setBoard: PropTypes.func.isRequired,
 }
 
 TablesPanel.propTypes = {
+    setDataToBeSaved: PropTypes.func.isRequired,
     orders: PropTypes.object.isRequired,
     editTable: PropTypes.object.isRequired,
     setEditTable: PropTypes.func.isRequired,

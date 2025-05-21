@@ -8,6 +8,7 @@ import TablesPanel from "./TablesPanel";
 
 import { ItemTypes } from "./Constants";
 import DroppableTable from "./DroppableTable";
+import { loadTableBoard } from "../../Pages/Loading/Loading";
 
 const TableList = [
     {type: "square", plates: 2, w: 100, h: 100, time: "00:00", fused: false},
@@ -30,6 +31,8 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
     const [inEdit, setInEdit] = useState(false);
     const [inFuse, setInFuse] = useState({type: "None", fusedList: [], sepList: []});
     const [editTable, setEditTable] = useState({id: -1, plates: 0});
+    const [dataToBeSaved, setDataToBeSaved] = useState(false);
+    const [isFirstRender, setIsFirstRender] = useState(true);
 
     const drop = useDrop(() => ({
         accept: [ItemTypes.CIRCLE, ItemTypes.SQUARE, ItemTypes.RECTANGLE],
@@ -87,15 +90,25 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
             }
             return prevBoard;
         });
+        setDataToBeSaved(true);
     };
 
     useEffect(() => {
         if (inEdit === false) {
             setEditTable({id: -1, plates: 0})
+            if (isFirstRender === false)
+                setDataToBeSaved(true)
         }
+        // linter want isFirstRender to be in the dependency array, but it will defeat the purpose of the useState
+        // eslint-disable-next-line
     }, [inEdit]);
 
     useEffect(() => {
+        loadTableBoard(setBoard);
+        setIsFirstRender(false);
+    }, [setBoard]);
+
+    const saveTable = () => {
         let configBoard = board.map((table) => {
             return {
                 x: table.left,
@@ -108,32 +121,39 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
                 orderId: table.orderId ? table.orderId : null,
             }
         })
-        if (configBoard.length > 0) {
-            const {innerWidth: width, innerHeight: height} = window;
-            let config = {
-                tables: configBoard,
-                width: width,
-                height: height,
-            }
-            fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/pos_config/`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
-                body: JSON.stringify(config)
-            })
-            .then(response => {
-                if (response.status === 401) {
-                    navigate("/", { state: { error: "Unauthorized access. Please log in." } });
-                    throw new Error("Unauthorized access. Please log in.");
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        const {innerWidth: width, innerHeight: height} = window;
+        let config = {
+            tables: configBoard,
+            width: width,
+            height: height,
         }
-    }, [board, navigate])
+        fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/pos_config/`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
+            body: JSON.stringify(config)
+        })
+        .then(response => {
+            if (response.status === 401) {
+                navigate("/", { state: { error: "Unauthorized access. Please log in." } });
+                throw new Error("Unauthorized access. Please log in.");
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    };
+
+    useEffect(() => {
+        if (dataToBeSaved === true) {
+            saveTable();
+            setDataToBeSaved(false);
+        }
+    // linter want saveTable to be in the dependency array, but it will create an infinite loop
+    // eslint-disable-next-line
+    }, [dataToBeSaved]);
 
     const boardElem = board.map((table) => (
-        <DroppableTable key={table.id} table={table} inEdit={inEdit} editTable={editTable} inFuse={inFuse} setInFuse={setInFuse} setEditTable={setEditTable} setOrders={setOrders} />
+        <DroppableTable key={table.id} setDataToBeSaved={setDataToBeSaved} table={table} inEdit={inEdit} editTable={editTable} inFuse={inFuse} setInFuse={setInFuse} setEditTable={setEditTable} setOrders={setOrders} />
     ));
 
     return (
@@ -142,7 +162,7 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
                 <div id="drop-area" ref={drop} className="row-span-9">
                     {boardElem}
                 </div>
-                <TablesFooter setInEdit={setInEdit} inFuse={inFuse} setInFuse={setInFuse} setBoard={setBoard} />
+                <TablesFooter setDataToBeSaved={setDataToBeSaved} setInEdit={setInEdit} inFuse={inFuse} setInFuse={setInFuse} setBoard={setBoard} />
             </div>
             <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} />
         </div>
