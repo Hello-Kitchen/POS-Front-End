@@ -118,7 +118,7 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
                 type: table.type,
                 plates: table.plates,
                 time: table.time,
-                orderId: table.orderId ? table.orderId : null,
+                orderId: table.orderId,
             }
         })
         const {innerWidth: width, innerHeight: height} = window;

@@ -151,7 +151,6 @@ const Layout = ({
             price={price}
             priceLess={priceLess}
             payList={payList}
-            setBoard={setTableBoard}
           />
         )}
         {activeTab === "" && (

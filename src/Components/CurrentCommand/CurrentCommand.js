@@ -235,7 +235,7 @@ const Content = ({ orders, stop, config, setOrders }) => (
  * @param {Number} priceLess full price of the current order
  * @param {[Number]} payList List of all current transactions
  */
-function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList, setBoard }) {
+function Footer({ config, orders, setOrders, setConfig, price, priceLess, payList }) {
 
     const navigate = useNavigate();
     async function sendFirstOrder() {
@@ -332,24 +332,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                     }
                     return response.json();
                   })
-                  .then((data) => {
-                    const { innerWidth: width, innerHeight: height } = window;
-                    const tables = data.tables.map((table) => {
-                      return {
-                        type: table.type,
-                        id: table.name,
-                        left: width / (data.width / table.x),
-                        top: height / (data.height / table.y),
-                        plates: table.plates,
-                        w: table.type === "rectangle" ? 200 : 100,
-                        h: 100,
-                        time: table.time,
-                        orderId: table.orderId ? table.orderId : null,
-                        fused: false
-                      }
-                    })
-                    setBoard(tables);
-                })
             })
             .catch(error => {
                 console.log(error);
@@ -433,7 +415,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
  * @param {Number} priceLess full price of the current order
  * @param {[Number]} payList List of all current transactions
  */
-function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList, setBoard }) {
+function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
     useEffect(() => {
         orders.food = mergeAllDuplicatesBetweenStops(orders.food);
       }, [orders]);
@@ -443,7 +425,7 @@ function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess
                 <Header orders={orders} />
                 <Content orders={orders} stop={false} config={config} setOrders={setOrders} setConfig={setConfig} />
             </div>
-            <Footer config={config} orders={orders} setOrders={setOrders} setConfig={setConfig} price={price} priceLess={priceLess} payList={payList} setBoard={setBoard} />
+            <Footer config={config} orders={orders} setOrders={setOrders} setConfig={setConfig} price={price} priceLess={priceLess} payList={payList} />
         </div>
     )
 }
@@ -498,7 +480,6 @@ Footer.propTypes = {
     price: PropTypes.number.isRequired,
     priceLess: PropTypes.number.isRequired,
     payList: PropTypes.array.isRequired,
-    setBoard: PropTypes.func.isRequired,
 }
 
 CurrentCommand.propTypes = {
@@ -509,7 +490,6 @@ CurrentCommand.propTypes = {
     price: PropTypes.number.isRequired,
     priceLess: PropTypes.number.isRequired,
     payList: PropTypes.array.isRequired,
-    setBoard: PropTypes.func.isRequired,
 }
 
 export default CurrentCommand;

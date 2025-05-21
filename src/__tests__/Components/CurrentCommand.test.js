@@ -9,14 +9,13 @@ jest.mock('react-router-dom', () => ({
 global.fetch = jest.fn(() =>
     Promise.resolve({
         status: 200,
-        json: () => Promise.resolve({ id: '123', tables: [] }),
+        json: () => Promise.resolve({ id: '123' }),
   })
 );
 
 describe('CurrentCommand', () => {
     const mockSetOrders = jest.fn();
     const mockSetConfig = jest.fn();
-    const mockSetBoard = jest.fn();
 
     const orders = {
         number: "Table 42",
@@ -56,7 +55,6 @@ describe('CurrentCommand', () => {
                 price={price}
                 priceLess={priceLess}
                 payList={payList}
-                setBoard={mockSetBoard}
             />
         );
 
@@ -79,7 +77,6 @@ describe('CurrentCommand', () => {
                 price={price}
                 priceLess={priceLess}
                 payList={payList}
-                setBoard={mockSetBoard}
             />
         );
         const foodName = screen.getByText('1x Burger Miam');
@@ -100,7 +97,6 @@ describe('CurrentCommand', () => {
                 price={price}
                 priceLess={priceLess}
                 payList={payList}
-                setBoard={mockSetBoard}
             />
         );
         fireEvent.click(screen.getByText('1x Burger Miam'));
@@ -118,7 +114,6 @@ describe('CurrentCommand', () => {
                 price={price}
                 priceLess={priceLess}
                 payList={payList}
-                setBoard={mockSetBoard}
             />
         );
 
@@ -137,7 +132,6 @@ describe('CurrentCommand', () => {
                 price={price}
                 priceLess={priceLess}
                 payList={payList}
-                setBoard={mockSetBoard}
             />
         );
         fireEvent.click(screen.getByText('1x Burger Miam'));
@@ -156,7 +150,6 @@ describe('CurrentCommand', () => {
                 price={price}
                 priceLess={priceLess}
                 payList={payList}
-                setBoard={mockSetBoard}
             />
         );
 
@@ -186,7 +179,6 @@ describe('CurrentCommand', () => {
                 price={price}
                 priceLess={priceLess}
                 payList={payList}
-                setBoard={mockSetBoard}
             />
         );
 
@@ -196,23 +188,23 @@ describe('CurrentCommand', () => {
     });
 
     test('renders Food component with correct name and price', () => {
-        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} setBoard={mockSetBoard}/>);
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
         expect(screen.getByText('1x Burger Miam')).toBeInTheDocument();
         expect(screen.getByText('17.99€')).toBeInTheDocument();
     });
 
     test('renders Detail component with correct details', () => {
-        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} setBoard={mockSetBoard}/>);
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
         expect(screen.getByText('Frites')).toBeInTheDocument();
     });
 
     test('renders Sup component with correct supplement', () => {
-        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} setBoard={mockSetBoard}/>);
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
         expect(screen.getByText('Supplement Fromage')).toBeInTheDocument();
     });
 
     test('calls setOrders when STOP button is clicked', () => {
-        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} setBoard={mockSetBoard}/>);
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
         const stopButton = screen.getByText('STOP');
         fireEvent.click(stopButton);
         expect(mockSetOrders).toHaveBeenCalled();
@@ -220,14 +212,14 @@ describe('CurrentCommand', () => {
 
     test('renders Footer with payment details when config.payement is true', () => {
         const updatedConfig = { ...config, payement: true };
-        render(<CurrentCommand orders={orders} config={updatedConfig} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} setBoard={mockSetBoard}/>);
+        render(<CurrentCommand orders={orders} config={updatedConfig} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
         expect(screen.getByText('Total')).toBeInTheDocument();
         expect(screen.getByText('Reste a payer')).toBeInTheDocument();
         expect(screen.getByText('0.00€')).toBeInTheDocument();
     });
 
     test('calls sendFirstOrder when Envoyer button is clicked', async () => {
-        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} setBoard={mockSetBoard}/>);
+        render(<CurrentCommand orders={orders} config={config} setConfig={mockSetConfig} setOrders={mockSetOrders} price={price} priceLess={priceLess} payList={payList} />);
         const sendButton = screen.getByText('Envoyer');
         fireEvent.click(sendButton);
         await waitFor(() => {
