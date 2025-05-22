@@ -38,6 +38,7 @@ export function loadTableBoard (setTableBoard) {
           w: table.type === "rectangle" ? 200 : 100,
           h: 100,
           time: table.time,
+          orderId: table.orderId,
           fused: false
         }
       })
