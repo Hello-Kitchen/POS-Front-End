@@ -317,22 +317,6 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
             .then(data => {
                 setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.orderId }));
             })
-            .then(() => {
-                fetch(
-                    `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/pos_config/`,
-                    {
-                      headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                      },
-                    }
-                  )
-                  .then((response) => {
-                    if (response.status === 401) {
-                      throw new Error("Unauthorized access. Please log in.");
-                    }
-                    return response.json();
-                  })
-            })
             .catch(error => {
                 console.log(error);
             });

@@ -157,6 +157,7 @@ describe('CurrentCommand', () => {
         fireEvent.click(sendButton);
 
         await waitFor(() => {
+            expect(global.fetch).toHaveBeenCalledTimes(1);
             expect(global.fetch).toHaveBeenCalledWith(
                 `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders${orders.tableId ? `?idTable=${orders.tableId}` : ''}`,
                 expect.objectContaining({
@@ -223,6 +224,7 @@ describe('CurrentCommand', () => {
         const sendButton = screen.getByText('Envoyer');
         fireEvent.click(sendButton);
         await waitFor(() => {
+            expect(global.fetch).toHaveBeenCalledTimes(1);
             expect(global.fetch).toHaveBeenCalledWith(
                 `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders${orders.tableId ? `?idTable=${orders.tableId}` : ''}`,
                 expect.objectContaining({
