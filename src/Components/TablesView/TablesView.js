@@ -90,7 +90,6 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
             }
             return prevBoard;
         });
-        setDataToBeSaved(true);
     };
 
     useEffect(() => {
@@ -118,7 +117,7 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
                 type: table.type,
                 plates: table.plates,
                 time: table.time,
-                orderId: table.orderId,
+                orderId: table.orderId ? table.orderId : null,
             }
         })
         const {innerWidth: width, innerHeight: height} = window;
