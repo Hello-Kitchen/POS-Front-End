@@ -16,6 +16,7 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
 
     const [border, setBorder] = useState("border-black")
     const [fuseBorder, setFuseBorder] = useState("border-kitchen-green")
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     const onTableClick = () => {
         if (inFuse.type !== "None") {
@@ -47,6 +48,36 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
     };
 
     useEffect(() => {
+        const interval = setInterval(() => {
+          setCurrentTime(new Date());
+        }, 1000);
+    
+        return () => clearInterval(interval);
+    }, []);
+    
+    /**
+     * @function calculateWaitingTime
+     * @description Calculates the waiting time for the order based on the order date.
+     * @param {string} orderDate - The date when the order was placed.
+     * @returns {Object} The calculated waiting time in hours, minutes, and seconds.
+     */
+    const calculateWaitingTime = (orderDate) => {
+        const diff = new Date(currentTime) - new Date(orderDate);
+        const totalSeconds = Math.floor(diff / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+      
+        return {
+          hours: String(hours).padStart(2, "0"),
+          minutes: String(minutes).padStart(2, "0"),
+          seconds: String(seconds).padStart(2, "0"),
+        };
+    };
+      
+    
+
+    useEffect(() => {
         if (!inFuse.fusedList.includes(table)) {
             if (table.time === "00:00") {
                 setFuseBorder("border-kitchen-green")
@@ -68,7 +99,7 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
             <div className={`${table.type === "circle" ? "text-xl" : "text-2xl"} row-span-1 self-center`}>{table.plates} {table.type === "rectangle" ? "couverts" : "couv."}</div>
             {inEdit === false ? table.time === "00:00" ?
                 <div className="row-span-1 self-center text-1xl">{table.type === "rectangle" ? "Disponible" : "Dispo."}</div>
-                : <div className="row-span-1 text-1xl">{table.time}</div> 
+                : <div className="row-span-1 text-1xl">{calculateWaitingTime(table.time).hours}:{calculateWaitingTime(table.time).minutes}</div> 
                 : <div/>}
         </div>
     );

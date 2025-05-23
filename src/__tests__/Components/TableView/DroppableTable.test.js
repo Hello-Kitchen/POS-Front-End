@@ -105,7 +105,7 @@ describe("DroppableTable Component", () => {
     });
 
     test("renders correct time", () => {
-        const tableWithTime = {...baseTable, time: "15:30"};
+        const tableWithTime = {...baseTable, time: new Date(Date.now() - 5 * 60 * 1000).toISOString()};
 
         render(
             <DroppableTable
@@ -119,6 +119,6 @@ describe("DroppableTable Component", () => {
             />
         );
 
-        expect(screen.getByText("15:30")).toBeInTheDocument();
+        expect(screen.getByText("00:05")).toBeInTheDocument();
     });
 });
