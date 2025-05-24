@@ -127,6 +127,8 @@ const Layout = ({
           setConfig(config);
         })
         .catch((error) => {
+          config.id_order = null;
+          setConfig(config);
           console.log(error);
         });
   }, [setOrders, setConfig, config, formatAll]);

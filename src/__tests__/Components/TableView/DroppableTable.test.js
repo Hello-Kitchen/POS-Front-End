@@ -73,6 +73,7 @@ describe("DroppableTable Component", () => {
                 setInFuse={() => {}}
                 setEditTable={() => {}}
                 setOrders={setOrders}
+                orderSelect={() => {}}
             />
         );
 
