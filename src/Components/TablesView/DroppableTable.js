@@ -12,13 +12,13 @@ import PropTypes from "prop-types";
  * @param {Function} setOrders state function used to update the current order
  * @returns {JSX.Element} The rendered DroppableTable component.
  */
-function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTable, setOrders}) {
+function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTable, setOrders, orderSelect}) {
 
     const [border, setBorder] = useState("border-black")
     const [fuseBorder, setFuseBorder] = useState("border-kitchen-green")
     const [currentTime, setCurrentTime] = useState(new Date());
 
-    const onTableClick = () => {
+    const onTableClick = (orderId) => {
         if (inFuse.type !== "None") {
             setInFuse((fused) => {
                 const filteredList = fused.fusedList.filter((t) => t.left !== table.left || t.top !== table.top);
@@ -43,7 +43,8 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
             setBorder("border-kitchen-button-orange")
             setEditTable(table)
         } else {
-            setOrders((Order) => ({...Order, number: table.id.toString(), tableId: table.id}));
+            setOrders((Order) => ({...Order, number: table.id.toString(), tableId: table.id, orderId: null, food: []}));
+            orderSelect(orderId);
         }
     };
 
@@ -94,7 +95,7 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
     }, [editTable, table])
 
     return (
-        <div onClick={() => onTableClick()} name={table.id} className={`${table.type === "circle" ? "rounded-full" : ""} border-4 absolute col-span-1 grid grid-flow-row ${inEdit === true ? `bg-grey-bg ${border} grid-rows-2` : table.time === "00:00" ? `bg-kitchen-green ${fuseBorder} grid-rows-3` : `bg-kitchen-yellow ${fuseBorder} grid-rows-3`} justify-center justify-items-center`} style={{width: table.w, height: table.h, top: table.top, left: table.left}}>   
+        <div onClick={() => onTableClick(table.orderId)} name={table.id} className={`${table.type === "circle" ? "rounded-full" : ""} border-4 absolute col-span-1 grid grid-flow-row ${inEdit === true ? `bg-grey-bg ${border} grid-rows-2` : table.time === "00:00" ? `bg-kitchen-green ${fuseBorder} grid-rows-3` : `bg-kitchen-yellow ${fuseBorder} grid-rows-3`} justify-center justify-items-center`} style={{width: table.w, height: table.h, top: table.top, left: table.left}}>   
             <div className={`${table.type === "circle" ? (table.id.length > 5 ? "text-xl" : "text-2xl") : (table.id.length > 5 ? "text-2xl" : "text-3xl")} row-span-1 self-center font-bold`}>{table.id}</div>
             <div className={`${table.type === "circle" ? "text-xl" : "text-2xl"} row-span-1 self-center`}>{table.plates} {table.type === "rectangle" ? "couverts" : "couv."}</div>
             {inEdit === false ? table.time === "00:00" ?
@@ -113,6 +114,7 @@ DroppableTable.propTypes = {
     setInFuse: PropTypes.func.isRequired,
     setEditTable: PropTypes.func.isRequired,
     setOrders: PropTypes.func.isRequired,
+    orderSelect: PropTypes.func.isRequired,
 }
 
 export default DroppableTable;

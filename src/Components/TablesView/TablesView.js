@@ -24,7 +24,7 @@ const TableList = [
  * @param {Function} setBoard state function used to update the tables board
  * @returns {JSX.Element} The rendered TablesView component.
  */
-export default function TablesView({ orders, setOrders, board, setBoard }) {
+export default function TablesView({ orders, setOrders, board, setBoard, orderSelect }) {
 
     const navigate = useNavigate();
 
@@ -152,7 +152,7 @@ export default function TablesView({ orders, setOrders, board, setBoard }) {
     }, [dataToBeSaved]);
 
     const boardElem = board.map((table) => (
-        <DroppableTable key={table.id} setDataToBeSaved={setDataToBeSaved} table={table} inEdit={inEdit} editTable={editTable} inFuse={inFuse} setInFuse={setInFuse} setEditTable={setEditTable} setOrders={setOrders} />
+        <DroppableTable key={table.id} setDataToBeSaved={setDataToBeSaved} table={table} inEdit={inEdit} editTable={editTable} inFuse={inFuse} setInFuse={setInFuse} setEditTable={setEditTable} setOrders={setOrders} orderSelect={orderSelect} />
     ));
 
     return (
@@ -173,4 +173,5 @@ TablesView.propTypes = {
     setOrders: PropTypes.func.isRequired,
     board: PropTypes.array.isRequired,
     setBoard: PropTypes.func.isRequired,
+    orderSelect: PropTypes.func.isRequired,
 }

@@ -127,6 +127,8 @@ const Layout = ({
           setConfig(config);
         })
         .catch((error) => {
+          config.id_order = null;
+          setConfig(config);
           console.log(error);
         });
   }, [setOrders, setConfig, config, formatAll]);
@@ -173,7 +175,7 @@ const Layout = ({
           />
         )}
         {activeTab === "TABLES" && (
-          <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} />
+          <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} orderSelect={getRecallOrder} />
         )}
         {activeTab === "COMMANDES" && (
           <OrdersView orderSelect={getRecallOrder} />
