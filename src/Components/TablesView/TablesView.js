@@ -11,9 +11,9 @@ import DroppableTable from "./DroppableTable";
 import { loadTableBoard } from "../../Pages/Loading/Loading";
 
 const TableList = [
-    {type: "square", plates: 2, w: 100, h: 100, time: "00:00", fused: false},
-    {type: "circle", plates: 2, w: 100, h: 100, time: "00:00", fused: false},
-    {type: "rectangle", plates: 4, w: 200, h: 100, time: "00:00", fused: false}
+    {type: "square", plates: 2, w: 100, h: 100, time: "00:00", fused: []},
+    {type: "circle", plates: 2, w: 100, h: 100, time: "00:00", fused: []},
+    {type: "rectangle", plates: 4, w: 200, h: 100, time: "00:00", fused: []}
 ]
 
 /**
@@ -107,9 +107,9 @@ export default function TablesView({ orders, setOrders, board, setBoard, orderSe
         setIsFirstRender(false);
     }, [setBoard]);
 
-    const saveTable = () => {
+    const createConfigBoard = (board) => {
         let configBoard = board.map((table) => {
-            return {
+            let obj = {
                 x: table.left,
                 y: table.top,
                 name: table.id.toString(),
@@ -119,7 +119,19 @@ export default function TablesView({ orders, setOrders, board, setBoard, orderSe
                 time: table.time,
                 orderId: table.orderId ? table.orderId : null,
             }
+            if (table.fused.length > 0) {
+                obj = {
+                    ...obj,
+                    fused: createConfigBoard(table.fused)
+                }
+            }
+            return obj
         })
+        return configBoard;
+    }
+
+    const saveTable = () => {
+        let configBoard = createConfigBoard(board);
         const {innerWidth: width, innerHeight: height} = window;
         let config = {
             tables: configBoard,

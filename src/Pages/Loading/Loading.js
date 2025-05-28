@@ -11,6 +11,55 @@ import { useNavigate } from "react-router-dom";
  * @example
  * loadTableBoard(setTableBoard);
  */
+
+  const checkTablePos = (table1, table2) => {
+    let diffTop = Math.abs(table2.top - table1.top);
+    let diffLeft = Math.abs(table2.left - table1.left);
+    if (diffTop > diffLeft) {
+        return true;
+    }
+    return false;
+  }
+
+  const getTables = (tables, w, h) => {
+    const { innerWidth: width, innerHeight: height } = window;
+  
+    const processTable = (table) => {
+      const left = width / (w / table.x);
+      const top = height / (h / table.y);
+      const isRectangle = table.type === "rectangle";
+      let tableWidth = isRectangle ? 200 : 100;
+      let tableHeight = 100;
+
+      const currentTable = {
+        type: table.type,
+        id: table.name,
+        left,
+        top,
+        plates: table.plates,
+        w: tableWidth,
+        h: tableHeight,
+        time: table.time,
+        fused: []
+      };
+      if (table.fused && table.fused.length > 0) {
+        currentTable.fused = table.fused.map(child => processTable(child, currentTable));
+        currentTable.fused.forEach(fusedTable => {
+          if (checkTablePos(currentTable, fusedTable)) {
+            currentTable.h += fusedTable.h;
+          } else {
+            currentTable.w += fusedTable.w;
+          }
+        });
+      }
+  
+      return currentTable;
+    };
+  
+    return tables.map(table => processTable(table));
+  };
+
+
 export function loadTableBoard (setTableBoard) {
   fetch(
       `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/pos_config/`,
@@ -27,21 +76,7 @@ export function loadTableBoard (setTableBoard) {
       return response.json();
     })
     .then((data) => {
-      const { innerWidth: width, innerHeight: height } = window;
-      const tables = data.tables.map((table) => {
-        return {
-          type: table.type,
-          id: table.name,
-          left: width / (data.width / table.x),
-          top: height / (data.height / table.y),
-          plates: table.plates,
-          w: table.type === "rectangle" ? 200 : 100,
-          h: 100,
-          time: table.time,
-          orderId: table.orderId,
-          fused: false
-        }
-      })
+      const tables = getTables(data.tables, data.width, data.height);
       setTableBoard(tables);
     })
     .catch((error) => {
