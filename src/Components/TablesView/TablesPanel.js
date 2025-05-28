@@ -23,10 +23,20 @@ function PlatesButton ({ editTable, setEditTable }) {
         }));
     };
 
+    const getTotalPlates = (table) => {
+        let total = table.plates || 0;
+        if (table.fused && table.fused.length > 0) {
+            for (const fusedTable of table.fused) {
+                total += getTotalPlates(fusedTable);
+            }
+        }
+        return total;
+    };
+
     return (
         <div className="grid grid-flow-col pt-5">
             <div className="text-white text-4xl">
-                {`Couverts : ${editTable.plates}`}
+                {`Couverts : ${getTotalPlates(editTable)}`}
             </div>
             <button onClick={() => handleAdd()} className="text-white text-4xl border-white border-y-2 border-l-2 border-r rounded-l-lg">+</button>
             <button onClick={() => handleDel()} className="text-white text-4xl border-white border-y-2 border-r-2 rounded-r-lg">-</button>

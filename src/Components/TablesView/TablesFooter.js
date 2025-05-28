@@ -54,9 +54,9 @@ function TablesFooter({setDataToBeSaved, setInEdit, inFuse, setInFuse, setBoard}
                         const size = checkTablePos(table1, table2);
                         const updatedTable = {
                             ...table,
-                            plates: table.plates + table2.plates,
                             h: table.h + (size ? table2.h : 0),
                             w: table.w + (!size ? table2.w : 0),
+                            fused: [...(table.fused || []), JSON.parse(JSON.stringify(table2))],
                         };
                         newBoard.push(updatedTable);
                     } else if (!table2Check) {
@@ -78,42 +78,34 @@ function TablesFooter({setDataToBeSaved, setInEdit, inFuse, setInFuse, setBoard}
 
     const onSepAdd = () => {
         setBoard((prevBoard) => {
-            if (inFuse.fusedList.length > 0) {
-                const [fusedTable] = inFuse.fusedList;
+            if (inFuse.fusedList.length === 0) return prevBoard;
 
-                const index = inFuse.sepList.findIndex(
-                    (t) => t.left === fusedTable.left && t.top === fusedTable.top
-                );
-                if (index === -1 || index + 1 >= inFuse.sepList.length) return prevBoard;
+            const [fusedTable] = inFuse.fusedList;
+            let lastFusedToRestore = null;
 
-                const sepTable1 = inFuse.sepList[index];
-                const sepTable2 = inFuse.sepList[index + 1];
+            const updatedBoard = prevBoard.map((table) => {
+                const isFused = table.left === fusedTable.left && table.top === fusedTable.top;
+                if (!isFused || !table.fused || table.fused.length === 0) return table;
 
-                const updatedBoard = prevBoard.map((table) => {
-                    const isFused = table.left === fusedTable.left && table.top === fusedTable.top;
-                    return isFused ? sepTable1 : table;
-                });
-                return [...updatedBoard, sepTable2];
-            }
+                const newFused = [...table.fused];
+                const lastTable = newFused.pop();
+                const size = checkTablePos(table, lastTable);
+                lastFusedToRestore = lastTable;
+
+                return {
+                    ...table,
+                    fused: newFused,
+                    h: table.h - (size ? lastTable.h : 0),
+                    w: table.w - (!size ? lastTable.w : 0),
+                };
+            });
+            return lastFusedToRestore ? [...updatedBoard, lastFusedToRestore] : updatedBoard;
         });
-        setInFuse((prevFuse) => {
-            const [fusedTable] = prevFuse.fusedList;
-
-            const index = prevFuse.sepList.findIndex(
-              (t) => t.left === fusedTable.left && t.top === fusedTable.top
-            );
-
-            if (index === -1 || index + 1 >= prevFuse.sepList.length) return prevFuse;
-
-            const newSepList = [...prevFuse.sepList];
-            newSepList.splice(index, 2);
-            return {
-                ...prevFuse,
-                fusedList: [],
-                sepList: newSepList,
-            };
-        });
-        setDataToBeSaved(true)
+        setInFuse((prevFuse) => ({
+            ...prevFuse,
+            fusedList: [],
+        }));
+        setDataToBeSaved(true);
     };
 
     const onDel = () => {
