@@ -3,11 +3,12 @@ import { Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import LayoutHeader from "../Components/LayoutHeader/LayoutHeader";
-import CurrentCommand from "../Components/CurrentCommand/CurrentCommand";
-import LayoutFooter from "../Components/LayoutFooter/LayoutFooter";
+import CurrentCommand, { mergeAllDuplicatesBetweenStops } from "../Components/CurrentCommand/CurrentCommand";
+import LayoutFooter, { FooterMainButton } from "../Components/LayoutFooter/LayoutFooter";
 import TablesView from "../Components/TablesView/TablesView";
 import OrdersView from "../Components/OrdersView/OrdersView";
 import ManagerView from "./Manager/ManagerView";
+import { Drawer } from "@mui/material";
 
 /**
  * Component : Main Layout of the POS Application, Main Component.
@@ -49,6 +50,7 @@ const Layout = ({
 }) => {
   const [activeTab, setActiveTab] = useState("");
   const [selectedOrder, setSelectedOrder] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   /**
    * @function updateActiveTab
@@ -79,6 +81,15 @@ const Layout = ({
     })
     return newOrders;
   }, []);
+
+  const ordersFoodString = JSON.stringify(orders.food);
+
+  useEffect(() => {
+    setOrders(prev => ({
+      ...prev,
+      food: mergeAllDuplicatesBetweenStops(prev.food)
+    }));
+  }, [ordersFoodString, setOrders]);
 
     const getRecallOrder = useCallback((orderId) => {
       setActiveTab("");
@@ -143,35 +154,24 @@ const Layout = ({
   return (
     <div className="column w-full h-full">
       <LayoutHeader textCenter="Caisse 1" />
-      <div className="w-full h-4/5">
-        {activeTab !== "TABLES" && activeTab !== 'GESTION' && (
-          <CurrentCommand
-            orders={orders}
-            config={config}
-            setConfig={setConfig}
-            setOrders={setOrders}
-            price={price}
-            priceLess={priceLess}
-            payList={payList}
-          />
-        )}
+      <div className="w-full h-4/5 flex flex-row">
         {activeTab === "" && (
           <Outlet
-            context={{
-              orders,
-              setOrders,
-              price,
-              config,
-              setConfig,
-              priceLess,
-              setPriceLess,
-              payList,
-              setPayList,
-              orderDetails,
-              setOrderDetails,
-              payDetail,
-              setPayDetail,
-            }}
+          context={{
+            orders,
+            setOrders,
+            price,
+            config,
+            setConfig,
+            priceLess,
+            setPriceLess,
+            payList,
+            setPayList,
+            orderDetails,
+            setOrderDetails,
+            payDetail,
+            setPayDetail,
+          }}
           />
         )}
         {activeTab === "TABLES" && (
@@ -183,21 +183,90 @@ const Layout = ({
         {activeTab === "GESTION" && (
           <ManagerView />
         )}
+        {activeTab !== "TABLES" && activeTab !== "GESTION" && (
+          <div className="h-full xl:w-1/4 lg:w-2/5 hidden lg:block">
+            <div className="w-full h-full">
+              <CurrentCommand
+                orders={orders}
+                config={config}
+                setConfig={setConfig}
+                setOrders={setOrders}
+                price={price}
+                priceLess={priceLess}
+                payList={payList}
+              />
+            </div>
+          </div>
+        )}
+
+        <Drawer
+          anchor="right"
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          slotProps={{
+            paper: {
+              sx: { width: '75%' },
+            },
+          }}
+        >
+          <div className="w-full h-full flex flex-col justify-between">
+            <div className="w-full h-[88%] overflow-y-auto">
+              <CurrentCommand
+                orders={orders}
+                config={config}
+                setConfig={setConfig}
+                setOrders={setOrders}
+                price={price}
+                priceLess={priceLess}
+                payList={payList}
+              />
+            </div>
+            <div className="w-full h-lf lg:hidden">
+              <FooterMainButton
+                price={price.toString()}
+                config={config}
+                setConfig={setConfig}
+                priceLess={priceLess}
+                setOrders={setOrders}
+                payDetail={payDetail}
+                setPriceLess={setPriceLess}
+                setPayList={setPayList}
+              />
+            </div>
+          </div>
+        </Drawer>
       </div>
-      <LayoutFooter
-        buttons={["tables", "commandes", "gestion"]}
-        price={price.toString()}
-        config={config}
-        setConfig={setConfig}
-        priceLess={priceLess}
-        setOrders={setOrders}
-        activeTab={activeTab}
-        updateActiveTab={updateActiveTab}
-        setSelectedOrder={setSelectedOrder}
-        payDetail={payDetail}
-        setPriceLess={setPriceLess}
-        setPayList={setPayList}
-      />
+      <div className="w-full h-lf flex flex-row">
+        <div className="w-full xl:w-3/4 lg:w-4/5 h-full">
+          <LayoutFooter
+            buttons={["tables", "commandes", "gestion"]}
+            price={price.toString()}
+            config={config}
+            setConfig={setConfig}
+            priceLess={priceLess}
+            setOrders={setOrders}
+            activeTab={activeTab}
+            updateActiveTab={updateActiveTab}
+            setSelectedOrder={setSelectedOrder}
+            payDetail={payDetail}
+            setPriceLess={setPriceLess}
+            setPayList={setPayList}
+            setDrawerOpen={setDrawerOpen}
+          />
+        </div>
+        <div className="xl:w-1/4 lg:w-2/5 h-full lg:block hidden">
+          <FooterMainButton
+            price={price.toString()}
+            config={config}
+            setConfig={setConfig}
+            priceLess={priceLess}
+            setOrders={setOrders}
+            payDetail={payDetail}
+            setPriceLess={setPriceLess}
+            setPayList={setPayList}
+          />
+        </div>
+      </div>
     </div>
   );
 };

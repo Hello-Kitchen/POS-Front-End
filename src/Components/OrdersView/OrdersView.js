@@ -92,7 +92,7 @@ export default function OrdersView({ orderSelect }) {
   }, [orders, selectedChannel]);
 
   return (
-    <div className="flex flex-col p-3">
+    <div className="w-full flex flex-col p-3">
       <div className="flex flex-row pb-2 items-center">
         <div className="text-2xl font-bold pr-2">
           {displayPastOrders ? "Commandes passées" : "Commandes en cours"}

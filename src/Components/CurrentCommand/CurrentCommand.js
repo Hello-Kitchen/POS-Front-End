@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { GoArrowRight } from "react-icons/go";
@@ -139,7 +139,7 @@ function Order({ order, border, config, setOrders }) {
     )
 }
 
-function mergeAllDuplicatesBetweenStops(items) {
+export function mergeAllDuplicatesBetweenStops(items) {
     const result = [];
     let currentGroup = [];
 
@@ -199,6 +199,7 @@ function createItemKey(item) {
  * @param {Function} setOrders state function to update the current orders
  */
 const Content = ({ orders, stop, config, setOrders }) => (
+
     <div className={!config.payement ? 'w-full flex flex-col overflow-auto scrollbar-hide' : 'w-full min-h-[h-current-cmd-content] flex flex-col overflow-auto scrollbar-hide border-b-4 border-kitchen-yellow box-border border-solid'}>
         {
             orders.food.map((order, index) => {
@@ -400,11 +401,8 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
  * @param {[Number]} payList List of all current transactions
  */
 function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
-    useEffect(() => {
-        orders.food = mergeAllDuplicatesBetweenStops(orders.food);
-      }, [orders]);
     return (
-        <div className='h-full w-1/4 bg-kitchen-blue float-right flex flex-col justify-between'>
+        <div className='h-full w-full bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className={!config.payement ? 'w-full max-h-[85%] float-right px-2 gap-3 flex flex-col' : 'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
                 <Header orders={orders} />
                 <Content orders={orders} stop={false} config={config} setOrders={setOrders} setConfig={setConfig} />

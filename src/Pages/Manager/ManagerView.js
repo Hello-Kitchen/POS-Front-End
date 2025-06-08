@@ -35,7 +35,7 @@ function ManagerView(){
     const [submenuOpened, setSubmenuOpened] = React.useState('');
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full w-full">
             {submenuOpened === '' && (
                 <div className="flex flex-col h-full">
                     {managerMenuOpen ? (
