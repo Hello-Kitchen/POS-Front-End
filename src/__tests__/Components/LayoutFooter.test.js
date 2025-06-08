@@ -205,10 +205,6 @@ describe('Footer Component', () => {
           expect(screen.getByText("DIRECT")).toBeInTheDocument();
     });
 
-    jest.mock('react-router-dom', () => ({
-        useNavigate: jest.fn(),
-    }));
-
     describe('FooterMainButton', () => {
         let setConfig, setOrders, setPriceLess, setPayList, navigate;
 
