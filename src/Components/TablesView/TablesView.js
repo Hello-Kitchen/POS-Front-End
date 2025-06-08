@@ -168,7 +168,7 @@ export default function TablesView({ orders, setOrders, board, setBoard, orderSe
     ));
 
     return (
-        <div className="h-full grid grid-flow-col grid-cols-4">
+        <div className="w-full h-full grid grid-flow-col grid-cols-4">
             <div className="col-span-3 grid grid-flow-row grid-rows-10">
                 <div id="drop-area" ref={drop} className="row-span-9">
                     {boardElem}

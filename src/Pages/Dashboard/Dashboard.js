@@ -161,7 +161,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
   }, []);
 
   return (
-    <div className="h-full w-3/4">
+    <div className="h-full w-full lg:w-3/4">
       {selectedCategory ? (
         <div className="h-full w-full">
           <FoodList
