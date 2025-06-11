@@ -88,7 +88,7 @@ const Login = () => {
                     
                     <div className="mb-6">
                         <label htmlFor="username" className="block pl-2 mb-3 text-lg md:text-base">
-                            Nom d'utilisateur
+                            Nom d&apos;utilisateur
                         </label>
                         <input
                             type="text"
