@@ -55,57 +55,70 @@ const Login = () => {
 
 
     return (
-        <div className="flex flex-row h-full w-full">
-            <div className="w-7/12 bg-kitchen-blue shadow-inner-right-lg"/>
-            <div className="flex flex-col w-5/12 justify-center pl-20">
-                <img src="./logo-notext.png" alt="Logo" className="w-2/6" />
-                <div className="font-extrabold text-2xl text-kitchen-blue mb-1">CONNEXION</div>
-                {error && (<div className="bg-kitchen-beige text-white w-4/6 mb-4 p-2 rounded">
-                    {error}
-                </div>)}
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label htmlFor="restaurantID" className="block pl-2">Numéro de restaurant</label>
+        <div className="flex flex-col md:flex-row h-screen w-full items-center justify-center md:items-stretch">
+            <div className="hidden md:block md:w-7/12 bg-kitchen-blue shadow-inner-right-lg"/>
+            <div className="flex flex-col w-full max-w-md md:w-5/12 md:max-w-none justify-center px-8 md:pl-20 py-10 md:py-0">
+                <img 
+                    src="./logo-notext.png" 
+                    alt="Logo" 
+                    className="w-2/5 md:w-2/6 mx-auto md:mx-0 mb-6"
+                />
+                <div className="font-extrabold text-4xl text-kitchen-blue mb-6 text-center md:text-left md:text-2xl">
+                    CONNEXION
+                </div>
+                {error && (
+                    <div className="bg-kitchen-beige text-white w-full md:w-3/4 mb-6 p-3 rounded text-center text-sm md:text-base">
+                        {error}
+                    </div>
+                )}
+                <form onSubmit={handleSubmit} className="w-full">
+                    <div className="mb-6">
+                        <label htmlFor="restaurantID" className="block pl-2 mb-3 text-lg md:text-base">
+                            Numéro de restaurant
+                        </label>
                         <input
                             type="text"
                             id="restaurantID"
                             name="restaurantID"
-                            className="w-4/6 p-2.5 rounded-2xl border border-kitchen-blue"
+                            className="w-full md:w-3/4 p-4 h-14 md:h-12 rounded-xl border border-kitchen-blue focus:outline-none focus:ring-2 focus:ring-kitchen-blue"
                             onChange={(e) => setRestaurantID(e.target.value)}
                             value={restaurantID}
                         />
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="username" className="block pl-2">Nom d&#39;utilisateur</label>
+                    
+                    <div className="mb-6">
+                        <label htmlFor="username" className="block pl-2 mb-3 text-lg md:text-base">
+                            Nom d&apos;utilisateur
+                        </label>
                         <input
                             type="text"
                             id="username"
                             name="username"
-                            className="w-4/6 p-2.5 rounded-2xl border border-kitchen-blue"
+                            className="w-full md:w-3/4 p-4 h-14 md:h-12 rounded-xl border border-kitchen-blue focus:outline-none focus:ring-2 focus:ring-kitchen-blue"
                             onChange={(e) => setUsername(e.target.value)}
                         />
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="password" className="block pl-2">Mot de passe</label>
+                    
+                    <div className="mb-8">
+                        <label htmlFor="password" className="block pl-2 mb-3 text-lg md:text-base">
+                            Mot de passe
+                        </label>
                         <input
                             type="password"
                             id="password"
                             name="password"
-                            className="w-4/6 p-2.5 rounded-2xl border border-kitchen-blue"
+                            className="w-full md:w-3/4 p-4 h-14 md:h-12 rounded-xl border border-kitchen-blue focus:outline-none focus:ring-2 focus:ring-kitchen-blue"
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-4/6 p-2.5 rounded-2xl bg-[#499CA6] text-white hover:bg-[#417f8c] transition duration-300"
+                        className="w-full md:w-3/4 p-4 h-14 md:h-12 rounded-xl bg-[#499CA6] text-white hover:bg-[#417f8c] transition duration-300 font-bold text-xl md:text-lg flex items-center justify-center"
                     >
-                        <div className="text-lg font-bold">
-                            Se connecter
-                        </div>
+                        Se connecter
                     </button>
                 </form>
             </div>
-
         </div>
     )
 };
