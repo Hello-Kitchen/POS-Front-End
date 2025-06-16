@@ -237,7 +237,7 @@ const Layout = ({
         </Drawer>
       </div>
       <div className="w-full h-lf flex flex-row">
-        <div className="w-full xl:w-3/4 lg:w-4/5 h-full">
+        <div className="w-full lg:w-3/4 h-full">
           <LayoutFooter
             buttons={["tables", "commandes", "gestion"]}
             price={price.toString()}
