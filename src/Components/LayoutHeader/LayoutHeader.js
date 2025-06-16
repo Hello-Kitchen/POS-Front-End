@@ -34,7 +34,7 @@ const formatDate = (date) => {
 function LayoutHeader({textCenter}) {
     const [currentTime, setCurrentTime] = useState(new Date());
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+    const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
     useEffect(() => {
         const interval = setInterval(() => {
