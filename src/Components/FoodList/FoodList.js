@@ -86,7 +86,7 @@ function FoodList({ foods, color, orders, setOrders, orderDetails, setOrderDetai
           name={name}
           onBackClick={onBackClick}
         />
-        <div className="h-[95%] grid grid-cols-4 grid-rows-8 content-start overflow-auto">
+        <div className="h-[95%] grid grid-cols-2 lg:grid-cols-4 grid-rows-8 content-start overflow-auto">
           {foodButtons}
         </div>
       </div>
