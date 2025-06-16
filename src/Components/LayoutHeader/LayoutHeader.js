@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useMediaQuery } from "react-responsive";
 
 import PropTypes from 'prop-types';
 
@@ -33,6 +34,7 @@ const formatDate = (date) => {
 function LayoutHeader({textCenter}) {
     const [currentTime, setCurrentTime] = useState(new Date());
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -45,9 +47,9 @@ function LayoutHeader({textCenter}) {
     return (
       <div className='w-full h-lh bg-kitchen-blue p-1'>
         <div className='w-full h-full flex justify-between items-center'>
-            {<SideText text={`${userInfo.id} - ${userInfo.firstname} ${userInfo.lastname}`}/>}
-            {<CenterText text={textCenter}/>}
-            {<SideText text={formatDate(currentTime)}/>}
+            {!isMobile && <SideText text={`${userInfo.id} - ${userInfo.firstname} ${userInfo.lastname}`}/>}
+            {!isMobile && <CenterText text={textCenter}/>}
+            {!isMobile && <SideText text={formatDate(currentTime)}/>}
         </div>
       </div>
     );
