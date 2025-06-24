@@ -48,5 +48,6 @@ OrdersRow.propTypes = {
     number: PropTypes.string.isRequired,
     channel: PropTypes.string.isRequired,
     time: PropTypes.string.isRequired,
-    chrono: PropTypes.string.isRequired
+    chrono: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
 }
