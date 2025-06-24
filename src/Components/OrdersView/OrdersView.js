@@ -71,6 +71,7 @@ export default function OrdersView({ orderSelect }) {
             channel: order.channel,
             time: String(time.getHours()).padStart(2, "0") + "h" + String(time.getMinutes()).padStart(2, "0"),
             chrono: chronoString,
+            total: order.total
           };
         });
       
@@ -90,11 +91,10 @@ export default function OrdersView({ orderSelect }) {
       );
     }
   }, [orders, selectedChannel]);
-
   return (
     <div className="w-full flex flex-col p-3">
       <div className="flex flex-row pb-2 items-center">
-        <div className="text-2xl font-bold pr-2">
+        <div className="text-4xl md:text-2xl font-bold pr-2">
           {displayPastOrders ? "Commandes passées" : "Commandes en cours"}
         </div>
         <IoSwapHorizontal
@@ -104,28 +104,34 @@ export default function OrdersView({ orderSelect }) {
           }}
         />
       </div>
-      <div className="flex flex-row items-center space-x-1 pb-2">
-        <div className="text-lg font-semibold pr-2">Canal</div>
-        <FilterButton
-          selected={selectedChannel === "Tous"}
-          text={"Tous"}
-          onClick={() => setSelectedChannel("Tous")}
-        />
-        <FilterButton
-          selected={selectedChannel === "Sur place"}
-          text={"Sur place"}
-          onClick={() => setSelectedChannel("Sur place")}
-        />
-        <FilterButton
-          selected={selectedChannel === "A emporter"}
-          text={"A emporter"}
-          onClick={() => setSelectedChannel("A emporter")}
-        />
-        <FilterButton
-          selected={selectedChannel === "LAD"}
-          text={"LAD"}
-          onClick={() => setSelectedChannel("LAD")}
-        />
+      <div className="flex items-center pb-2 space-x-2">
+        <div className="text-2xl md:text-lg font-semibold shrink-0 pr-2">
+          Canal
+        </div>
+        <div className="flex-1 overflow-x-auto">
+          <div className="flex space-x-2 whitespace-nowrap">
+            <FilterButton
+              selected={selectedChannel === "Tous"}
+              text={"Tous"}
+              onClick={() => setSelectedChannel("Tous")}
+            />
+            <FilterButton
+              selected={selectedChannel === "Sur place"}
+              text={"Sur place"}
+              onClick={() => setSelectedChannel("Sur place")}
+            />
+            <FilterButton
+              selected={selectedChannel === "A emporter"}
+              text={"A emporter"}
+              onClick={() => setSelectedChannel("A emporter")}
+            />
+            <FilterButton
+              selected={selectedChannel === "LAD"}
+              text={"LAD"}
+              onClick={() => setSelectedChannel("LAD")}
+            />
+          </div>
+        </div>
       </div>
       <div className="h-auto flex flex-col space-y-1">
         {displayedOrders.map((order) => (
@@ -139,6 +145,7 @@ export default function OrdersView({ orderSelect }) {
                 channel={order.channel}
                 time={order.time}
                 chrono={order.chrono}
+                price={order.total}
               />
             </div>
           </div>
