@@ -39,7 +39,7 @@ function Footer({ buttons, setConfig, setOrders, activeTab, updateActiveTab, set
     const [isModalOpen, setModalOpen] = useState(false);
     
     return (
-        <div className='relative w-full h-full flex flex-row'>
+        <div className='relative w-full h-[75px] flex flex-row sm:h-full'>
             <div className='w-full h-full bg-kitchen-yellow flex flex-row gap-0.5'>
                 <div className='w-full bg-kitchen-yellow flex flex-row justify-between'>
                     <ButtonSet buttons={buttons} activeTab={activeTab} updateActiveTab={updateActiveTab} />
