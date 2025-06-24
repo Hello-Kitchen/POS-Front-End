@@ -133,7 +133,7 @@ export default function OrdersView({ orderSelect }) {
           </div>
         </div>
       </div>
-      <div className="h-auto flex flex-col space-y-1">
+      <div className="flex-1 overflow-y-auto flex flex-col space-y-1 max-h-[calc(92vh-200px)]">
         {displayedOrders.map((order) => (
           <div key={order.id}>
             <div
