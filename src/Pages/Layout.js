@@ -152,9 +152,9 @@ const Layout = ({
   }, [selectedOrder, getRecallOrder]);
 
   return (
-    <div className="column w-full h-full">
+    <div className="flex flex-col w-full h-screen">
       <LayoutHeader textCenter="Caisse 1" />
-      <div className="w-full h-4/5 flex flex-row">
+      <div className="w-full flex-1 flex flex-row">
         {activeTab === "" && (
           <Outlet
           context={{
@@ -210,7 +210,7 @@ const Layout = ({
           }}
         >
           <div className="w-full h-full flex flex-col justify-between">
-            <div className="w-full h-[88%] overflow-y-auto">
+            <div className="h-full w-full sm:h-[88%] overflow-y-auto">
               <CurrentCommand
                 orders={orders}
                 config={config}
@@ -221,7 +221,7 @@ const Layout = ({
                 payList={payList}
               />
             </div>
-            <div className="w-full h-lf lg:hidden">
+            <div className="h-[75px] sm:h-lf w-full lg:hidden">
               <FooterMainButton
                 price={price.toString()}
                 config={config}
@@ -236,8 +236,8 @@ const Layout = ({
           </div>
         </Drawer>
       </div>
-      <div className="w-full h-lf flex flex-row">
-        <div className="w-full xl:w-3/4 lg:w-4/5 h-full">
+      <div className="h-[75px] sm:h-lf w-full flex flex-row mt-auto">
+        <div className="w-full lg:w-3/4 h-full">
           <LayoutFooter
             buttons={["tables", "commandes", "gestion"]}
             price={price.toString()}
