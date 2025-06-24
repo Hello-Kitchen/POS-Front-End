@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
  */
 function FoodStick({color}) {
     return (
-        <div className={`${color} col-span-1 mt-2 mb-2 ml-1 mr-4 rounded`} />
+        <div className={`${color} col-span-1 mt-2 mb-2 ml-1 sm:mr-4 rounded`} />
     );
 }
 

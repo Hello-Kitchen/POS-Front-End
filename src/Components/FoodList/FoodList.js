@@ -93,7 +93,7 @@ function FoodList({ foods, color, orders, setOrders, orderDetails, setOrderDetai
       {selectedFood && (
         <div>
           <div className="h-food-top absolute w-3/4 inset-0 z-10 bg-transparent"/>
-          <div className="top-food-top absolute h-4/6 w-3/4 bg-white flex justify-center items-center  transition-all duration-200">
+          <div className="top-food-top absolute h-4/6 xl:w-3/4 lg:w-4/6 w-full bg-white flex justify-center items-center  transition-all duration-200">
             <FoodElem
               foods={foods}
               color={color}

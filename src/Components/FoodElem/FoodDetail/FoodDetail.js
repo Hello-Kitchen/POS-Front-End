@@ -64,7 +64,7 @@ function FoodDetail({ name, data, multiple, orderDetails, setOrderDetails }) {
             className={`${elem.color} h-20 col-span-1 border border-white ${elem.selected ? 'shadow-button' : ''}`}
         >
             <button className="h-full w-full" onClick={() => handleClick(elem.name)}>
-                <h1 className="text-2xl text-white float-left ml-4">{elem.name}</h1>
+                <h1 className="sm:text-2xl text-xl text-white float-left sm:ml-4 ml-2">{elem.name}</h1>
             </button>
         </div>
     ));
@@ -72,11 +72,11 @@ function FoodDetail({ name, data, multiple, orderDetails, setOrderDetails }) {
     return (
         <div className="w-full grid grid-flow-row">
             <div className="h-20 flex content-center">
-                <h1 className="text-3xl font-bold text-black self-center ml-8">
+                <h1 className="sm:text-3xl text-2xl font-bold text-black self-center sm:ml-8 ml-4">
                     {name}
                 </h1>
             </div>
-            <div className="w-full grid grid-cols-4 mb-2">
+            <div className="w-full grid sm:grid-cols-4 grid-cols-2 mb-2">
                 {choice}
             </div>
         </div>

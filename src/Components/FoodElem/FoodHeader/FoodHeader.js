@@ -17,12 +17,12 @@ function FoodHeader({name, price, color}) {
         <div className="w-full row-span-1 grid grid-flow-col grid-cols-48 border-b-2 border-b-black">
             <FoodStick color={color} />
             <div className="h-full col-span-36 content-center self-center flex">
-                <h1 className="text-3xl font-bold text-black text-left self-center">
+                <h1 className="sm:text-3xl text-2xl font-bold text-black text-left self-center sm:ml-0 ml-2">
                     {name}
                 </h1>
             </div>
             <div className="col-span-11 w-full grid justify-items-end float-right pr-2 self-center">
-                <h1 className="text-3xl font-bold text-black">
+                <h1 className="sm:text-3xl text-2xl font-bold text-black">
                     {price}€
                 </h1>
             </div>
