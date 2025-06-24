@@ -137,7 +137,7 @@ const GenericButton = ({
                 onClick={handleClick}
             >
                 <CustomImage url={!isActive ? `./active-${imageUrl}` : `./${imageUrl}`} />
-                <div className={`text-3xl font-bold ${isActive ? 'text-kitchen-blue' : 'text-white'}`}>
+                <div className={`text-lg sm:text-3xl font-bold ${isActive ? 'text-kitchen-blue' : 'text-white'}`}>
                     {label}
                 </div>
             </div>
