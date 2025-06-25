@@ -37,7 +37,7 @@ export default function OrdersView({ orderSelect }) {
 
   useEffect(() => {
     fetch(
-      `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders`,
+      `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -63,7 +63,7 @@ export function FooterMainButton({ price, config, setConfig, priceLess, setOrder
     
     const handlePayement = async () => {
         const body = { value: payDetail, user: Number(JSON.parse(localStorage.getItem("userInfo")).id), discount: 0 };
-        await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/payment/${config.id_order}`, {
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/payment/${config.id_order}`, {
             method: 'PUT',
             body: JSON.stringify(body),
             headers: {

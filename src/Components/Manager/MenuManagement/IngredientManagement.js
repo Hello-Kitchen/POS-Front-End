@@ -18,7 +18,7 @@ import PropTypes from "prop-types";
 async function loadIngredients(navigate) {
   try {
     const response = await fetch(
-      `http://${process.env.REACT_APP_BACKEND_URL}:${
+      `${process.env.REACT_APP_BACKEND_URL}:${
         process.env.REACT_APP_BACKEND_PORT
       }/api/${localStorage.getItem("restaurantID")}/ingredient`,
       {
@@ -146,7 +146,7 @@ function IngredientManagement({ setAlert }) {
 
   const handleDeleteClick = (id) => () => {
     fetch(
-      `http://${process.env.REACT_APP_BACKEND_URL}:${
+      `${process.env.REACT_APP_BACKEND_URL}:${
         process.env.REACT_APP_BACKEND_PORT
       }/api/${localStorage.getItem("restaurantID")}/ingredient/${id}`,
       {
@@ -185,7 +185,7 @@ function IngredientManagement({ setAlert }) {
 
   const processRowUpdate = async (newRow) => {
     try {
-      const url = `http://${process.env.REACT_APP_BACKEND_URL}:${
+      const url = `${process.env.REACT_APP_BACKEND_URL}:${
         process.env.REACT_APP_BACKEND_PORT
       }/api/${localStorage.getItem("restaurantID")}/ingredient/${
         newRow.id === -1 ? "" : newRow.id

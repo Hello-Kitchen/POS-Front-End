@@ -62,7 +62,7 @@ import { useNavigate } from "react-router-dom";
 
 export function loadTableBoard (setTableBoard) {
   fetch(
-      `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/pos_config/`,
+      `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/pos_config/`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -102,7 +102,7 @@ function Loading({setTableBoard}) {
 
       loadTableBoard(setTableBoard);
 
-      fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/${localStorage.getItem("restaurantID")}`, {headers: {
+      fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/${localStorage.getItem("restaurantID")}`, {headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       }})
       .then((response) => {
@@ -126,7 +126,7 @@ function Loading({setTableBoard}) {
 
 }
 
-  //   //fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/${id}`).then(response => {
+  //   //fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/pos/${id}`).then(response => {
   //   //reprendre la ligne du dessous, valeur en brut en dessous
 
 export default Loading;
