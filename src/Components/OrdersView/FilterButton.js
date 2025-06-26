@@ -25,7 +25,7 @@ export default function FilterButton({onClick, selected, text}) {
                     `bg-white border-kitchen-yellow`
                 }
                 border-2 rounded-xl px-3
-                text-2xl md:text-sm 
+                text-xl md:text-2xl 
                 whitespace-nowrap`}
             onClick={onClick}
         >
