@@ -60,7 +60,7 @@ describe('ModalNewOrder Component', () => {
     fireEvent.click(screen.getByText('Sur place'));
 
     expect(global.fetch).toHaveBeenCalledWith(
-      `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem(
+      `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem(
         'restaurantID'
       )}/orders/number?channel=eatin`,
       {
@@ -97,7 +97,7 @@ describe('ModalNewOrder Component', () => {
     fireEvent.click(screen.getByText('A emporter'));
 
     expect(global.fetch).toHaveBeenCalledWith(
-      `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem(
+      `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem(
         'restaurantID'
       )}/orders/number?channel=togo`,
       {
