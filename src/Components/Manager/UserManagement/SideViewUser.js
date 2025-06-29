@@ -9,7 +9,6 @@ import {
 import { ExpandMore, SaveRounded } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import bcrypt from "bcryptjs-react";
 import PropTypes from "prop-types";
 
 /**
@@ -76,10 +75,7 @@ function SideViewUser({ user, setAlert, refreshData }) {
       ...newUser,
       ...(isNewUser &&
         password.password && {
-          password: bcrypt.hashSync(
-            password.password,
-            process.env.REACT_APP_SALT_HASH
-          ),
+          password: password.password
         }),
     };
 
@@ -108,14 +104,8 @@ function SideViewUser({ user, setAlert, refreshData }) {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
               },
               body: JSON.stringify({
-                oldPassword: bcrypt.hashSync(
-                  password.oldPassword,
-                  process.env.REACT_APP_SALT_HASH
-                ),
-                newPassword: bcrypt.hashSync(
-                  password.password,
-                  process.env.REACT_APP_SALT_HASH
-                ),
+                oldPassword: password.oldPassword,
+                newPassword: password.password,
               }),
             }
           );
