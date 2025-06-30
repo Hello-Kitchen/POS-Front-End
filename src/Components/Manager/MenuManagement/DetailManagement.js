@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 async function loadDetails(navigate) {
     try {
-          const response = await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/details`, {
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/details`, {
               headers: {
                   Authorization: `Bearer ${localStorage.getItem("token")}`,
               }
@@ -72,7 +72,7 @@ function DetailManagement({setAlert}) {
       }, [fetchData]);
 
       const deleteDetail = (id) => {
-        fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/details/${id}`, {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/details/${id}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -40,7 +40,7 @@ function SideViewDetail({ selectedDetail, setAlert, refreshData }) {
   const sendDetail = () => {
     setSendLoading(true);
     fetch(
-      `http://${process.env.REACT_APP_BACKEND_URL}:${
+      `${process.env.REACT_APP_BACKEND_URL}:${
         process.env.REACT_APP_BACKEND_PORT
       }/api/${localStorage.getItem("restaurantID")}/details/${
         newDetail.id === -1 ? "" : selectedDetail.id

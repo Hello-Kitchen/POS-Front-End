@@ -17,7 +17,7 @@ function ModalNewOrder({setModalOpen, setOrders, setConfig, setSelectedOrder}) {
               tmp: {}
             });
         } else {
-          fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/number?channel=${orderType}`,
+          fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/number?channel=${orderType}`,
           {headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           }})

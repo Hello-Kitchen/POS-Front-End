@@ -9,7 +9,7 @@ import SideViewUser from "./SideViewUser";
 
 async function loadUsers(navigate) {
     try {
-          const response = await fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/users`, {
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/users`, {
               headers: {
                   Authorization: `Bearer ${localStorage.getItem("token")}`,
               }
@@ -83,7 +83,7 @@ function UserManagemementGrid({setAlert}) {
       }, [fetchData]);
 
       const deleteUser = (id) => {
-        fetch(`http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/users/${id}`, {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/users/${id}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

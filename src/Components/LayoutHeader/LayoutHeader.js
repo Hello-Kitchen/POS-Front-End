@@ -43,13 +43,17 @@ function LayoutHeader({textCenter}) {
     }, []);
 
     return (
-      <div className='w-full h-lh bg-kitchen-blue p-1'>
-        <div className='w-full h-full flex justify-between items-center'>
-            {<SideText text={`${userInfo.id} - ${userInfo.firstname} ${userInfo.lastname}`}/>}
-            {<CenterText text={textCenter}/>}
-            {<SideText text={formatDate(currentTime)}/>}
+        <div className='h-[60px] w-full md:h-lh bg-kitchen-blue p-1'>
+            <div className='w-full h-full flex justify-between items-center'>
+                <SideText text={`${userInfo.id} - ${userInfo.firstname} ${userInfo.lastname}`} />
+                <div className='block pr-4 md:pr-0 md:absolute md:left-1/2 md:transform md:-translate-x-1/2'>
+                    <CenterText text={textCenter} />
+                </div>
+                <div className='hidden md:block'>
+                    <SideText text={formatDate(currentTime)} />
+                </div>
+            </div>
         </div>
-      </div>
     );
 }
 

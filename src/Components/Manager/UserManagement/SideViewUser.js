@@ -65,7 +65,7 @@ function SideViewUser({ user, setAlert, refreshData }) {
       return;
     }
 
-    const userUrl = `http://${process.env.REACT_APP_BACKEND_URL}:${
+    const userUrl = `${process.env.REACT_APP_BACKEND_URL}:${
       process.env.REACT_APP_BACKEND_PORT
     }/api/${localStorage.getItem("restaurantID")}/users/${
       isNewUser ? "" : user.id
@@ -96,7 +96,7 @@ function SideViewUser({ user, setAlert, refreshData }) {
       if (res.status === 200 || res.status === 201) {
         if (!isNewUser && password.password) {
           const passRes = await fetch(
-            `http://${process.env.REACT_APP_BACKEND_URL}:${
+            `${process.env.REACT_APP_BACKEND_URL}:${
               process.env.REACT_APP_BACKEND_PORT
             }/api/${localStorage.getItem("restaurantID")}/users/${
               user.id
