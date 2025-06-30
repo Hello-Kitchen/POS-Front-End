@@ -131,10 +131,10 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
 
     const noteButton = (
         
-        <div className={`h-15 w-full row-span-1 grid grid-flow-col sm:grid-cols-12 grid-cols-6 colbottom-0 content-center pl-6 pr-6`}>
-            <form onSubmit={handleFormSubmit} className="h-full w-full sm:col-span-12 col-span-6 grid grid-flow-col sm:grid-cols-12 grid-cols-6">
+        <div className={`h-15 w-full row-span-1 grid grid-flow-col lg:grid-cols-12 grid-cols-6 colbottom-0 content-center pl-6 pr-6`}>
+            <form onSubmit={handleFormSubmit} className="h-full w-full lg:col-span-12 col-span-6 grid grid-flow-col lg:grid-cols-12 grid-cols-7">
                 {noteBool === false &&
-                    <div className='sm:col-span-10 col-span-4'>
+                    <div className='lg:col-span-10 col-span-4'>
                         <h1 className="text-3xl text-black float-left ml-4">
                             Note
                         </h1>
@@ -143,14 +143,14 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
                 {noteBool === true &&
                     <input
                         type="text"
-                        className="text-2xl sm:col-span-10 col-span-4 border-2 rounded-full focus:outline-none px-4 float-left mt-1 mb-1 w-full"
+                        className="text-2xl lg:col-span-10 col-span-4 border-2 rounded-full focus:outline-none px-4 float-left mt-1 mb-1 w-full"
                         placeholder="Note"
                         value={noteValue}
                         onChange={handleInputChange}
                     />
                 }
-                <div className='w-full col-span-2 grid grid-flow-col grid-cols-5'>
-                    <button type="submit" onClick={() => handleNoteClick()} className="xl:text-3xl lg:text-2xl sm:text-xl text-2xl border-4 border-kitchen-food-detail-selected text-white col-start-3 justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-detail-selected h-current-cmd-content">
+                <div className='w-full lg:col-span-2 col-span-3 grid grid-flow-col grid-cols-5'>
+                    <button type="submit" onClick={() => handleNoteClick()} className="xl:text-3xl lg:text-2xl text-xl border-4 border-kitchen-food-detail-selected text-white col-start-3 justify-items-center col-span-3 self-center mt-1 mb-1 ml-1 rounded-full bg-kitchen-food-detail-selected h-current-cmd-content">
                         Ajouter
                     </button>
                 </div>
@@ -160,20 +160,20 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
 
     let i = 0
     const choice = fullData.map((elem) =>
-        <div key={i += 1} className={`${elem.color} h-15 w-full grid grid-flow-col sm:grid-cols-12 grid-cols-6 colbottom-0 content-center pl-6 pr-6 mb-1`} >
-            <div className='h-full sm:col-span-10 col-span-4'>
+        <div key={i += 1} className={`${elem.color} h-15 w-full grid grid-flow-col lg:grid-cols-10 xl:grid-cols-12 grid-cols-7 colbottom-0 content-center pl-6 pr-6 mb-1`} >
+            <div className='h-full lg:col-span-7 xl:col-span-10 col-span-4'>
                 <h1 className="text-3xl text-black float-left ml-4">
                     {elem.name}
                 </h1>
             </div>
-            <div className='h-full w-full col-span-2 grid grid-flow-col grid-cols-5'>
-                <button name="Supplément" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_add} xl:text-3xl lg:text-2xl sm:text-xl text-2xl text-white border-4 border-kitchen-food-ingredient-green col-span-1 mr-1 rounded-full aspect-square w-full h-full`}>
+            <div className='h-full w-full xl:col-span-2 col-span-3 grid grid-flow-col grid-cols-5'>
+                <button name="Supplément" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_add} xl:text-3xl lg:text-2xl text-xl text-white border-4 border-kitchen-food-ingredient-green col-span-1 mr-1 rounded-full aspect-square w-full h-full`}>
                     +
                 </button>
-                <button name="Retirer" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_del} xl:text-3xl lg:text-2xl sm:text-xl text-2xl text-white border-4 border-kitchen-food-ingredient-red col-span-1 self-center ml-1 rounded-full w-full h-full aspect-square`}>
+                <button name="Retirer" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_del} xl:text-3xl lg:text-2xl text-xl text-white border-4 border-kitchen-food-ingredient-red col-span-1 self-center ml-1 rounded-full w-full h-full aspect-square`}>
                     -
                 </button>
-                <button name="Allergie" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_all} xl:text-3xl lg:text-2xl sm:text-xl text-2xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-3 self-center ml-2 rounded-full h-full`}>
+                <button name="Allergie" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_all} xl:text-3xl lg:text-2xl text-xl text-white border-4 border-kitchen-food-ingredient-red justify-items-center col-span-3 self-center ml-2 rounded-full h-full`}>
                     Allergie
                 </button>
             </div>
