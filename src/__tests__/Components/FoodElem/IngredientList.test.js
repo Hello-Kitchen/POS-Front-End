@@ -5,9 +5,9 @@ import IngredientList from '../../../Components/FoodElem/Ingredientlist/Ingredie
 
 describe('IngredientList Component', () => {
   const mockData = [
-    'Salade',
-    'Tomate',
-    'Ognion',
+    {'name':'Salade'},
+    {'name':'Tomate'},
+    {'name':'Ognion'},
   ];
 
   const mockOrderDetails = {

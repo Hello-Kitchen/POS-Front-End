@@ -35,7 +35,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
   
     try {
       const response = await fetch(
-        `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/food?foodCategory=${id}`,
+        `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/food?foodCategory=${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -67,7 +67,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
   
           // If food is new
           const foodDetailsResponse = await fetch(
-            `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/food/${apiFood.id}?useCase=POS`,
+            `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/food/${apiFood.id}?useCase=POS`,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -120,7 +120,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
 
   useEffect(() => {
     fetch(
-      `http://${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/food_category`,
+      `${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/food_category`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

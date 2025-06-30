@@ -14,7 +14,7 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
     const [fullData, setFullData] = useState(data.map((elem => {
         return {
             id: elem.id,
-            name: elem,
+            name: elem.name,
             color_add: 'bg-kitchen-food-ingredient-green',
             color_del: 'bg-kitchen-food-ingredient-red',
             color_all: 'bg-kitchen-food-ingredient-red',
