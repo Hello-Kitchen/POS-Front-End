@@ -13,7 +13,7 @@ describe('FoodStick', () => {
         expect(div).toHaveClass('mt-2');
         expect(div).toHaveClass('mb-2');
         expect(div).toHaveClass('ml-1');
-        expect(div).toHaveClass('mr-4');
+        expect(div).toHaveClass('sm:mr-4');
         expect(div).toHaveClass('rounded');
     });
 });
