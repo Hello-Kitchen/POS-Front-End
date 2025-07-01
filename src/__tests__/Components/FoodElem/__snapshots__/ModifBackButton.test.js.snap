@@ -6,7 +6,7 @@ exports[`ModifBackButton Component matches the snapshot 1`] = `
     class="w-full row-span-1 grid grid-flow-col grid-cols-6 colbottom-0 content-center pl-6 pr-6"
   >
     <div
-      class="w-full col-span-5 justify-items-center flex-row content-center"
+      class="w-full col-span-5 justify-items-start flex-row content-center"
     >
       <h1
         class="text-3xl font-bold text-black"
