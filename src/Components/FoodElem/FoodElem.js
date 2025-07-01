@@ -11,9 +11,9 @@ import IngredientList from "../FoodElem/Ingredientlist/IngredientList";
 /**
  * Component : Component displaying all food related to a category of a restaurant
  *
- * @component CategoryList
+ * @component FoodElem
  */
-function FoodList({
+function FoodElem({
   foods,
   color,
   setOrders,
@@ -86,7 +86,7 @@ function FoodList({
   );
 }
 
-FoodList.propTypes = {
+FoodElem.propTypes = {
   foods: PropTypes.array.isRequired,
   color: PropTypes.string.isRequired,
   setOrders: PropTypes.func.isRequired,
@@ -98,4 +98,4 @@ FoodList.propTypes = {
   setInEdit: PropTypes.func.isRequired,
 };
 
-export default FoodList;
+export default FoodElem;
