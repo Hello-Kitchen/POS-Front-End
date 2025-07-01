@@ -325,7 +325,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
     }
 
     async function sendOtherOrder() {
-        const newOrders = [...orders];
+        const newOrders = { ...orders, food: [...orders.food] };
         const index = newOrders.food.findIndex(item => item.stop === true);
         if (index !== -1) {
             fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/next/${config.id_order}`, {
