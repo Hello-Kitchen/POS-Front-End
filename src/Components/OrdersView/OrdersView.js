@@ -98,7 +98,7 @@ export default function OrdersView({ orderSelect }) {
   return (
     <div className="w-full flex flex-col p-3">
       <div className="flex flex-row pb-2 items-center" onClick={() => {handleChannelChange();}}>
-        <div className="text-2xl md:text-4xl font-bold pr-2">
+        <div className="text-4xl font-bold pr-2">
           {displayPastOrders ? "Commandes passées" : "Commandes en cours"}
         </div>
         <IoSwapHorizontal
@@ -109,7 +109,7 @@ export default function OrdersView({ orderSelect }) {
         />
       </div>
       <div className="flex items-center pb-2 space-x-2">
-        <div className="text-xl sm:text-2xl font-semibold shrink-0 pr-2">
+        <div className="text-2xl sm:text-2xl font-semibold shrink-0 pr-2 pl-4 sm:pl-0">
           Canal
         </div>
         <div className="flex-1 overflow-x-auto">
