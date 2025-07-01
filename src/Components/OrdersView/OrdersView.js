@@ -72,7 +72,7 @@ export default function OrdersView({ orderSelect }) {
             time: String(time.getHours()).padStart(2, "0") + "h" + String(time.getMinutes()).padStart(2, "0"),
             chrono: chronoString,
             total: order.total,
-            served: order.served
+            payed: order.payment ? true : false
           };
         });
       
@@ -86,11 +86,11 @@ export default function OrdersView({ orderSelect }) {
   useEffect(() => {
     if (selectedChannel === "Tous") {
       setDisplayedOrders(
-        orders.filter((order) => order.served === displayPastOrders)
+        orders.filter((order) => order.payed === displayPastOrders)
       );
     } else {
       setDisplayedOrders(
-        orders.filter((order) => order.channel === selectedChannel && order.served === displayPastOrders)
+        orders.filter((order) => order.channel === selectedChannel && order.payed === displayPastOrders)
       );
     }
   }, [orders, selectedChannel, displayPastOrders]);
