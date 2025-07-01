@@ -24,8 +24,8 @@ describe('OrdersView Component', () => {
 
     test('filters past and current orders', async () => {
         const orders = [
-            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString(), served: false },
-            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString(), served: true },
+            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString(), payment: false },
+            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString(), payment: true },
         ];
         global.fetch.mockImplementationOnce(() =>
             Promise.resolve({
@@ -42,8 +42,8 @@ describe('OrdersView Component', () => {
 
     test('filters orders by channel', async () => {
         const orders = [
-            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString(), served: false },
-            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString(), served: false },
+            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString(), payment: false },
+            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString(), payment: false },
         ];
         global.fetch.mockImplementationOnce(() =>
             Promise.resolve({
