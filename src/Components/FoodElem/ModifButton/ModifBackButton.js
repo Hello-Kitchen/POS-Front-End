@@ -18,7 +18,7 @@ function ModifBackButton({closeModif}) {
 
     return (
         <div className="w-full row-span-1 grid grid-flow-col grid-cols-6 colbottom-0 content-center pl-6 pr-6">
-            <div className="w-full col-span-5 justify-items-center flex-row content-center">
+            <div className="w-full col-span-5 justify-items-start flex-row content-center">
                 <h1 className="text-3xl font-bold text-black">
                     Modifications
                 </h1>
