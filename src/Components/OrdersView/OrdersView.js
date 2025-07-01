@@ -26,13 +26,13 @@ import { IoSwapHorizontal } from "react-icons/io5";
  * @property {string} chrono - The elapsed time since the order was placed.
  */
 export default function OrdersView({ orderSelect }) {
-  const [displayPastOrders, setPastDisplayOrders] = React.useState(false);
+  const [displayPastOrders, setDisplayPastOrders] = React.useState(false);
   const [selectedChannel, setSelectedChannel] = React.useState("Tous");
   const [orders, setOrders] = React.useState([]);
   const [displayedOrders, setDisplayedOrders] = React.useState([]);
 
   const handleChannelChange = () => {
-    setPastDisplayOrders(!displayPastOrders);
+    setDisplayPastOrders(!displayPastOrders);
   };
 
   useEffect(() => {
@@ -71,7 +71,8 @@ export default function OrdersView({ orderSelect }) {
             channel: order.channel,
             time: String(time.getHours()).padStart(2, "0") + "h" + String(time.getMinutes()).padStart(2, "0"),
             chrono: chronoString,
-            total: order.total
+            total: order.total,
+            payed: order.payment ? true : false
           };
         });
       
@@ -84,17 +85,20 @@ export default function OrdersView({ orderSelect }) {
 
   useEffect(() => {
     if (selectedChannel === "Tous") {
-      setDisplayedOrders(orders);
+      setDisplayedOrders(
+        orders.filter((order) => order.payed === displayPastOrders)
+      );
     } else {
       setDisplayedOrders(
-        orders.filter((order) => order.channel === selectedChannel)
+        orders.filter((order) => order.channel === selectedChannel && order.payed === displayPastOrders)
       );
     }
-  }, [orders, selectedChannel]);
+  }, [orders, selectedChannel, displayPastOrders]);
+
   return (
     <div className="w-full flex flex-col p-3">
-      <div className="flex flex-row pb-2 items-center">
-        <div className="text-2xl md:text-4xl font-bold pr-2">
+      <div className="flex flex-row pb-2 items-center" onClick={() => {handleChannelChange();}}>
+        <div className="text-4xl font-bold pr-2">
           {displayPastOrders ? "Commandes passées" : "Commandes en cours"}
         </div>
         <IoSwapHorizontal
@@ -105,7 +109,7 @@ export default function OrdersView({ orderSelect }) {
         />
       </div>
       <div className="flex items-center pb-2 space-x-2">
-        <div className="text-xl sm:text-2xl font-semibold shrink-0 pr-2">
+        <div className="text-2xl sm:text-2xl font-semibold shrink-0 pr-2 pl-4 sm:pl-0">
           Canal
         </div>
         <div className="flex-1 overflow-x-auto">
