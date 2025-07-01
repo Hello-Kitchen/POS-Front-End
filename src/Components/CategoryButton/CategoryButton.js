@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 function CategoryButton({id, name, color, handleClick}) {
 
     return (
-        <div className={`${color} col-span-1 row-span-1`}>
+        <div className={`${color} col-span-1 sm:row-span-1 sm:h-full h-20`}>
             <button 
                 className="h-full w-full"
                 onClick={() => handleClick(id)}

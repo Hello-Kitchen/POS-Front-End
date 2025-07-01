@@ -176,7 +176,7 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
           />
         </div>
       ) : (
-        <div className="h-full grid grid-cols-2 grid-rows-8 content-start">
+        <div className="h-full grid sm:grid-cols-2 grid-cols-1 sm:grid-rows-8 content-start overflow-auto scrollbar-hide">
           {buttons}
         </div>
       )}
