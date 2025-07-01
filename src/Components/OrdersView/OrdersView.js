@@ -26,13 +26,13 @@ import { IoSwapHorizontal } from "react-icons/io5";
  * @property {string} chrono - The elapsed time since the order was placed.
  */
 export default function OrdersView({ orderSelect }) {
-  const [displayPastOrders, setPastDisplayOrders] = React.useState(false);
+  const [displayPastOrders, setDisplayPastOrders] = React.useState(false);
   const [selectedChannel, setSelectedChannel] = React.useState("Tous");
   const [orders, setOrders] = React.useState([]);
   const [displayedOrders, setDisplayedOrders] = React.useState([]);
 
   const handleChannelChange = () => {
-    setPastDisplayOrders(!displayPastOrders);
+    setDisplayPastOrders(!displayPastOrders);
   };
 
   useEffect(() => {
@@ -71,7 +71,8 @@ export default function OrdersView({ orderSelect }) {
             channel: order.channel,
             time: String(time.getHours()).padStart(2, "0") + "h" + String(time.getMinutes()).padStart(2, "0"),
             chrono: chronoString,
-            total: order.total
+            total: order.total,
+            served: order.served
           };
         });
       
@@ -84,16 +85,19 @@ export default function OrdersView({ orderSelect }) {
 
   useEffect(() => {
     if (selectedChannel === "Tous") {
-      setDisplayedOrders(orders);
+      setDisplayedOrders(
+        orders.filter((order) => order.served === displayPastOrders)
+      );
     } else {
       setDisplayedOrders(
-        orders.filter((order) => order.channel === selectedChannel)
+        orders.filter((order) => order.channel === selectedChannel && order.served === displayPastOrders)
       );
     }
-  }, [orders, selectedChannel]);
+  }, [orders, selectedChannel, displayPastOrders]);
+
   return (
     <div className="w-full flex flex-col p-3">
-      <div className="flex flex-row pb-2 items-center">
+      <div className="flex flex-row pb-2 items-center" onClick={() => {handleChannelChange();}}>
         <div className="text-2xl md:text-4xl font-bold pr-2">
           {displayPastOrders ? "Commandes passées" : "Commandes en cours"}
         </div>
