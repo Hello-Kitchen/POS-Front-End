@@ -45,7 +45,7 @@ function FoodList({ foods, color, orders, setOrders, orderDetails, setOrderDetai
     })
     return {
         details: detailsTemp,
-        sups: [...order.mods_ingredients.map((mod) => `${modTypeMap[mod.type] || mod.type} ${mod.ingredient}`),
+        sups: [...order.mods_ingredients.map((mod) => `${modTypeMap[mod.type] || mod.type} ${mod.ingredient} ${mod.suppPrice ? mod.suppPrice : ""}`),
             ...(order.note ? [order.note] : []),
         ],
     };

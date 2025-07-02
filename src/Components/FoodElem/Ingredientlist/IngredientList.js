@@ -15,6 +15,7 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
         return {
             id: elem.id,
             name: elem.name,
+            price: elem.suppPrice,
             color_add: 'bg-kitchen-food-ingredient-green',
             color_del: 'bg-kitchen-food-ingredient-red',
             color_all: 'bg-kitchen-food-ingredient-red',
@@ -90,13 +91,18 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
                 cpy.sups = removeDuplicate(cpy.sups, name)
                 color_change = updateAllButtons(event.target, data)
                 if (color_change.active === true) {
-                    cpy.sups.push(action + " " + name)
+                    if (action === "Supplément") {
+                        cpy.sups.push(action + " " + name + " +" + data.price)
+                    } else {
+                        cpy.sups.push(action + " " + name)
+                    }
                 }
                 setOrderDetails({details: orderDetails.details, sups: cpy.sups})
             }
             return {
                 id: data.id,
                 name: data.name,
+                price: data.price,
                 color_add: color_change.color_add,
                 color_del: color_change.color_del,
                 color_all: color_change.color_all
@@ -168,7 +174,7 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
             </div>
             <div className='h-full w-full xl:col-span-2 col-span-3 grid grid-flow-col grid-cols-5'>
                 <button name="Supplément" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_add} xl:text-3xl lg:text-2xl text-xl text-white border-4 border-kitchen-food-ingredient-green col-span-1 mr-1 rounded-full aspect-square w-full h-full`}>
-                    +
+                    {`+ ${elem.price}€`}
                 </button>
                 <button name="Retirer" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_del} xl:text-3xl lg:text-2xl text-xl text-white border-4 border-kitchen-food-ingredient-red col-span-1 self-center ml-1 rounded-full w-full h-full aspect-square`}>
                     -
