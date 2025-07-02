@@ -3,6 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Component : component used to create new order
+ *
+ * @component ModalNewOrder
+ * @param {Function} setModalOpen state function used to define a new modal, and close it when it's done
+ * @param {Function} setOrders state function used to update the orders
+ * @param {Function} setConfig state function used to update the config of the POS application
+ * @param {Function} setSelectedOrder state function used to update the selected food
+ */
 function ModalNewOrder({setModalOpen, setOrders, setConfig, setSelectedOrder}) {
 
     const navigate = useNavigate();

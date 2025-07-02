@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
  * @param {Function} setInFuse state function used to check the type of fuse, and update the arrays containing fused tables and selected tables
  * @param {Function} setEditTable state function used to update the table in edit
  * @param {Function} setOrders state function used to update the current order
+ * @param {Function} orderSelect state function used to change the ID of the current order
  * @returns {JSX.Element} The rendered DroppableTable component.
  */
 function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTable, setOrders, orderSelect}) {

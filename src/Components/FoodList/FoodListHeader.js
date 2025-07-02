@@ -6,10 +6,9 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 /**
  * FoodListHeader component renders a header for the food list with a back button and a title.
  *
- * @param {Object} props - The properties object.
- * @param {string} props.name - The name to be displayed in the header.
- * @param {string} props.color - The background color class for the header.
- * @param {Function} props.onBackClick - The function to be called when the back button is clicked.
+ * @param {string} name - The name to be displayed in the header.
+ * @param {string} color - The background color class for the header.
+ * @param {Function} onBackClick - The function to be called when the back button is clicked.
  * @returns {JSX.Element} The FoodListHeader component.
  */
 export default function FoodListHeader({ name, color, onBackClick }) {

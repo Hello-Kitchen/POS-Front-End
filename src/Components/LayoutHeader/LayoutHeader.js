@@ -28,7 +28,6 @@ const formatDate = (date) => {
  * 
  * @component LayoutHeader
  * @param {String} textCenter Number and name of logged in user
- * @param {String} textLeft number of the current active POS
  */
 function LayoutHeader({textCenter}) {
     const [currentTime, setCurrentTime] = useState(new Date());

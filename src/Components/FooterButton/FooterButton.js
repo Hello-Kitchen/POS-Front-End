@@ -171,13 +171,9 @@ let buttonData = {
  * This component dynamically generates buttons based on a list of keys, mapping each key
  * to the corresponding button data. It passes the `setConfig` function to buttons that need it.
  *
- * @param {Object} props - Component properties.
- * @param {string[]} props.buttons - An array of button keys to render.
- * @param {function} props.setConfig - Function to handle configuration toggling, passed to relevant buttons.
- * @param {function} props.navigationPrev - A function to navigate to the prev order.
- * @param {function} props.navigationAfter - A function to navigate to the next order.
- * @param {string} props.activeTab - The currently active tab.
- * @param {function} props.updateActiveTab - A function to update the active tab.
+ * @param {[String]} buttons - An array of button keys to render.
+ * @param {string} activeTab - The currently active tab.
+ * @param {function} updateActiveTab - A function to update the active tab.
  *
  * @return {JSX.Element} A set of rendered buttons.
  */

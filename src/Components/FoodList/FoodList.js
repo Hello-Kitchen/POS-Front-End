@@ -9,7 +9,7 @@ import FoodListHeader from "./FoodListHeader";
 /**
  * Component : Component displaying all food related to a category of a restaurant
  *
- * @component CategoryList
+ * @component FoodList
  * @param {Array} foods list of all food of a category
  * @param {String} color color code of the category
  * @param {[Object]} orders current order

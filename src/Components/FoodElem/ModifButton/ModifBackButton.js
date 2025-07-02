@@ -6,7 +6,7 @@ import { GoArrowDown } from "react-icons/go";
 /**
  * Header Component : used to change page from the ingredient modification page of a food to the detail modification page
  * 
- * @component ModifButton
+ * @component ModifBackButton
  * @param {function} closeModif function used to close the modification page
  */
 function ModifBackButton({closeModif}) {

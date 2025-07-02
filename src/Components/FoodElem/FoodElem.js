@@ -12,9 +12,16 @@ import IngredientList from "../FoodElem/Ingredientlist/IngredientList";
  * Component : Component displaying all food related to a category of a restaurant
  *
  * @component FoodElem
+ * @param {String} color color of the category
+ * @param {Function} setOrders state function used to update the current order as a whole
+ * @param {Object} orderDetails Object containing all relevant informations of the current order
+ * @param {Function} setOrderDetails state function used to update the current order details
+ * @param {Object} selectedFood Object containing all relevant informations of the chosen food
+ * @param {Function} setSelectedFood state function used to update the selected food
+ * @param {Boolean} inEdit boolean used to know if it's a new food, or a previous being edited
+ * @param {Function} setInEdit state function used to update inEdit
  */
 function FoodElem({
-  foods,
   color,
   setOrders,
   orderDetails,
@@ -63,13 +70,7 @@ function FoodElem({
               orderDetails={orderDetails}
               setOrderDetails={setOrderDetails}
             />
-            <ModifButton
-              id={selectedFood.id}
-              food={selectedFood.food}
-              foods={foods}
-              color={color}
-              openModif={openModif}
-            />
+            <ModifButton openModif={openModif} />
           </div>
         )}
       </div>
@@ -87,7 +88,6 @@ function FoodElem({
 }
 
 FoodElem.propTypes = {
-  foods: PropTypes.array.isRequired,
   color: PropTypes.string.isRequired,
   setOrders: PropTypes.func.isRequired,
   orderDetails: PropTypes.object.isRequired,
