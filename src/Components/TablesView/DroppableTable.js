@@ -102,8 +102,29 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
         }
     }, [editTable, table])
 
+    const getResponsiveSizeClasses = (height, width) => {
+        const base = 6.25
+        const sm = 10
+        const xl = 20
+        const round = (num) => Number(num.toFixed(2));
+        const baseH = round(height / base);
+        const smH = round(height / sm);
+        const xlH = round(height / xl);
+        const baseW = round(width / base);
+        const smW = round(width / sm);
+        const xlW = round(width / xl);
+
+        return {
+            h: `h-[${baseH}vw] sm:h-[${smH}vw] xl:h-[${xlH}vw]`,
+            w: `w-[${baseW}vw] sm:w-[${smW}vw] xl:w-[${xlW}vw]`
+        };
+    }
+    const { h, w } = getResponsiveSizeClasses(table.h, table.w);
+    console.log(h)
+    console.log(w)
+
     return (
-        <div onClick={() => onTableClick(table.orderId)} name={table.id} className={`${table.type === "circle" ? "rounded-full" : ""} border-4 absolute col-span-1 grid grid-flow-row ${inEdit === true ? `bg-grey-bg ${border} grid-rows-2` : table.time === "00:00" ? `bg-kitchen-green ${fuseBorder} grid-rows-3` : `bg-kitchen-yellow ${fuseBorder} grid-rows-3`} justify-center justify-items-center`} style={{width: table.w, height: table.h, top: table.top, left: table.left}}>   
+        <div onClick={() => onTableClick(table.orderId)} name={table.id} className={`${table.type === "circle" ? "rounded-full" : ""} border-4 absolute col-span-1 grid grid-flow-row ${inEdit === true ? `bg-grey-bg ${border} grid-rows-2` : table.time === "00:00" ? `bg-kitchen-green ${fuseBorder} grid-rows-3` : `bg-kitchen-yellow ${fuseBorder} grid-rows-3`} justify-center justify-items-center ${h} ${w} block`} style={{top: table.top, left: table.left}}>   
             <div className={`${table.type === "circle" ? (table.id.length > 5 ? "text-xl" : "text-2xl") : (table.id.length > 5 ? "text-2xl" : "text-3xl")} row-span-1 self-center font-bold`}>{table.id}</div>
             <div className={`${table.type === "circle" ? "text-xl" : "text-2xl"} row-span-1 self-center`}>{getTotalPlates(table)} {table.type === "rectangle" ? "couverts" : "couv."}</div>
             {inEdit === false ? table.time === "00:00" ?
