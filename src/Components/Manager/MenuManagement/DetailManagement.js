@@ -1,5 +1,5 @@
 import { Close, Delete } from "@mui/icons-material";
-import { DataGrid, GridActionsCellItem, GridToolbarContainer } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, Toolbar } from "@mui/x-data-grid";
 import React, { useCallback, useEffect } from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from "react-router-dom";
@@ -96,11 +96,11 @@ function DetailManagement({setAlert}) {
 
     function ToolBar() {
         return (
-          <GridToolbarContainer>
+          <Toolbar>
             <Button onClick={() => {setSelectedDetail({id: -1, name: '', multiple: false, data: [{type: 'text', name: ''}]});}}>
               Ajouter un detail
             </Button>
-          </GridToolbarContainer>
+          </Toolbar>
         )
     }
 
@@ -124,7 +124,7 @@ function DetailManagement({setAlert}) {
     ]
 
     return (
-        <div className="flex flex-row h-full w-full">
+        <div className="flex flex-row" style={{ height: 'calc(100vh - 309px)' }}> 
         <div className={selectedDetail ? 'w-3/4' : 'w-full'} style={{ display: "flex", flexDirection: "column", height: "100%" }}>
           <div className="flex-1 min-h-0">
             <DataGrid
@@ -134,6 +134,7 @@ function DetailManagement({setAlert}) {
               disableColumnFilter
               disableColumnSelector
               disableDensitySelector
+              showToolbar
               slots={{ toolbar: ToolBar }}
               slotProps={{
                 toolbar: {

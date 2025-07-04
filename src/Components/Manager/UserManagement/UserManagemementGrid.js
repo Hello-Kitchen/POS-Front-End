@@ -1,5 +1,5 @@
 import { Close, Delete } from "@mui/icons-material";
-import { DataGrid, GridActionsCellItem, GridToolbarContainer } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, Toolbar } from "@mui/x-data-grid";
 import React, { useCallback, useEffect } from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from "react-router-dom";
@@ -47,7 +47,7 @@ async function loadUsers(navigate) {
  *
  * @dependencies
  * - React (useState, useEffect, useCallback)
- * - Material-UI components: DataGrid, GridToolbarContainer, GridActionsCellItem, Slide, IconButton
+ * - Material-UI components: DataGrid, Toolbar, GridActionsCellItem, Slide, IconButton
  * - Custom components: SideViewUser
  * - Utility functions: loadUsers
  *
@@ -107,11 +107,11 @@ function UserManagemementGrid({setAlert}) {
 
     function ToolBar() {
         return (
-          <GridToolbarContainer>
+          <Toolbar>
             <Button onClick={() => {setSelectedUser({id: -1, username: '', firstname: '', lastname:'', password: ''});}}>
               Ajouter un utilisateur
             </Button>
-          </GridToolbarContainer>
+          </Toolbar>
         )
     }
 
@@ -137,7 +137,7 @@ function UserManagemementGrid({setAlert}) {
     ]
 
     return (
-        <div className="flex flex-row h-full w-full">
+        <div className="flex flex-row" style={{ height: 'calc(100vh - 309px)' }}> 
         <div className={selectedUser ? 'w-3/4' : 'w-full'} style={{ display: "flex", flexDirection: "column", height: "100%" }}>
           <div className="flex-1 min-h-0">
             <DataGrid
@@ -147,6 +147,7 @@ function UserManagemementGrid({setAlert}) {
               disableColumnFilter
               disableColumnSelector
               disableDensitySelector
+              showToolbar
               slots={{ toolbar: ToolBar }}
               slotProps={{
                 toolbar: {

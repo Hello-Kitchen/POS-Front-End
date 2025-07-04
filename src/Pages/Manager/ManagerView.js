@@ -3,6 +3,7 @@ import MenuListLine from "../../Components/MenuListLine/MenuListLine";
 import AccountManagement from "./AccountManagement";
 import MenuManagement from "./MenuManagement";
 import UserManagement from "./UserManagement";
+import PrepaQuart from "./PrepaQuart";
 
 /**
  * ManagerView component renders a user interface for managing different aspects of the application.
@@ -47,6 +48,7 @@ function ManagerView(){
                     ) : (
                         <div className="flex flex-col h-full">
                             <div className="w-full">
+                                <MenuListLine title={"Prépa quart"} onClick={() => setSubmenuOpened('Prépa quart')}/>
                                 <MenuListLine title={"Gestion du compte"} onClick={() => setSubmenuOpened('Gestion du compte')}/>
                             </div>
                             <div className="w-full mt-auto"> 
@@ -64,6 +66,9 @@ function ManagerView(){
             )}
             {submenuOpened === 'Gestion des utilisateurs' && (
                 <UserManagement onClickBack={() => setSubmenuOpened('')}/>
+            )}
+            {submenuOpened === 'Prépa quart' && (
+                <PrepaQuart onClickBack={() => setSubmenuOpened('')}/>
             )}
         </div>
     );

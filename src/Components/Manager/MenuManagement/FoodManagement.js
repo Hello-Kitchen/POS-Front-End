@@ -1,5 +1,5 @@
 import {  Button, IconButton, Slide } from "@mui/material";
-import { DataGrid,  GridActionsCellItem, GridToolbarContainer } from "@mui/x-data-grid";
+import { DataGrid,  GridActionsCellItem, Toolbar } from "@mui/x-data-grid";
 import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Close, Delete } from '@mui/icons-material';
@@ -155,11 +155,11 @@ function FoodManagement({setAlert}) {
 
   function ToolBar() {
     return (
-      <GridToolbarContainer>
+      <Toolbar>
         <Button onClick={() => {setSelectedFood({id: -1, name: '', price: '', id_category: '', details: [], ingredients: []});}}>
           Ajouter un plat
         </Button>
-      </GridToolbarContainer>
+      </Toolbar>
     )
   }
 
@@ -188,7 +188,7 @@ function FoodManagement({setAlert}) {
   ]
 
   return (
-    <div className="flex flex-row h-full w-full">
+    <div className="flex flex-row" style={{ height: 'calc(100vh - 309px)' }}> 
       <div className={selectedFood ? 'w-3/4' : 'w-full'} style={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <div className="flex-1 min-h-0">
           <DataGrid
@@ -198,6 +198,7 @@ function FoodManagement({setAlert}) {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            showToolbar
             slots={{ toolbar: ToolBar }}
             slotProps={{
               toolbar: {

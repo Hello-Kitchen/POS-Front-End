@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/fr';
 
 import "./index.css";
 
@@ -9,7 +12,9 @@ import PosRouter from './Pages/PosRouter';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <PosRouter />
+    <LocalizationProvider dateAdapter={AdapterDayjs} locale="fr">
+      <PosRouter />
+    </LocalizationProvider>
   </React.StrictMode>
 );
 
