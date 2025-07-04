@@ -11,8 +11,7 @@ function PrepaQuartGrid() {
     const [loading, setLoading] = React.useState(true);
     const [choosenDate, setChosenDate] = React.useState(dayjs(new Date()).startOf('day'));
 
-
-    const fetchData = () => {
+    const fetchData = React.useCallback(() => {
         setLoading(true);
         const convertedDate = choosenDate.format('YYYY-MM-DD');
         fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/kpi/ingredientForecast?useCase=POS&date=${convertedDate}`, {
@@ -37,11 +36,11 @@ function PrepaQuartGrid() {
         .catch(error => {
             console.error('Error:', error);
         });
-    };
+    }, [choosenDate]);
 
     React.useEffect(() => {
         fetchData();
-    }, [choosenDate]);
+    }, [fetchData]);
 
     const columns = [
         { field: 'name', headerName: 'Ingrédient', width: 200 },
@@ -80,18 +79,18 @@ function PrepaQuartGrid() {
                 columns={columns}
                 rows={data}
                 loading={loading}
-                // disableColumnFilter
-                // disableColumnSelector
-                // disableDensitySelector
-                // getRowId={(row) => row.id}
+                disableColumnFilter
+                disableColumnSelector
+                disableDensitySelector
+                getRowId={(row) => row.id}
                 slots={{ toolbar: CustomToolbar }}
                 showToolbar
-                // slotProps={{
-                //     loadingOverlay: {
-                //         variant: 'linear-progress',
-                //         noRowsVariant: 'linear-progress',
-                //     },
-                // }}
+                slotProps={{
+                    loadingOverlay: {
+                        variant: 'linear-progress',
+                        noRowsVariant: 'linear-progress',
+                    },
+                }}
             />
         </div>
     );
