@@ -78,7 +78,6 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
                 }
             });
         }
-        console.log("price: ", price);
         let number = 1;
         setOrders(prevOrders => {
             let updatedOrders = { ...prevOrders };
