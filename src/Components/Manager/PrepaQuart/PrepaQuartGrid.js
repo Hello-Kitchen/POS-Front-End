@@ -12,30 +12,32 @@ function PrepaQuartGrid() {
     const [choosenDate, setChosenDate] = React.useState(dayjs(new Date()).startOf('day'));
 
     const fetchData = React.useCallback(() => {
-        setLoading(true);
-        const convertedDate = choosenDate.format('YYYY-MM-DD');
-        fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/kpi/ingredientForecast?useCase=POS&date=${convertedDate}`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            }
-        })
-        .then(response => {
-            if (response.status === 401) {
-                throw new Error("Unauthorized access. Please log in.");
-            } else if (response.status === 200) {
-                return response.json();
-            } else {
-                throw new Error('Error fetching data');
-            }
-        })
-        .then(data => {
-            setData(data);
-            setLoading(false);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        if (choosenDate !== null) {
+            setLoading(true);
+            const convertedDate = choosenDate.format('YYYY-MM-DD');
+            fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/kpi/ingredientForecast?useCase=POS&date=${convertedDate}`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                }
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    throw new Error("Unauthorized access. Please log in.");
+                } else if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error('Error fetching data');
+                }
+            })
+            .then(data => {
+                setData(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
     }, [choosenDate]);
 
     React.useEffect(() => {
