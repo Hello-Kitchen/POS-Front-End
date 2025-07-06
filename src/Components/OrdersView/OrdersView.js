@@ -65,6 +65,7 @@ export default function OrdersView({ orderSelect }) {
             chronoString = String(minutes).padStart(2, "0") + "m";
           }
 
+          const timePayment = order.timePayment ? new Date(order.timePayment) : false;
           return {
             id: order.id,
             number: order.number, 
@@ -72,7 +73,8 @@ export default function OrdersView({ orderSelect }) {
             time: String(time.getHours()).padStart(2, "0") + "h" + String(time.getMinutes()).padStart(2, "0"),
             chrono: chronoString,
             total: order.total,
-            payed: order.payment ? true : false
+            payed: order.payment ? order.payment : false,
+            timePayment: order.timePayment ? String(timePayment.getHours()).padStart(2, "0") + "h" + String(timePayment.getMinutes()).padStart(2, "0") : false,
           };
         });
       
@@ -86,11 +88,11 @@ export default function OrdersView({ orderSelect }) {
   useEffect(() => {
     if (selectedChannel === "Tous") {
       setDisplayedOrders(
-        orders.filter((order) => order.payed === displayPastOrders)
+        orders.filter((order) => displayPastOrders ? order.payed !== false : order.payed === false)
       );
     } else {
       setDisplayedOrders(
-        orders.filter((order) => order.channel === selectedChannel && order.payed === displayPastOrders)
+        orders.filter((order) => order.channel === selectedChannel).filter((order) => displayPastOrders ? order.payed !== false : order.payed === false)
       );
     }
   }, [orders, selectedChannel, displayPastOrders]);
@@ -150,6 +152,8 @@ export default function OrdersView({ orderSelect }) {
                 time={order.time}
                 chrono={order.chrono}
                 price={order.total}
+                payment={order.payed}
+                timePayment={order.timePayment}
               />
             </div>
           </div>

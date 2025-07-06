@@ -15,7 +15,27 @@ import PropTypes from 'prop-types';
  * @param {number} props.price - The total price of the order.
  * @returns {JSX.Element} The rendered OrdersRow component.
  */
-export default function OrdersRow({ number, channel, time, chrono, price}) {
+export default function OrdersRow({ number, channel, time, chrono, price, payment, timePayment}) {
+    const formatPaymentMessage = ((payment) => {
+        const paymentTypes = {
+            'cb': "carte bleue",
+            'cash': "espèce",
+        }
+        if (payment.value.length === 1) {
+            return "Règlement en " + paymentTypes[payment.value[0].type]
+        } else {
+            let max = 0;
+            let maxIndex = 0;
+            payment.value.forEach((e, i) => {
+                if (max < parseInt(e.value)) {
+                    max = parseInt(e.value);
+                    maxIndex = i;
+                }
+            });
+            return "Règlement en " + paymentTypes[payment.value[maxIndex].type]
+        }
+    });
+
     return (
         <div className="flex flex-row justify-between items-center">
             <div>
@@ -29,10 +49,13 @@ export default function OrdersRow({ number, channel, time, chrono, price}) {
                 </div>
                 <div className="flex flex-row text-sm font-medium text-gray-600">
                     <div className=" pr-1">
-                        {time}
+                        {timePayment ? timePayment : time}
                     </div>
                     <div className="">
-                        - Ouverte depuis {chrono}
+                        {
+                            payment ? <>- {formatPaymentMessage(payment)}</> :
+                            <>- Ouverte depuis {chrono}</>
+                        }
                     </div>
                 </div>
             </div>
