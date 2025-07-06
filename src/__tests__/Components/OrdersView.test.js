@@ -25,7 +25,7 @@ describe('OrdersView Component', () => {
     test('filters past and current orders', async () => {
         const orders = [
             { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString(), payment: false },
-            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString(), payment: true },
+            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString(), payment: {value:[{type:'cb', value: '15'}]} },
         ];
         global.fetch.mockImplementationOnce(() =>
             Promise.resolve({

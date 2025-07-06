@@ -16,23 +16,24 @@ import PropTypes from 'prop-types';
  * @returns {JSX.Element} The rendered OrdersRow component.
  */
 export default function OrdersRow({ number, channel, time, chrono, price, payment, timePayment}) {
-    const formatPaymentMessage = ((payment) => {
+    console.log(payment)
+    const formatPaymentMessage = ((paymentInfo) => {
         const paymentTypes = {
             'cb': "carte bleue",
             'cash': "espèce",
         }
-        if (payment.value.length === 1) {
-            return "Règlement en " + paymentTypes[payment.value[0].type]
+        if (paymentInfo.length === 1) {
+            return "Règlement en " + paymentTypes[paymentInfo[0].type]
         } else {
             let max = 0;
             let maxIndex = 0;
-            payment.value.forEach((e, i) => {
+            paymentInfo.forEach((e, i) => {
                 if (max < parseInt(e.value)) {
                     max = parseInt(e.value);
                     maxIndex = i;
                 }
             });
-            return "Règlement en " + paymentTypes[payment.value[maxIndex].type]
+            return "Règlement en " + paymentTypes[paymentInfo[maxIndex].type]
         }
     });
 
@@ -53,7 +54,7 @@ export default function OrdersRow({ number, channel, time, chrono, price, paymen
                     </div>
                     <div className="">
                         {
-                            payment ? <>- {formatPaymentMessage(payment)}</> :
+                            payment ? <>- {formatPaymentMessage(payment.value)}</> :
                             <>- Ouverte depuis {chrono}</>
                         }
                     </div>
@@ -72,5 +73,7 @@ OrdersRow.propTypes = {
     channel: PropTypes.string.isRequired,
     time: PropTypes.string.isRequired,
     chrono: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
+    price: PropTypes.number.isRequired,
+    payment: PropTypes.object.isRequired,
+    timePayment: PropTypes.string.isRequired,
 }
