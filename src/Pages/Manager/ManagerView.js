@@ -4,6 +4,7 @@ import AccountManagement from "./AccountManagement";
 import MenuManagement from "./MenuManagement";
 import UserManagement from "./UserManagement";
 import PrepaQuart from "./PrepaQuart";
+import StatsView from "./StatsView";
 
 /**
  * ManagerView component renders a user interface for managing different aspects of the application.
@@ -49,6 +50,7 @@ function ManagerView(){
                         <div className="flex flex-col h-full">
                             <div className="w-full">
                                 <MenuListLine title={"Prépa quart"} onClick={() => setSubmenuOpened('Prépa quart')}/>
+                                <MenuListLine title={"Statistiques"} onClick={() => setSubmenuOpened('Statistiques')}/>
                                 <MenuListLine title={"Gestion du compte"} onClick={() => setSubmenuOpened('Gestion du compte')}/>
                             </div>
                             <div className="w-full mt-auto"> 
@@ -70,6 +72,8 @@ function ManagerView(){
             {submenuOpened === 'Prépa quart' && (
                 <PrepaQuart onClickBack={() => setSubmenuOpened('')}/>
             )}
+            {submenuOpened === 'Statistiques' && (
+                <StatsView onClickBack={() => setSubmenuOpened('')}/>)}
         </div>
     );
 };
