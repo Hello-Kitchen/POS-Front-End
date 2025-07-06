@@ -73,6 +73,31 @@ export default function TablesView({ orders, setOrders, board, setBoard, orderSe
         return check
     };
 
+    function collectIds(board) {
+        const ids = new Set();
+
+        function getId(board) {
+            for (const table of board) {
+                if (table.id !== undefined) {
+                    ids.add(Number(table.id));
+                }
+                if (Array.isArray(table.fused)) {
+                    getId(table.fused);
+                }
+            }
+        }
+        getId(board);
+        return ids;
+    }
+    function generateId(board) {
+        const tablesIds = collectIds(board);
+        let newId = 1;
+        while (tablesIds.has(newId)) {
+            newId++;
+        }
+        return newId;
+    }
+
     const addTable = (type, left, top, containerRect) => {
         setBoard((prevBoard) => {
             const table = TableList.find((table) => table.type === type);
@@ -85,7 +110,7 @@ export default function TablesView({ orders, setOrders, board, setBoard, orderSe
                 if (outOfBounds(left, top, table, containerRect)) {
                     return prevBoard;
                 }
-                const id = prevBoard.length
+                const id = generateId(prevBoard)
                 return [...prevBoard, { ...table, id, left, top }];
             }
             return prevBoard;
