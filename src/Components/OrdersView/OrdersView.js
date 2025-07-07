@@ -140,12 +140,15 @@ export default function OrdersView({ orderSelect }) {
         </div>
       </div>
       <div className="flex-1 overflow-y-auto flex flex-col space-y-1 max-h-[calc(92vh-200px)]">
-        {displayedOrders.map((order) => (
+        {displayedOrders.map((order, index) => (
           <div key={order.id}>
-            <div
+            {
+              index === 0 ? <></> :
+              <div
                 className="w-full h-1 border-b-[1px] border-black"
-            />
-            <div className="px-2 pt-1" onClick={() => orderSelect(order.id)}>
+              />
+            }
+            <div className="py-3 px-2 pt-1 sm:py-0" onClick={() => orderSelect(order.id)}>
               <OrdersRow
                 number={order.number}
                 channel={order.channel}
