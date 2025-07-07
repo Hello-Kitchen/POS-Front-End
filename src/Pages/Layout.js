@@ -175,7 +175,7 @@ const Layout = ({
           />
         )}
         {activeTab === "TABLES" && (
-          <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} orderSelect={getRecallOrder} />
+          <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} orderSelect={getRecallOrder} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
         )}
         {activeTab === "COMMANDES" && (
           <OrdersView orderSelect={getRecallOrder} />
@@ -199,6 +199,7 @@ const Layout = ({
           </div>
         )}
 
+        {activeTab !== "TABLES" && (
         <Drawer
           anchor="right"
           open={drawerOpen}
@@ -235,6 +236,7 @@ const Layout = ({
             </div>
           </div>
         </Drawer>
+        )}
       </div>
       <div className="h-[75px] sm:h-lf w-full flex flex-row mt-auto">
         <div className="w-full lg:w-3/4 h-full">

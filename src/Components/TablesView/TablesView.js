@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { Drawer } from "@mui/material";
 
 import { useDrop } from "react-dnd";
 import TablesFooter from "./TablesFooter";
@@ -24,7 +25,7 @@ const TableList = [
  * @param {Function} setBoard state function used to update the tables board
  * @returns {JSX.Element} The rendered TablesView component.
  */
-export default function TablesView({ orders, setOrders, board, setBoard, orderSelect }) {
+export default function TablesView({ orders, setOrders, board, setBoard, orderSelect, drawerOpen, setDrawerOpen }) {
 
     const navigate = useNavigate();
 
@@ -169,13 +170,31 @@ export default function TablesView({ orders, setOrders, board, setBoard, orderSe
 
     return (
         <div className="w-full h-full grid grid-flow-col grid-cols-4">
-            <div className="col-span-3 grid grid-flow-row grid-rows-10">
+            <div className="lg:col-span-3 col-span-4 grid grid-flow-row grid-rows-10">
                 <div id="drop-area" ref={drop} className="row-span-9">
                     {boardElem}
                 </div>
                 <TablesFooter setDataToBeSaved={setDataToBeSaved} setInEdit={setInEdit} inFuse={inFuse} setInFuse={setInFuse} setBoard={setBoard} />
             </div>
-            <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} />
+            {window.innerWidth > 1024 && (
+                <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} />
+            )}
+            {window.innerWidth < 1024 && (
+                <Drawer
+                    anchor="right"
+                    open={drawerOpen}
+                    onClose={() => setDrawerOpen(false)}
+                    slotProps={{
+                        paper: {
+                        sx: { width: '75%' },
+                      },
+                    }}
+                >
+                    <div className="w-full h-full flex flex-col justify-between">
+                        <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} />
+                    </div>
+                </Drawer>
+            )}
         </div>
     );
 }
@@ -186,4 +205,6 @@ TablesView.propTypes = {
     board: PropTypes.array.isRequired,
     setBoard: PropTypes.func.isRequired,
     orderSelect: PropTypes.func.isRequired,
+    drawerOpen: PropTypes.bool.isRequired,
+    setDrawerOpen: PropTypes.func.isRequired
 }
