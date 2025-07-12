@@ -124,7 +124,7 @@ function Order({ order, border, config, setOrders }) {
     return (
     <div className={`w-full h-auto p-2 ${border ? 'border-t border-t-kitchen-yellow' : ''}`}>
         <div onClick={() => handleOrderEdit()}>   
-            {order.name && order.price && order.number && <Food name={order.name} price={order.price} quantity={order.number} />}
+            {order.name && order.price && order.number && <Food name={order.name} price={order.price} quantity={order.quantity || order.number} />}
             {order.details && order.details.map((detail, index) => (
                 <Detail key={index} text={detail} />
             ))}
