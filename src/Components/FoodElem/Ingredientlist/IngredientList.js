@@ -174,7 +174,7 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
             </div>
             <div className='h-full w-full xl:col-span-2 col-span-3 grid grid-flow-col grid-cols-5'>
                 <button name="Supplément" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_add} xl:text-3xl lg:text-2xl text-xl text-white border-4 border-kitchen-food-ingredient-green col-span-1 mr-1 rounded-full aspect-square w-full h-full`}>
-                    {`+ ${elem.price}€`}
+                    +
                 </button>
                 <button name="Retirer" onClick={(e) => handleClick(e, elem.name)} className={`${elem.color_del} xl:text-3xl lg:text-2xl text-xl text-white border-4 border-kitchen-food-ingredient-red col-span-1 self-center ml-1 rounded-full w-full h-full aspect-square`}>
                     -
