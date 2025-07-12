@@ -22,10 +22,28 @@ describe('OrdersView Component', () => {
         expect(screen.getByText('Commandes en cours')).toBeInTheDocument();
     });
 
+    test('filters past and current orders', async () => {
+        const orders = [
+            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString(), payment: false },
+            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString(), payment: {value:[{type:'cb', value: '15'}]} },
+        ];
+        global.fetch.mockImplementationOnce(() =>
+            Promise.resolve({
+                json: () => Promise.resolve(orders),
+            })
+        );
+        render(<OrdersView orderSelect={mockOrderSelect} />);
+
+        expect(await screen.findByText('Table 1')).toBeInTheDocument();
+
+        fireEvent.click(screen.getByText('Commandes en cours'));
+        expect(screen.getByText('N°2')).toBeInTheDocument();
+    });
+
     test('filters orders by channel', async () => {
         const orders = [
-            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString() },
-            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString() },
+            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString(), payment: false },
+            { id: '2', number: 'N°2', channel: 'A emporter', date: new Date().toISOString(), payment: false },
         ];
         global.fetch.mockImplementationOnce(() =>
             Promise.resolve({
@@ -48,7 +66,7 @@ describe('OrdersView Component', () => {
 
     test('calls orderSelect when an order is clicked', async () => {
         const orders = [
-            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString() },
+            { id: '1', number: 'Table 1', channel: 'Sur place', date: new Date().toISOString(), served: false },
         ];
         global.fetch.mockImplementationOnce(() =>
             Promise.resolve({

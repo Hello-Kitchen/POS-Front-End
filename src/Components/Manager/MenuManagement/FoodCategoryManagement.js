@@ -8,7 +8,7 @@ import CancelIcon from "@mui/icons-material/Close";
 import {
   DataGrid,
   GridRowModes,
-  GridToolbarContainer,
+  Toolbar,
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
@@ -54,11 +54,11 @@ function EditToolbar(props) {
   };
 
   return (
-    <GridToolbarContainer>
+    <Toolbar>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
         Ajouter une catégorie
       </Button>
-    </GridToolbarContainer>
+    </Toolbar>
   );
 }
 
@@ -268,7 +268,7 @@ function FoodCategoryManagement({ setAlert }) {
   ];
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-row" style={{ height: 'calc(100vh - 309px)' }}> 
       <DataGrid
         rows={rows}
         columns={columns}
@@ -280,6 +280,7 @@ function FoodCategoryManagement({ setAlert }) {
         onProcessRowUpdateError={(error) => {
           console.error(error);
         }}
+        showToolbar
         slots={{ toolbar: EditToolbar }}
         slotProps={{
           toolbar: { setRows, setRowModesModel },
