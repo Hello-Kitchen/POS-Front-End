@@ -40,7 +40,14 @@ const Detail = ({ text }) => (
 
 const Sup = ({ text }) => (
     <div className="w-full flex flex-row gap-2 pl-3 items-center">
-        <div className="flex text-20px text-white font-light">{text.type === 'ADD' ? `Supplement ${text.ingredient} ${text.suppPrice}€` : text.type === 'ALE' ? `Allergie ${text.ingredient}` : text.type === 'DEL' ? `Sans ${text.ingredient}` : ``}</div>
+        <div className={`flex text-20px text-white font-light w-full ${text.suppPrice ? 'justify-between' : ''}`}>
+            <div>
+            {text.type === 'ADD' ? `Supplement ${text.ingredient}` : text.type === 'ALE' ? `Allergie ${text.ingredient}` : text.type === 'DEL' ? `Sans ${text.ingredient}` : ``}
+            </div>
+            <div>
+                {text.suppPrice ? `${text.suppPrice}€` : ''}
+            </div>
+        </div>
     </div>
 )
 
