@@ -200,7 +200,7 @@ function createItemKey(item) {
  */
 const Content = ({ orders, stop, config, setOrders }) => (
 
-    <div className={!config.payement ? 'w-full flex flex-col overflow-auto scrollbar-hide' : 'w-full min-h-[h-current-cmd-content] flex flex-col overflow-auto scrollbar-hide border-b-4 border-kitchen-yellow box-border border-solid'}>
+    <div className={!config.payement ? 'w-full max-h-none sm:max-h-[60vh] flex flex-col' : 'w-full max-h-none sm:max-h-[60vh] flex flex-col border-b-4 border-kitchen-yellow box-border border-solid'}>
         {
             orders.food.map((order, index) => {
                 if (index === 0) {
@@ -402,10 +402,12 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
  */
 function CurrentCommand({ orders, config, setConfig, setOrders, price, priceLess, payList }) {
     return (
-        <div className='h-full w-full bg-kitchen-blue float-right flex flex-col justify-between'>
+        <div className='h-full w-full bg-kitchen-blue float-right flex flex-col justify-between overflow-hidden'>
             <div className={!config.payement ? 'w-full max-h-[85%] float-right px-2 gap-3 flex flex-col' : 'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
                 <Header orders={orders} />
-                <Content orders={orders} stop={false} config={config} setOrders={setOrders} setConfig={setConfig} />
+                <div className='overflow-y-scroll scrollbar-hide'>
+                    <Content orders={orders} stop={false} config={config} setOrders={setOrders} setConfig={setConfig} />
+                </div>
             </div>
             <Footer config={config} orders={orders} setOrders={setOrders} setConfig={setConfig} price={price} priceLess={priceLess} payList={payList} />
         </div>
