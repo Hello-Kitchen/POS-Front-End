@@ -47,7 +47,7 @@ function PosRouter() {
     let tmp = 0;
     for (let i = 0; i < orders.food.length; i++) {
       if (orders.food[i].price) {
-        for (let j = 0; j < orders.food[i].number; j++) {
+        for (let j = 0; j < orders.food[i].quantity; j++) {
           tmp += Number(orders.food[i].price);
         }
       }
