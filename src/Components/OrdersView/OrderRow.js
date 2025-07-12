@@ -61,7 +61,7 @@ export default function OrdersRow({ number, channel, time, chrono, price, paymen
                 </div>
             </div>
             <div className="flex items-center space-x-1">
-                <div className="text-xl font-bold">{price}€</div>
+                <div className="text-xl font-bold">{price ? price.toFixed(2) : price}€</div>
                 <IoIosArrowForward size={25} />
             </div>
         </div>
