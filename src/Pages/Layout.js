@@ -137,6 +137,7 @@ const Layout = ({
             food: formatAll(orderedFoods),
           })
           config.id_order = data.id;
+          config.firstSend = false;
           setConfig(config);
         })
         .catch((error) => {
