@@ -160,7 +160,7 @@ EditPanel.propTypes = {
 }
 
 TablesPanel.propTypes = {
-    setDataToBeSaved: PropTypes.func.isRequired,
+    setDataToBeSaved: PropTypes.func,
     orders: PropTypes.object.isRequired,
     editTable: PropTypes.object.isRequired,
     setEditTable: PropTypes.func.isRequired,

@@ -117,15 +117,15 @@ function TablesFooter({setDataToBeSaved, setInEdit, inFuse, setInFuse, setBoard}
             <FooterButton url="fuse.png" type="Fuse" activeButton={activeButton} setActiveButton={setActiveButton} />
             {activeButton === "Fuse" &&
                 <div className="col-span-4 grid grid-flow-col grid-cols-2 justify-center justify-items-center">
-                    <div onClick={() => onFuseAdd()} id="fuse-add" className="col-span-1 flex items-center justify-center w-3/4 h-2/4 font-bold text-3xl text-white bg-kitchen-button-green self-center rounded-full">Fusionner</div>
-                    <div onClick={() => onDel()} id="fuse-del" className="col-span-1 flex items-center justify-center w-3/4 h-2/4 font-bold text-3xl text-white bg-kitchen-button-red self-center rounded-full">Annuler</div>
+                    <div onClick={() => onFuseAdd()} id="fuse-add" className="col-span-1 flex items-center justify-center w-3/4 h-2/4 font-bold text-sm md:text-lg lg:text-3xl text-white bg-kitchen-button-green self-center rounded-full">Fusionner</div>
+                    <div onClick={() => onDel()} id="fuse-del" className="col-span-1 flex items-center justify-center w-3/4 h-2/4 font-bold text-sm md:text-lg lg:text-3xl text-white bg-kitchen-button-red self-center rounded-full">Annuler</div>
                 </div>
             }
             <FooterButton url="sep.png" type="Sep" activeButton={activeButton} setActiveButton={setActiveButton} />
             {activeButton === "Sep" &&
                 <div className="col-span-9 grid grid-flow-col grid-cols-9 justify-center justify-items-center">
-                    <div onClick={() => onSepAdd()} id="sep-add" className="col-span-2 flex items-center justify-center w-3/4 h-2/4 font-bold text-3xl text-white bg-kitchen-button-green self-center rounded-full">Séparer</div>
-                    <div onClick={() => onDel()} id="sep-del" className="col-span-2 flex items-center justify-center w-3/4 h-2/4 font-bold text-3xl text-white bg-kitchen-button-red self-center rounded-full">Annuler</div>
+                    <div onClick={() => onSepAdd()} id="sep-add" className="col-span-2 flex items-center justify-center w-3/4 h-2/4 font-bold text-sm md:text-lg lg:text-3xl text-white bg-kitchen-button-green self-center rounded-full">Séparer</div>
+                    <div onClick={() => onDel()} id="sep-del" className="col-span-2 flex items-center justify-center w-3/4 h-2/4 font-bold text-sm md:text-lg lg:text-3xl text-white bg-kitchen-button-red self-center rounded-full">Annuler</div>
                     <div id="blank" className="col-span-5" />
                 </div>
             }
