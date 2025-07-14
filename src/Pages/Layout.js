@@ -63,6 +63,8 @@ const Layout = ({
   };
 
   const reformatOrder = (order) => {
+    if (order.stop)
+      return order;
     let cleanOrder = {
       food: order.food,
       name: order.name,
@@ -71,6 +73,7 @@ const Layout = ({
       note: order.note,
       price: order.price.toString(),
       number: order.part,
+      quantity: order.quantity
     }
     return cleanOrder;
   };
@@ -108,13 +111,12 @@ const Layout = ({
           return response.json();
         })
         .then((data) => {
-
           // Group food by parts
           const groupedByPart = data.food_ordered.reduce((groups, food) => {
             if (!groups[food.part]) {
               groups[food.part] = [];
             }
-            groups[food.part].push({ ...food, quantity: undefined });
+            groups[food.part].push({ ...food, quantity: food.quantity });
             return groups;
           }, {});
 
@@ -135,6 +137,7 @@ const Layout = ({
             food: formatAll(orderedFoods),
           })
           config.id_order = data.id;
+          config.firstSend = false;
           setConfig(config);
         })
         .catch((error) => {
@@ -175,7 +178,7 @@ const Layout = ({
           />
         )}
         {activeTab === "TABLES" && (
-          <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} orderSelect={getRecallOrder} />
+          <TablesView orders={orders} setOrders={setOrders} board={tableBoard} setBoard={setTableBoard} orderSelect={getRecallOrder} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
         )}
         {activeTab === "COMMANDES" && (
           <OrdersView orderSelect={getRecallOrder} />
@@ -199,6 +202,7 @@ const Layout = ({
           </div>
         )}
 
+        {activeTab !== "TABLES" && (
         <Drawer
           anchor="right"
           open={drawerOpen}
@@ -235,6 +239,7 @@ const Layout = ({
             </div>
           </div>
         </Drawer>
+        )}
       </div>
       <div className="h-[75px] sm:h-lf w-full flex flex-row mt-auto">
         <div className="w-full lg:w-3/4 h-full">
