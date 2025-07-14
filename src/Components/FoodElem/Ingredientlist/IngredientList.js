@@ -15,6 +15,7 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
         return {
             id: elem.id,
             name: elem.name,
+            price: elem.suppPrice,
             color_add: 'bg-kitchen-food-ingredient-green',
             color_del: 'bg-kitchen-food-ingredient-red',
             color_all: 'bg-kitchen-food-ingredient-red',
@@ -90,13 +91,18 @@ function IngredientList({data, orderDetails, setOrderDetails}) {
                 cpy.sups = removeDuplicate(cpy.sups, name)
                 color_change = updateAllButtons(event.target, data)
                 if (color_change.active === true) {
-                    cpy.sups.push(action + " " + name)
+                    if (action === "Supplément") {
+                        cpy.sups.push(action + " " + name + " +" + data.price)
+                    } else {
+                        cpy.sups.push(action + " " + name)
+                    }
                 }
                 setOrderDetails({details: orderDetails.details, sups: cpy.sups})
             }
             return {
                 id: data.id,
                 name: data.name,
+                price: data.price,
                 color_add: color_change.color_add,
                 color_del: color_change.color_del,
                 color_all: color_change.color_all

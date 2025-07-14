@@ -34,7 +34,7 @@ describe('IngredientList Component', () => {
     expect(mockSetOrderDetails).toHaveBeenCalledTimes(1);
     expect(mockSetOrderDetails).toHaveBeenCalledWith({
       details: '',
-      sups: ['Supplément Salade'],
+      sups: ['Supplément Salade +undefined'],
     });
   });
 

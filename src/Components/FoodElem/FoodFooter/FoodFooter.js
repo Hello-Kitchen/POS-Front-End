@@ -47,7 +47,7 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
             let info = e.split(" ");
             switch (info[0]) {
                 case "Supplément":
-                    res.push({type: "ADD", ingredient: info[1]});
+                    res.push({type: "ADD", ingredient: info[1], suppPrice: info[2]});
                     break;
                 case "Retirer":
                     res.push({type: "DEL", ingredient: info[1]});
@@ -67,6 +67,17 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
     const addToOrder = () => {
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);
+        let price = Number(food.price);
+        if (sups.sup && Array.isArray(sups.sup)) {
+            sups.sup.forEach(sup => {
+                if (sup.type === "ADD" && sup.suppPrice) {
+                    const supp = Number(sup.suppPrice);
+                    if (!isNaN(supp)) {
+                        price += supp;
+                    }
+                }
+            });
+        }
         let number = 1;
         setOrders(prevOrders => {
             let updatedOrders = { ...prevOrders };
@@ -85,7 +96,7 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
             }
             return updatedOrders;
         });
-        let current = {food: food.id, name: food.name, price: String(food.price), details: details, mods_ingredients: sups.sup, note: sups.note, number: number, category: food.id_category};
+        let current = {food: food.id, name: food.name, price: String(price), details: details, mods_ingredients: sups.sup, note: sups.note, number: number, category: food.id_category};
         setOrderDetails({details: [], sups: []});
         setInEdit(false);
         closeDetail();

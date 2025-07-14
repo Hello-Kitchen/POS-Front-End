@@ -20,7 +20,6 @@ function Dashboard({ orders, setOrders, orderDetails, setOrderDetails }) {
 
   useEffect(() => {
     if (orders.tmp && Object.keys(orders.tmp).length > 0) {
-      console.log("orders.tmp", orders.tmp);
       const obj = JSON.parse(data).find((elem) => elem.food.find((f) => f.id === orders.tmp.food));
       setCategoryFood(obj.food)
       setSelectedCategory(obj.id)

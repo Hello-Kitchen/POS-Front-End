@@ -22,7 +22,7 @@ const Header = ({ orders }) => {
     );
 };
 
-function Food ({ name, price, quantity }) {
+function Food({ name, price, quantity }) {
     return (
         <div className='w-full flex flex-row justify-between'>
             <div className='flex text-24px text-white font-light'>{quantity}x {name}</div>
@@ -40,7 +40,14 @@ const Detail = ({ text }) => (
 
 const Sup = ({ text }) => (
     <div className="w-full flex flex-row gap-2 pl-3 items-center">
-        <div className="flex text-20px text-white font-light">{text.type === 'ADD' ? `Supplement ${text.ingredient}` : text.type === 'ALE' ? `Allergie ${text.ingredient}` : text.type === 'DEL' ? `Sans ${text.ingredient}` : ``}</div>
+        <div className={`flex text-20px text-white font-light w-full ${text.suppPrice ? 'justify-between' : ''}`}>
+            <div>
+            {text.type === 'ADD' ? `Supplement ${text.ingredient}` : text.type === 'ALE' ? `Allergie ${text.ingredient}` : text.type === 'DEL' ? `Sans ${text.ingredient}` : ``}
+            </div>
+            <div>
+                {text.suppPrice ? `${text.suppPrice}€` : ''}
+            </div>
+        </div>
     </div>
 )
 
@@ -58,11 +65,12 @@ const Stop = () => (
     </div>
 )
 
-function Edit({order, setOrders}) {
+function Edit({ order, setOrders }) {
 
     const addOrderQuantity = () => {
         setOrders((prevOrders) => {
-            return {...prevOrders, food: prevOrders.food.map((item) => {
+            return {
+                ...prevOrders, food: prevOrders.food.map((item) => {
                     if (item === order) {
                         return { ...item, number: item.number + 1 };
                     }
@@ -73,7 +81,8 @@ function Edit({order, setOrders}) {
     };
     const delOrderQuantity = () => {
         setOrders((prevOrders) => {
-            return {...prevOrders, food: prevOrders.food.map((item) => {
+            return {
+                ...prevOrders, food: prevOrders.food.map((item) => {
                     if (item === order) {
                         return { ...item, number: item.number - 1 };
                     }
@@ -86,9 +95,9 @@ function Edit({order, setOrders}) {
     const modifyFoodOrder = () => {
         setOrders((prevOrders) => {
             if (prevOrders.tmp && Object.keys(prevOrders.tmp).length > 0) {
-                return {...prevOrders, tmp: prevOrders.tmp};
-        }
-            return {...prevOrders, tmp: order };
+                return { ...prevOrders, tmp: prevOrders.tmp };
+            }
+            return { ...prevOrders, tmp: order };
         });
     };
 
@@ -112,7 +121,7 @@ function Edit({order, setOrders}) {
  */
 
 function Order({ order, border, config, setOrders }) {
-    
+
     const [edit, setEdit] = useState(false)
 
     const handleOrderEdit = () => {
@@ -122,20 +131,20 @@ function Order({ order, border, config, setOrders }) {
             setEdit(false);
     };
     return (
-    <div className={`w-full h-auto p-2 ${border ? 'border-t border-t-kitchen-yellow' : ''}`}>
-        <div onClick={() => handleOrderEdit()}>   
-            {order.name && order.price && order.number && <Food name={order.name} price={order.price} quantity={order.quantity || order.number} />}
-            {order.details && order.details.map((detail, index) => (
-                <Detail key={index} text={detail} />
-            ))}
-            {order.mods_ingredients && order.mods_ingredients.map((sup, index) => (
-                <Sup key={index} text={sup} />
-            ))}
-            {order.note && <Note text={order.note} />}
-            {!config.payement && order.stop && <Stop />}
+        <div className={`w-full h-auto p-2 ${border ? 'border-t border-t-kitchen-yellow' : ''}`}>
+            <div onClick={() => handleOrderEdit()}>
+                {order.name && order.price && order.number && <Food name={order.name} price={order.price} quantity={order.quantity || order.number} />}
+                {order.details && order.details.map((detail, index) => (
+                    <Detail key={index} text={detail} />
+                ))}
+                {order.mods_ingredients && order.mods_ingredients.map((sup, index) => (
+                    <Sup key={index} text={sup} />
+                ))}
+                {order.note && <Note text={order.note} />}
+                {!config.payement && order.stop && <Stop />}
+            </div>
+            {edit && <Edit order={order} setOrders={setOrders} />}
         </div>
-        {edit && <Edit order={order} setOrders={setOrders} />}
-    </div>
     )
 }
 
@@ -164,18 +173,18 @@ export function mergeAllDuplicatesBetweenStops(items) {
 
 function mergeAllDuplicatesInGroup(group) {
     const itemMap = new Map();
-    
+
     for (const item of group) {
         const key = createItemKey(item);
-        
+
         if (itemMap.has(key)) {
             const existing = itemMap.get(key);
             existing.number += item.number;
         } else {
-            itemMap.set(key, {...item});
+            itemMap.set(key, { ...item });
         }
     }
-    
+
     return Array.from(itemMap.values());
 }
 
@@ -292,35 +301,35 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
             })
-            .then(response => {
-                if (response.status === 401) {
-                    navigate("/", { state: { error: "Unauthorized access. Please log in." } });
-                    throw new Error("Unauthorized access. Please log in.");
-                }
-                setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: orders.orderId }));
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                .then(response => {
+                    if (response.status === 401) {
+                        navigate("/", { state: { error: "Unauthorized access. Please log in." } });
+                        throw new Error("Unauthorized access. Please log in.");
+                    }
+                    setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: orders.orderId }));
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         } else {
             await fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders${orders.tableId ? `?idTable=${orders.tableId}` : ''}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
             })
-            .then(response => {
-                if (response.status === 401) {
-                  navigate("/", {state: {error: "Unauthorized access. Please log in."}});
-                  throw new Error("Unauthorized access. Please log in.");
-                }
-                return response.json();
-            })
-            .then(data => {
-                setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.orderId }));
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                .then(response => {
+                    if (response.status === 401) {
+                        navigate("/", { state: { error: "Unauthorized access. Please log in." } });
+                        throw new Error("Unauthorized access. Please log in.");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setConfig(prevConfig => ({ ...prevConfig, firstSend: false, id_order: data.orderId }));
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     }
 
@@ -330,26 +339,26 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         if (index !== -1) {
             fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/next/${config.id_order}`, {
                 method: 'PUT',
-                headers: {Authorization: `Bearer ${localStorage.getItem("token")}` },
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             })
-            .then(response => {
-                if (response.status === 401) {
-                  navigate("/", {state: {error: "Unauthorized access. Please log in."}});
-                  throw new Error("Unauthorized access. Please log in.");
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                .then(response => {
+                    if (response.status === 401) {
+                        navigate("/", { state: { error: "Unauthorized access. Please log in." } });
+                        throw new Error("Unauthorized access. Please log in.");
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
             newOrders.food = newOrders.food.filter((_, i) => i !== index);
             setOrders(newOrders);
         }
     }
 
     const addStop = () => {
-        if(orders.food.length < 1)
+        if (orders.food.length < 1)
             return;
-        const newOrders = {...orders};
+        const newOrders = { ...orders };
         newOrders.food = [...newOrders.food, { stop: true }];
         setOrders(newOrders);
     }
