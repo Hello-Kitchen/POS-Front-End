@@ -28,7 +28,7 @@ describe('CurrentCommand', () => {
                 price: 17.99,
                 details: ['Frites'],
                 mods_ingredients: [{ type: "ADD", ingredient: "Fromage" }],
-                number: 1,
+                quantity: 1,
                 category: 1,
                 stop: false
             },

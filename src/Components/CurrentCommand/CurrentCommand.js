@@ -72,7 +72,7 @@ function Edit({ order, setOrders }) {
             return {
                 ...prevOrders, food: prevOrders.food.map((item) => {
                     if (item === order) {
-                        return { ...item, number: item.number + 1 };
+                        return { ...item, quantity: item.quantity + 1 };
                     }
                     return item;
                 })
@@ -84,10 +84,10 @@ function Edit({ order, setOrders }) {
             return {
                 ...prevOrders, food: prevOrders.food.map((item) => {
                     if (item === order) {
-                        return { ...item, number: item.number - 1 };
+                        return { ...item, quantity: item.quantity - 1 };
                     }
                     return item;
-                }).filter((item) => item.number > 0)
+                }).filter((item) => item.quantity > 0)
             };
         });
     };
@@ -133,7 +133,7 @@ function Order({ order, border, config, setOrders }) {
     return (
         <div className={`w-full h-auto p-2 ${border ? 'border-t border-t-kitchen-yellow' : ''}`}>
             <div onClick={() => handleOrderEdit()}>
-                {order.name && order.price && order.number && <Food name={order.name} price={order.price} quantity={order.quantity || order.number} />}
+                {order.name && order.price && order.quantity && <Food name={order.name} price={order.price} quantity={order.quantity} />}
                 {order.details && order.details.map((detail, index) => (
                     <Detail key={index} text={detail} />
                 ))}
@@ -179,7 +179,7 @@ function mergeAllDuplicatesInGroup(group) {
 
         if (itemMap.has(key)) {
             const existing = itemMap.get(key);
-            existing.number += item.number;
+            existing.quantity += item.quantity;
         } else {
             itemMap.set(key, { ...item });
         }
@@ -255,7 +255,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         const orderedFood = [];
 
         const promises = orders.food.map(async (order) => {
-            const number = order.number;
+            const number = order.quantity;
             let cleanOrder = {
                 food: order.food,
                 name: order.name,

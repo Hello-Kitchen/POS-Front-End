@@ -68,21 +68,11 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
         let details = getAllDetails(orderDetails.details);
         let sups = getAllSups(orderDetails.sups);
         let price = Number(food.price);
-        if (sups.sup && Array.isArray(sups.sup)) {
-            sups.sup.forEach(sup => {
-                if (sup.type === "ADD" && sup.suppPrice) {
-                    const supp = Number(sup.suppPrice);
-                    if (!isNaN(supp)) {
-                        price += supp;
-                    }
-                }
-            });
-        }
-        let number = 1;
+        let quantity = 1;
         setOrders(prevOrders => {
             let updatedOrders = { ...prevOrders };
             if (inEdit) {
-                number = updatedOrders.tmp.number
+                quantity = updatedOrders.tmp.quantity
                 const index = updatedOrders.food.findIndex(item => JSON.stringify(item) === JSON.stringify(updatedOrders.tmp));
                 if (index !== -1) {
                     updatedOrders.food[index] = { ...updatedOrders.food[index], ...current };
@@ -96,7 +86,7 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
             }
             return updatedOrders;
         });
-        let current = {food: food.id, name: food.name, price: String(price), details: details, mods_ingredients: sups.sup, note: sups.note, number: number, category: food.id_category};
+        let current = {food: food.id, name: food.name, price: String(price), details: details, mods_ingredients: sups.sup, note: sups.note, quantity: quantity, category: food.id_category};
         setOrderDetails({details: [], sups: []});
         setInEdit(false);
         closeDetail();

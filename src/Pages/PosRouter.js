@@ -48,7 +48,15 @@ function PosRouter() {
     for (let i = 0; i < orders.food.length; i++) {
       if (orders.food[i].price) {
         for (let j = 0; j < orders.food[i].quantity; j++) {
-          tmp += Number(orders.food[i].price);
+          let priceSup = 0;
+          if (orders.food[i].mods_ingredients) {
+            orders.food[i].mods_ingredients.forEach((ingredient) => {
+              if (ingredient.suppPrice) {
+                priceSup += Number(ingredient.suppPrice);
+              }
+            });
+          }
+          tmp += Number(orders.food[i].price) + priceSup;
         }
       }
     }
