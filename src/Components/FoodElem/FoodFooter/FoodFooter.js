@@ -47,13 +47,26 @@ function FoodFooter({food, setOrders, orderDetails, setOrderDetails, closeDetail
             let info = e.split(" ");
             switch (info[0]) {
                 case "Supplément":
-                    res.push({type: "ADD", ingredient: info[1], suppPrice: info[2]});
+                    // ingredient name may have spaces, suppPrice is always last
+                    res.push({
+                        type: "ADD",
+                        ingredient: info.slice(1, info.length - 1).join(" "),
+                        suppPrice: info[info.length - 1]
+                    });
                     break;
                 case "Retirer":
-                    res.push({type: "DEL", ingredient: info[1]});
+                    // ingredient name may have spaces
+                    res.push({
+                        type: "DEL",
+                        ingredient: info.slice(1).join(" ")
+                    });
                     break;
                 case "Allergie":
-                    res.push({type: "ALE", ingredient: info[1]});
+                    // ingredient name may have spaces
+                    res.push({
+                        type: "ALE",
+                        ingredient: info.slice(1).join(" ")
+                    });
                     break;
                 default:
                     note = info.join(" ");
