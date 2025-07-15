@@ -296,7 +296,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
         };
 
         if (orders.orderId !== null) {
-            await fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders/${orders.orderId}`, {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/${orders.orderId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
@@ -312,7 +312,7 @@ function Footer({ config, orders, setOrders, setConfig, price, priceLess, payLis
                     console.log(error);
                 });
         } else {
-            await fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/1/orders${orders.tableId ? `?idTable=${orders.tableId}` : ''}`, {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders${orders.tableId ? `?idTable=${orders.tableId}` : ''}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 body: JSON.stringify(obj)
