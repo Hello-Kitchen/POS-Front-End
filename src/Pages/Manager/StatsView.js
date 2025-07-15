@@ -10,6 +10,33 @@ import { FaPrint, FaFileCsv } from "react-icons/fa";
 import { IoIosRefresh } from "react-icons/io";
 import dayjs from "dayjs";
 
+function TimeSinceUpdate({ lastUpdateTime }) {
+    const [timeSinceUpdate, setTimeSinceUpdate] = React.useState("0s");
+
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            if (lastUpdateTime) {
+                const now = new Date();
+                const diffMs = now - new Date(lastUpdateTime);
+                const seconds = Math.floor(diffMs / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                if (minutes > 0) {
+                    setTimeSinceUpdate(`${minutes}m ${remainingSeconds}s`);
+                } else {
+                    setTimeSinceUpdate(`${remainingSeconds}s`);
+                }
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [lastUpdateTime]);
+
+    if (!lastUpdateTime) return null;
+    const isStale = (new Date() - new Date(lastUpdateTime)) > 15000;
+
+    return <h1 className="text-2xl font-bold">{isStale ? `Mis à jour il y a ${timeSinceUpdate}` : "En direct"}</h1>;
+}
+
 /**
  * StatsView component displays real-time KPI statistics and a data grid for the manager.
  *
@@ -30,7 +57,6 @@ function StatsView({ onClickBack }) {
     const [revenuesLoading, setRevenuesLoading] = React.useState(true);
     const [choosenDate, setChosenDate] = React.useState(dayjs(new Date()).startOf('day'));
     const [lastUpdateTime, setLastUpdateTime] = React.useState(null);
-    const [timeSinceUpdate, setTimeSinceUpdate] = React.useState("0s");
 
 
     const fetchKpi = React.useCallback(() => {
@@ -95,26 +121,6 @@ function StatsView({ onClickBack }) {
         fetchRevenues();
     }, [fetchKpi, fetchRevenues]);
 
-    React.useEffect(() => {
-        const interval = setInterval(() => {
-            if (lastUpdateTime) {
-                const now = new Date();
-                const diffMs = now - new Date(lastUpdateTime);
-                const seconds = Math.floor(diffMs / 1000);
-                const minutes = Math.floor(seconds / 60);
-                const remainingSeconds = seconds % 60;
-
-                if (minutes > 0) {
-                    setTimeSinceUpdate(`${minutes}m ${remainingSeconds}s`);
-                } else {
-                    setTimeSinceUpdate(`${remainingSeconds}s`);
-                }
-            }
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, [lastUpdateTime]);
-
     function CustomToolbar() {
         return (
             <Toolbar>
@@ -159,13 +165,7 @@ function StatsView({ onClickBack }) {
             <div className="flex flex-col h-full w-full mb-5 px-3 pt-1">
                 <div className="flex flex-row items-center">
                     <img src="./loading.gif" alt="Loading animation" className="w-5 h-5 mr-1" />
-                    <h1 className="text-2xl font-bold">
-                        {
-                            lastUpdateTime && (new Date() - new Date(lastUpdateTime)) > 15000
-                                ? `Mis à jour il y a ${timeSinceUpdate}`
-                                : "En direct"
-                        }
-                    </h1>
+                    <TimeSinceUpdate lastUpdateTime={lastUpdateTime} />
                     <IconButton className="ml-auto" onClick={fetchKpi} disabled={kpiLoading}>
                         <Tooltip title="Rafraîchir les KPI">
                             <IoIosRefresh size={20} />
@@ -220,6 +220,10 @@ function StatsView({ onClickBack }) {
         </div>
     );
 }
+
+TimeSinceUpdate.propTypes = {
+    lastUpdateTime: PropTypes.string,
+};
 
 StatsView.propTypes = {
     onClickBack: PropTypes.func.isRequired,
