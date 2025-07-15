@@ -31,7 +31,7 @@ function ModalNewOrder({setModalOpen, setOrders, setConfig, setSelectedOrder}) {
           .then(data => {
             if (orderType === "eatin") {
               setOrders({
-                number: `Table ${data}`,
+                number: `${data}`,
                 channel: "Sur place",
                 orderId: null,
                 food: [],
