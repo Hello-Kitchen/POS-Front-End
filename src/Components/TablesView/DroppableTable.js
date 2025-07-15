@@ -123,11 +123,11 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
 
     return (
         <div onClick={() => onTableClick(table.orderId)} name={table.id} className={`${table.type === "circle" ? "rounded-full" : ""} border-4 absolute col-span-1 grid grid-flow-row ${inEdit === true ? `bg-grey-bg ${border} grid-rows-2` : table.time === "00:00" ? `bg-kitchen-green ${fuseBorder} grid-rows-3` : `bg-kitchen-yellow ${fuseBorder} grid-rows-3`} justify-center justify-items-center`} style={{height: `${table.h / tableSize}vw`, width: `${table.w / tableSize}vw`, top: table.top, left: table.left}}>   
-            <div className={`${table.type === "circle" ? (table.id.length > 5 ? "sm:text-xl text-lg" : "sm:text-2xl text-xl") : (table.id.length > 5 ? "sm:text-2xl text-xl" : "sm:text-3xl text-2xl")} row-span-1 self-center font-bold`}>{table.id}</div>
-            <div className={`${table.type === "circle" ? "sm:text-xl text-lg" : "sm:text-2xl text-xl"} row-span-1 self-center`}>{getTotalPlates(table)} {table.type === "rectangle" ? "couverts" : "couv."}</div>
+            <div className={`${table.type === "circle" ? (table.id.length > 5 ? "sm:text-xl text-sm" : "sm:text-2xl text-base") : (table.id.length > 5 ? "sm:text-2xl text-xl" : "sm:text-3xl text-2xl")} row-span-1 self-center font-bold`}>{table.id}</div>
+            <div className={`${table.type === "circle" ? "sm:text-xl text-sm" : "sm:text-2xl text-sm"} row-span-1 self-center`}>{getTotalPlates(table)} {table.type === "rectangle" ? "couverts" : "couv."}</div>
             {inEdit === false ? table.time === "00:00" ?
-                <div className="row-span-1 self-center sm:text-xl text-lg">{table.type === "rectangle" ? "Disponible" : "Dispo."}</div>
-                : <div className="row-span-1 sm:text-1xl text-lg">{calculateWaitingTime(table.time).hours}:{calculateWaitingTime(table.time).minutes}</div> 
+                <div className="row-span-1 self-center sm:text-xl text-sm">{table.type === "rectangle" ? "Disponible" : "Dispo."}</div>
+                : <div className="row-span-1 sm:text-xl text-sm">{calculateWaitingTime(table.time).hours}:{calculateWaitingTime(table.time).minutes}</div> 
                 : <div/>}
         </div>
     );
