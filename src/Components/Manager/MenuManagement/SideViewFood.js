@@ -1,5 +1,5 @@
-import { SaveRounded } from "@mui/icons-material";
-import { Autocomplete, Button, Stack, TextField } from "@mui/material";
+import { Add, Delete, SaveRounded } from "@mui/icons-material";
+import { Autocomplete, Button, IconButton, Stack, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -72,7 +72,7 @@ function SideViewFood({selectedFood, foodDetails, foodIngredients, foodCategorie
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col w-full h-full overflow-auto pb-10">
       <Stack spacing={2} className="mb-4">
         <TextField
           value={newFood.name}
@@ -102,14 +102,54 @@ function SideViewFood({selectedFood, foodDetails, foodIngredients, foodCategorie
           value={foodDetails.filter((detail) => newFood.details.includes(detail.id))}
           renderInput={(params) => <TextField {...params} label="Détails" variant="standard" />}
         />
-        <Autocomplete
-          multiple
-          options={foodIngredients}
-          getOptionLabel={(option) => option.name}
-          onChange={(event, value) => setNewFood({...newFood, ingredients: value.map((ingredient) => ingredient.id)})}
-          value={foodIngredients.filter((ingredient) => newFood.ingredients.includes(ingredient.id))}
-          renderInput={(params) => <TextField {...params} label="Ingrédients" variant="standard" />}
-        />
+        <Typography variant="h6">Ingrédients</Typography>
+        <div className="flex flex-col w-full space-y-3">
+          {
+            newFood.ingredients.map((ingredient, index) => {
+              return (
+                <div key={ingredient.id} className="flex flex-row w-full border-b-2 pb-5 ">
+                  <div className="flex-1">
+                    <Autocomplete
+                      options={foodIngredients.filter(ing => newFood.ingredients.every(i => i.id_ingredient !== ing.id))}
+                      getOptionLabel={(option) => option.name}
+                      value={foodIngredients.find(ing => ing.id === ingredient.id_ingredient) || null}
+                      onChange={(event, value) => {
+                        setNewFood({...newFood, ingredients: newFood.ingredients.map(ing => ing.id_ingredient === ingredient.id_ingredient ? {...ing, id_ingredient: value ? value.id : -1} : ing)});
+                      }}
+                      renderInput={(params) => <TextField {...params} label="Ingrédient" variant="standard" />}
+                    />
+                    <TextField
+                      value={ingredient.quantity}
+                      onChange={(e) => setNewFood({...newFood, ingredients: newFood.ingredients.map(ing => ing.id_ingredient === ingredient.id_ingredient ? {...ing, quantity: Number(e.target.value)} : ing)})}
+                      label="Quantité"
+                      variant="standard"
+                      type="number"
+                    />
+                    <TextField
+                      value={ingredient.suppPrice}
+                      onChange={(e) => setNewFood({...newFood, ingredients: newFood.ingredients.map(ing => ing.id_ingredient === ingredient.id_ingredient ? {...ing, suppPrice: Number(e.target.value)} : ing)})}
+                      label="Prix supp"
+                      variant="standard"
+                      type="number"
+                    />
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <IconButton color="primary" onClick={() => {
+                      setNewFood({...newFood, ingredients: [...newFood.ingredients, {id_ingredient: -1, quantity: 0}]});
+                    }}>
+                        <Add />
+                    </IconButton>
+                    {index !== 0 && <IconButton onClick={() => {
+                      setNewFood({...newFood, ingredients: newFood.ingredients.filter(ing => ing.id_ingredient !== ingredient.id_ingredient)});
+                    }}>
+                        <Delete/>
+                    </IconButton>}
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
         <Button
           onClick={sendFood}
           endIcon={<SaveRounded/>}
