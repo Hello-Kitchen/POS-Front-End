@@ -105,29 +105,47 @@ function SideViewFood({selectedFood, foodDetails, foodIngredients, foodCategorie
         <Typography variant="h6">Ingrédients</Typography>
         <div className="flex flex-col w-full space-y-3">
           {
-            newFood.ingredients.map((ingredient, index) => {
+            (newFood.ingredients.length === 0
+              ? [{ id_ingredient: -1, quantity: 0, suppPrice: 0 }]
+              : newFood.ingredients
+            ).map((ingredient, index) => {
               return (
-                <div key={ingredient.id} className="flex flex-row w-full border-b-2 pb-5 ">
+                <div key={ingredient.id_ingredient ?? ingredient.id} className="flex flex-row w-full border-b-2 pb-5 ">
                   <div className="flex-1">
                     <Autocomplete
-                      options={foodIngredients.filter(ing => newFood.ingredients.every(i => i.id_ingredient !== ing.id))}
+                      options={foodIngredients.filter(ing => newFood.ingredients.every(i => i.id_ingredient !== ing.id) || ing.id === ingredient.id_ingredient)}
                       getOptionLabel={(option) => option.name}
                       value={foodIngredients.find(ing => ing.id === ingredient.id_ingredient) || null}
                       onChange={(event, value) => {
-                        setNewFood({...newFood, ingredients: newFood.ingredients.map(ing => ing.id_ingredient === ingredient.id_ingredient ? {...ing, id_ingredient: value ? value.id : -1} : ing)});
+                        setNewFood({
+                          ...newFood,
+                          ingredients: newFood.ingredients.length === 0
+                            ? [{ ...ingredient, id_ingredient: value ? value.id : -1 }]
+                            : newFood.ingredients.map(ing => ing === ingredient ? { ...ing, id_ingredient: value ? value.id : -1 } : ing)
+                        });
                       }}
                       renderInput={(params) => <TextField {...params} label="Ingrédient" variant="standard" />}
                     />
                     <TextField
                       value={ingredient.quantity}
-                      onChange={(e) => setNewFood({...newFood, ingredients: newFood.ingredients.map(ing => ing.id_ingredient === ingredient.id_ingredient ? {...ing, quantity: Number(e.target.value)} : ing)})}
+                      onChange={(e) => setNewFood({
+                        ...newFood,
+                        ingredients: newFood.ingredients.length === 0
+                          ? [{ ...ingredient, quantity: Number(e.target.value) }]
+                          : newFood.ingredients.map(ing => ing === ingredient ? { ...ing, quantity: Number(e.target.value) } : ing)
+                      })}
                       label="Quantité"
                       variant="standard"
                       type="number"
                     />
                     <TextField
                       value={ingredient.suppPrice}
-                      onChange={(e) => setNewFood({...newFood, ingredients: newFood.ingredients.map(ing => ing.id_ingredient === ingredient.id_ingredient ? {...ing, suppPrice: Number(e.target.value)} : ing)})}
+                      onChange={(e) => setNewFood({
+                        ...newFood,
+                        ingredients: newFood.ingredients.length === 0
+                          ? [{ ...ingredient, suppPrice: Number(e.target.value) }]
+                          : newFood.ingredients.map(ing => ing === ingredient ? { ...ing, suppPrice: Number(e.target.value) } : ing)
+                      })}
                       label="Prix supp"
                       variant="standard"
                       type="number"
@@ -135,15 +153,26 @@ function SideViewFood({selectedFood, foodDetails, foodIngredients, foodCategorie
                   </div>
                   <div className="flex flex-col items-center">
                     <IconButton color="primary" onClick={() => {
-                      setNewFood({...newFood, ingredients: [...newFood.ingredients, {id_ingredient: -1, quantity: 0}]});
+                      setNewFood({
+                        ...newFood,
+                        ingredients: [
+                          ...(newFood.ingredients.length === 0 ? [{ ...ingredient }] : newFood.ingredients),
+                          { id_ingredient: -1, quantity: 0, suppPrice: 0 }
+                        ]
+                      });
                     }}>
                         <Add />
                     </IconButton>
-                    {index !== 0 && <IconButton onClick={() => {
-                      setNewFood({...newFood, ingredients: newFood.ingredients.filter(ing => ing.id_ingredient !== ingredient.id_ingredient)});
-                    }}>
+                    {index !== 0 && newFood.ingredients.length !== 0 && (
+                      <IconButton onClick={() => {
+                        setNewFood({
+                          ...newFood,
+                          ingredients: newFood.ingredients.filter((ing, i) => i !== index)
+                        });
+                      }}>
                         <Delete/>
-                    </IconButton>}
+                      </IconButton>
+                    )}
                   </div>
                 </div>
               );
