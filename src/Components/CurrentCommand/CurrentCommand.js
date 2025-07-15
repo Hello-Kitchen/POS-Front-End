@@ -45,7 +45,7 @@ const Sup = ({ text }) => (
             {text.type === 'ADD' ? `Supplement ${text.ingredient}` : text.type === 'ALE' ? `Allergie ${text.ingredient}` : text.type === 'DEL' ? `Sans ${text.ingredient}` : ``}
             </div>
             <div>
-                {text.suppPrice ? `${text.suppPrice}€` : ''}
+                {text.suppPrice && text.suppPrice !== "+0" ? `${text.suppPrice}€` : ''}
             </div>
         </div>
     </div>
