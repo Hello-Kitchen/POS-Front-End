@@ -38,40 +38,59 @@ export default function TablesView({ orders, setOrders, board, setBoard, orderSe
     const drop = useDrop(() => ({
         accept: [ItemTypes.CIRCLE, ItemTypes.SQUARE, ItemTypes.RECTANGLE],
         drop: (item, monitor) => {
-            const offset = monitor.getClientOffset();
-            if (!offset) return;
-    
-            const container = document.getElementById("drop-area");
-            const containerRect = container.getBoundingClientRect();
-            const left = offset.x;
-            const top = offset.y;
+            const dropArea = document.getElementById("drop-area");
+            if (!dropArea) return;
 
-            if (left > containerRect.left && top > containerRect.top) {
-                addTable(item.id, left, top, containerRect);
+            if (item.table) {
+                const delta = monitor.getDifferenceFromInitialOffset();
+                if (!delta) return;
+
+                const currentTable = board.find(t => t.id === item.id);
+                if (!currentTable) return;
+
+                const left = currentTable.left + delta.x;
+                const top = currentTable.top + delta.y;
+
+                setBoard((prevBoard) =>
+                    prevBoard.map((table) =>
+                    table.id === item.id ? { ...table, left, top } : table
+                    )
+                );
+            } else {
+                const offset = monitor.getSourceClientOffset();
+                if (!offset) return;
+
+                const containerRect = dropArea.getBoundingClientRect();
+                const left = offset.x;
+                const top = offset.y;
+
+                if (left > containerRect.left && top > containerRect.top) {
+                    addTable(item.id, left, top, containerRect);
+                }
             }
-    
+            setDataToBeSaved(true);
         },
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
         }),
-    }))[1];
+    }), [board])[1];
 
     const doesOverlap = (x, y, board) => {
-        let check = false
+        let check = false;
         board.forEach((table) => {
             if (x < table.left + table.w && x + table.w > table.left && y < table.top + table.h && y + table.h > table.top) {
-                check = true
+                check = true;
             }
         });
-        return check
+        return check;
     };
 
     const outOfBounds = (x, y, elem, containerRect) => {
-        let check = false
+        let check = false;
         if (x + elem.w > containerRect.width || y + elem.h > containerRect.height) {
-            check = true
+            check = true;
         }
-        return check
+        return check;
     };
 
     function collectIds(board) {

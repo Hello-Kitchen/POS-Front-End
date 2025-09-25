@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useDrag } from "react-dnd";
 
 /**
  * DroppableTable component rendering the dragged tables onto the main div.
@@ -18,6 +19,13 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
     const [fuseBorder, setFuseBorder] = useState("border-kitchen-green")
     const [currentTime, setCurrentTime] = useState(new Date());
     const [tableSize, setTableSize] = useState(20);
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: table.type,
+        item: { id: table.id, table },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    }));
 
     const onTableClick = (orderId) => {
         if (inFuse.type !== "None") {
@@ -122,7 +130,7 @@ function DroppableTable({table, inEdit, editTable, inFuse, setInFuse, setEditTab
     }, []);
 
     return (
-        <div onClick={() => onTableClick(table.orderId)} name={table.id} className={`${table.type === "circle" ? "rounded-full" : ""} border-4 absolute col-span-1 grid grid-flow-row ${inEdit === true ? `bg-grey-bg ${border} grid-rows-2` : table.time === "00:00" ? `bg-kitchen-green ${fuseBorder} grid-rows-3` : `bg-kitchen-yellow ${fuseBorder} grid-rows-3`} justify-center justify-items-center`} style={{height: `${table.h / tableSize}vw`, width: `${table.w / tableSize}vw`, top: table.top, left: table.left}}>   
+        <div ref={inEdit ? drag : null} onClick={() => onTableClick(table.orderId)} name={table.id} className={`${table.type === "circle" ? "rounded-full" : ""} border-4 absolute col-span-1 grid grid-flow-row ${inEdit === true ? `bg-grey-bg ${border} grid-rows-2` : table.time === "00:00" ? `bg-kitchen-green ${fuseBorder} grid-rows-3` : `bg-kitchen-yellow ${fuseBorder} grid-rows-3`} justify-center justify-items-center`} style={{height: `${table.h / tableSize}vw`,width: `${table.w / tableSize}vw`,top: table.top,left: table.left,opacity: isDragging ? 0.5 : 1}}>   
             <div className={`${table.type === "circle" ? (table.id.length > 5 ? "sm:text-xl text-sm" : "sm:text-2xl text-base") : (table.id.length > 5 ? "sm:text-2xl text-xl" : "sm:text-3xl text-2xl")} row-span-1 self-center font-bold`}>{table.id}</div>
             <div className={`${table.type === "circle" ? "sm:text-xl text-sm" : "sm:text-2xl text-sm"} row-span-1 self-center`}>{getTotalPlates(table)} {table.type === "rectangle" ? "couverts" : "couv."}</div>
             {inEdit === false ? table.time === "00:00" ?
