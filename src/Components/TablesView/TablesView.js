@@ -202,7 +202,7 @@ export default function TablesView({ orders, setOrders, board, setBoard, orderSe
                 <TablesFooter setDataToBeSaved={setDataToBeSaved} setInEdit={setInEdit} inFuse={inFuse} setInFuse={setInFuse} setBoard={setBoard} />
             </div>
             {window.innerWidth > 1024 && (
-                <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} />
+                <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} board={board} />
             )}
             {window.innerWidth < 1024 && (
                 <Drawer
@@ -216,7 +216,7 @@ export default function TablesView({ orders, setOrders, board, setBoard, orderSe
                     }}
                 >
                     <div className="w-full h-full flex flex-col justify-between">
-                        <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} />
+                        <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} board={board} />
                     </div>
                 </Drawer>
             )}

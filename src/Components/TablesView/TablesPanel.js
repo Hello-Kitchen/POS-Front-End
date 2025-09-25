@@ -51,12 +51,16 @@ function PlatesButton ({ editTable, setEditTable }) {
  * @param {Function} setBoard state function used to update the full table board
  * @returns {JSX.Element} The rendered EditPanel component.
  */
-function EditPanel ({ editTable, setEditTable, setBoard }) {
+function EditPanel ({ editTable, setEditTable, setBoard, board }) {
 
     const [nameBool, setNameBool] = useState(false);
     const [nameValue, setNameValue] = useState('');
 
     const handleInputChange = (event) => {
+        console.log(board)
+        const nameExists = board.some(table => 
+            String(table.id) === String(event.target.value)
+        );
         setNameValue(event.target.value);
     };
 
@@ -124,7 +128,7 @@ function EditPanel ({ editTable, setEditTable, setBoard }) {
  * @param {Function} setOrders state function used to update the current order
  * @returns {JSX.Element} The rendered TablesPanel component.
  */
-export default function TablesPanel({ setDataToBeSaved, orders, editTable, setEditTable, setBoard }) {
+export default function TablesPanel({ setDataToBeSaved, orders, editTable, setEditTable, setBoard, board }) {
 
     const basicTable = (
         <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders.number}`}</div>
@@ -141,7 +145,7 @@ export default function TablesPanel({ setDataToBeSaved, orders, editTable, setEd
     return (
         <div className='h-full col-span-1 bg-kitchen-blue float-right flex flex-col justify-between'>
             <div className={'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
-                {editTable.id !== -1 ? <EditPanel setDataToBeSaved={setDataToBeSaved} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} /> : basicTable}
+                {editTable.id !== -1 ? <EditPanel board={board} setDataToBeSaved={setDataToBeSaved} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} /> : basicTable}
             </div>
         </div>
     );
