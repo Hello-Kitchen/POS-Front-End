@@ -105,6 +105,8 @@ function EditPanel ({ editTable, setEditTable, setBoard }) {
                     placeholder="New name"
                     value={nameValue}
                     onChange={handleInputChange}
+                    maxLength={10}
+                    autoFocus
                     />
                 }
                 </form>
