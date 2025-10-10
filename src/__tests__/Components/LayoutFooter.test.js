@@ -377,7 +377,7 @@ describe("Footer Component", () => {
 			expect(setConfig).toHaveBeenCalled();
 			expect(setOrders).toHaveBeenCalledWith({
 				number: "DIRECT",
-				channel: "LAD",
+				channel: "Sur place",
 				orderId: null,
 				food: [],
 				tmp: {},
