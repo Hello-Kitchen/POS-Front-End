@@ -160,8 +160,8 @@ export function FooterMainButton({
 								firstSend: true,
 							}));
 							setOrders({
-								number: "Direct",
-								channel: "LAD",
+								number: "DIRECT",
+								channel: "Sur place",
 								orderId: null,
 								food: [],
 								tmp: {},

@@ -11,8 +11,8 @@ import Pay from "./Pay/Pay";
 // Initial data for the orders
 // TMP : To be replaced when the 'New order' button is implemented
 const data = {
-	number: "Direct",
-	channel: "LAD",
+	number: "DIRECT",
+	channel: "Sur place",
 	orderId: null,
 	food: [],
 	tmp: {},

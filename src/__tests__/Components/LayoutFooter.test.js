@@ -376,7 +376,7 @@ describe("Footer Component", () => {
 			expect(setPayList).toHaveBeenCalledWith([]);
 			expect(setConfig).toHaveBeenCalled();
 			expect(setOrders).toHaveBeenCalledWith({
-				number: "Direct",
+				number: "DIRECT",
 				channel: "LAD",
 				orderId: null,
 				food: [],
