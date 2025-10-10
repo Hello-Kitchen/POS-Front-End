@@ -469,7 +469,11 @@ function Footer({
 
 	const addStop = () => {
 		if (orders.food.length < 1) return;
+
 		const newOrders = { ...orders };
+		if ("stop" in newOrders.food[newOrders.food.length - 1]) {
+			return;
+		}
 		newOrders.food = [...newOrders.food, { stop: true }];
 		setOrders(newOrders);
 	};
