@@ -16,6 +16,7 @@ describe("DroppableTable Component", () => {
                 setInFuse={() => {}}
                 setEditTable={() => {}}
                 setOrders={() => {}}
+                orderSelect={() => {}}
             />
         );
 
@@ -34,6 +35,7 @@ describe("DroppableTable Component", () => {
                 setInFuse={() => {}}
                 setEditTable={() => {}}
                 setOrders={() => {}}
+                orderSelect={() => {}}
             />
         );
 
@@ -52,6 +54,7 @@ describe("DroppableTable Component", () => {
                 setInFuse={() => {}}
                 setEditTable={setEditTable}
                 setOrders={() => {}}
+                orderSelect={() => {}}
             />
         );
 
@@ -96,6 +99,7 @@ describe("DroppableTable Component", () => {
                 setInFuse={setInFuse}
                 setEditTable={() => {}}
                 setOrders={() => {}}
+                orderSelect={() => {}}
             />
         );
 
@@ -117,6 +121,7 @@ describe("DroppableTable Component", () => {
                 setInFuse={() => {}}
                 setEditTable={() => {}}
                 setOrders={() => {}}
+                orderSelect={() => {}}
             />
         );
 
