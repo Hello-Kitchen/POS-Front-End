@@ -179,8 +179,21 @@ export default function TablesPanel({
 	setEditTable,
 	setBoard,
 }) {
+
+	const orderNumber = () => {
+		if (orders.channel === "Sur place" && orders.number !== "Direct") {
+			return `Table ${orders.number}`;
+		} else if (orders.channel === "Sur place" && orders.number === "Direct") {
+			return `Direct`;
+		} else if (orders.channel === "A emporter") {
+			return `N°${orders.number}`;
+		} else {
+			return `${orders.number}`;
+		}
+	};
+
 	const basicTable = (
-		<div className="w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex">{`Table ${orders.number}`}</div>
+		<div className="w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex">{orderNumber()}</div>
 	);
 
 	useEffect(() => {

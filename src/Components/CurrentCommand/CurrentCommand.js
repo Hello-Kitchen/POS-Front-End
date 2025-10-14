@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 const Header = ({ orders }) => {
 	const orderNumber = () => {
-		if (orders.channel === "Sur place" && orders.number !== "DIRECT") {
+		if (orders.channel === "Sur place" && orders.number !== "Direct") {
 			return `Table ${orders.number}`;
-		} else if (orders.channel === "Sur place" && orders.number === "DIRECT") {
+		} else if (orders.channel === "Sur place" && orders.number === "Direct") {
 			return `Direct`;
 		} else if (orders.channel === "A emporter") {
 			return `N°${orders.number}`;
