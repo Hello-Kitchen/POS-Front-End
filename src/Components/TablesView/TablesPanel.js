@@ -84,7 +84,6 @@ function EditPanel ({ editTable, setEditTable, setBoard, board }) {
     const [nameValue, setNameValue] = useState('');
 
     const handleInputChange = (event) => {
-        console.log(board)
         const nameExists = board.some(table => 
             String(table.id) === String(event.target.value)
         );
@@ -214,6 +213,7 @@ EditPanel.propTypes = {
 	editTable: PropTypes.object.isRequired,
 	setEditTable: PropTypes.func.isRequired,
 	setBoard: PropTypes.func.isRequired,
+	board: PropTypes.object.isRequired,
 };
 
 TablesPanel.propTypes = {
@@ -222,4 +222,5 @@ TablesPanel.propTypes = {
 	editTable: PropTypes.object.isRequired,
 	setEditTable: PropTypes.func.isRequired,
 	setBoard: PropTypes.func.isRequired,
+	board: PropTypes.object.isRequired,
 };
