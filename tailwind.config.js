@@ -49,6 +49,7 @@ module.exports = {
         'black': '#000000',
         'kitchen-blue': '#499CA6',
         'kitchen-yellow': '#F2E5A2',
+        'kitchen-yellow-darker': '#BEB37B',
         'kitchen-orange': '#F2762E',
         'kitchen-red': '#D91604',
         'kitchen-beige': '#D98282',
