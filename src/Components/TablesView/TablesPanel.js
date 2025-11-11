@@ -78,13 +78,17 @@ function PlatesButton({ editTable, setEditTable }) {
  * @param {Function} setBoard state function used to update the full table board
  * @returns {JSX.Element} The rendered EditPanel component.
  */
-function EditPanel({ editTable, setEditTable, setBoard }) {
-	const [nameBool, setNameBool] = useState(false);
-	const [nameValue, setNameValue] = useState("");
+function EditPanel ({ editTable, setEditTable, setBoard, board }) {
 
-	const handleInputChange = (event) => {
-		setNameValue(event.target.value);
-	};
+    const [nameBool, setNameBool] = useState(false);
+    const [nameValue, setNameValue] = useState('');
+
+    const handleInputChange = (event) => {
+        const nameExists = board.some(table => 
+            String(table.id) === String(event.target.value)
+        );
+		if (!nameExists) setNameValue(event.target.value);
+    };
 
 	const handleInputSubmit = (name) => {
 		setEditTable((table) => ({
@@ -172,16 +176,11 @@ function EditPanel({ editTable, setEditTable, setBoard }) {
  * @param {Function} setOrders state function used to update the current order
  * @returns {JSX.Element} The rendered TablesPanel component.
  */
-export default function TablesPanel({
-	setDataToBeSaved,
-	orders,
-	editTable,
-	setEditTable,
-	setBoard,
-}) {
-	const basicTable = (
-		<div className="w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex">{`Table ${orders.number}`}</div>
-	);
+export default function TablesPanel({ setDataToBeSaved, orders, editTable, setEditTable, setBoard, board }) {
+
+    const basicTable = (
+        <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders.number}`}</div>
+    )
 
 	useEffect(() => {
 		if (editTable.id !== -1) {
@@ -195,24 +194,13 @@ export default function TablesPanel({
 		}
 	}, [editTable, setBoard]);
 
-	return (
-		<div className="h-full col-span-1 bg-kitchen-blue float-right flex flex-col justify-between">
-			<div
-				className={"w-full max-h-[80%] float-right px-2 gap-3 flex flex-col"}
-			>
-				{editTable.id !== -1 ? (
-					<EditPanel
-						setDataToBeSaved={setDataToBeSaved}
-						editTable={editTable}
-						setEditTable={setEditTable}
-						setBoard={setBoard}
-					/>
-				) : (
-					basicTable
-				)}
-			</div>
-		</div>
-	);
+    return (
+        <div className='h-full col-span-1 bg-kitchen-blue float-right flex flex-col justify-between'>
+            <div className={'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
+                {editTable.id !== -1 ? <EditPanel board={board} setDataToBeSaved={setDataToBeSaved} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} /> : basicTable}
+            </div>
+        </div>
+    );
 }
 
 PlatesButton.propTypes = {
@@ -225,6 +213,7 @@ EditPanel.propTypes = {
 	editTable: PropTypes.object.isRequired,
 	setEditTable: PropTypes.func.isRequired,
 	setBoard: PropTypes.func.isRequired,
+	board: PropTypes.object.isRequired,
 };
 
 TablesPanel.propTypes = {
@@ -233,4 +222,5 @@ TablesPanel.propTypes = {
 	editTable: PropTypes.object.isRequired,
 	setEditTable: PropTypes.func.isRequired,
 	setBoard: PropTypes.func.isRequired,
+	board: PropTypes.object.isRequired,
 };

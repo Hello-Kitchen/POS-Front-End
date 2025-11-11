@@ -242,51 +242,35 @@ export default function TablesView({
 		/>
 	));
 
-	return (
-		<div className="w-full h-full grid grid-flow-col grid-cols-4">
-			<div className="lg:col-span-3 col-span-4 grid grid-flow-row grid-rows-10">
-				<div id="drop-area" ref={drop} className="row-span-9">
-					{boardElem}
-				</div>
-				<TablesFooter
-					setDataToBeSaved={setDataToBeSaved}
-					setInEdit={setInEdit}
-					inFuse={inFuse}
-					setInFuse={setInFuse}
-					setBoard={setBoard}
-				/>
-			</div>
-			{window.innerWidth > 1024 && (
-				<TablesPanel
-					orders={orders}
-					editTable={editTable}
-					setEditTable={setEditTable}
-					setBoard={setBoard}
-				/>
-			)}
-			{window.innerWidth < 1024 && (
-				<Drawer
-					anchor="right"
-					open={drawerOpen}
-					onClose={() => setDrawerOpen(false)}
-					slotProps={{
-						paper: {
-							sx: { width: "75%" },
-						},
-					}}
-				>
-					<div className="w-full h-full flex flex-col justify-between">
-						<TablesPanel
-							orders={orders}
-							editTable={editTable}
-							setEditTable={setEditTable}
-							setBoard={setBoard}
-						/>
-					</div>
-				</Drawer>
-			)}
-		</div>
-	);
+    return (
+        <div className="w-full h-full grid grid-flow-col grid-cols-4">
+            <div className="lg:col-span-3 col-span-4 grid grid-flow-row grid-rows-10">
+                <div id="drop-area" ref={drop} className="row-span-9">
+                    {boardElem}
+                </div>
+                <TablesFooter setDataToBeSaved={setDataToBeSaved} setInEdit={setInEdit} inFuse={inFuse} setInFuse={setInFuse} setBoard={setBoard} />
+            </div>
+            {window.innerWidth > 1024 && (
+                <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} board={board} />
+            )}
+            {window.innerWidth < 1024 && (
+                <Drawer
+                    anchor="right"
+                    open={drawerOpen}
+                    onClose={() => setDrawerOpen(false)}
+                    slotProps={{
+                        paper: {
+                        sx: { width: '75%' },
+                      },
+                    }}
+                >
+                    <div className="w-full h-full flex flex-col justify-between">
+                        <TablesPanel orders={orders} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} board={board} />
+                    </div>
+                </Drawer>
+            )}
+        </div>
+    );
 }
 
 TablesView.propTypes = {
