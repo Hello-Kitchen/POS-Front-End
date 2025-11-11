@@ -170,6 +170,7 @@ function DroppableTable({
 				width: `${table.w / tableSize}vw`,
 				top: table.top,
 				left: table.left,
+                opacity: isDragging ? 0.5 : 1
 			}}
 		>
 			<div
