@@ -238,6 +238,7 @@ describe('Footer Component', () => {
                     payDetail={[]}
                     setPriceLess={setPriceLess}
                     setPayList={setPayList}
+                    orderFoods={["test"]}
                 />
             );
             expect(screen.getByText('Encaisser 20.00€')).toBeInTheDocument();
@@ -254,6 +255,7 @@ describe('Footer Component', () => {
                     payDetail={[]}
                     setPriceLess={setPriceLess}
                     setPayList={setPayList}
+                    orderFoods={["test"]}
                 />
             );
             expect(screen.getByText('Encaisser 15.00€')).toBeInTheDocument();
@@ -270,6 +272,7 @@ describe('Footer Component', () => {
                     payDetail={[]}
                     setPriceLess={setPriceLess}
                     setPayList={setPayList}
+                    orderFoods={["test"]}
                 />
             );
             expect(screen.getByText('Retour')).toBeInTheDocument();
@@ -286,6 +289,7 @@ describe('Footer Component', () => {
                     payDetail={[]}
                     setPriceLess={setPriceLess}
                     setPayList={setPayList}
+                    orderFoods={["test"]}
                 />
             );
             expect(screen.getByText('Terminée')).toBeInTheDocument();
@@ -302,6 +306,7 @@ describe('Footer Component', () => {
                     payDetail={[]}
                     setPriceLess={setPriceLess}
                     setPayList={setPayList}
+                    orderFoods={["test"]}
                 />
             );
             fireEvent.click(screen.getByText('Encaisser 20.00€'));
@@ -320,6 +325,7 @@ describe('Footer Component', () => {
                     payDetail={[]}
                     setPriceLess={setPriceLess}
                     setPayList={setPayList}
+                    orderFoods={["test"]}
                 />
             );
             fireEvent.click(screen.getByText('Retour'));
@@ -340,6 +346,7 @@ describe('Footer Component', () => {
                         payDetail={[{ test: 1 }]}
                         setPriceLess={setPriceLess}
                         setPayList={setPayList}
+                        orderFoods={["test"]}
                     />
                 );
             });
