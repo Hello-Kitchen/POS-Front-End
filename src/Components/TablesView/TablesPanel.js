@@ -78,17 +78,16 @@ function PlatesButton({ editTable, setEditTable }) {
  * @param {Function} setBoard state function used to update the full table board
  * @returns {JSX.Element} The rendered EditPanel component.
  */
-function EditPanel ({ editTable, setEditTable, setBoard, board }) {
+function EditPanel({ editTable, setEditTable, setBoard, board }) {
+	const [nameBool, setNameBool] = useState(false);
+	const [nameValue, setNameValue] = useState("");
 
-    const [nameBool, setNameBool] = useState(false);
-    const [nameValue, setNameValue] = useState('');
-
-    const handleInputChange = (event) => {
-        const nameExists = board.some(table => 
-            String(table.id) === String(event.target.value)
-        );
+	const handleInputChange = (event) => {
+		const nameExists = board.some(
+			(table) => String(table.id) === String(event.target.value),
+		);
 		if (!nameExists) setNameValue(event.target.value);
-    };
+	};
 
 	const handleInputSubmit = (name) => {
 		setEditTable((table) => ({
@@ -121,33 +120,52 @@ function EditPanel ({ editTable, setEditTable, setBoard, board }) {
 		setEditTable({ id: -1 });
 	};
 
-    return (
-        <div className="h-full">
-            <div className={`w-full p-2 items-center border-b-4 border-b-kitchen-yellow`}>
-                <form onSubmit={handleFormSubmit} className={`w-full h-full grid grid-flow-row ${nameBool ? "grid-rows-2" : "grid-rows-1"}`}>
-                <div className="row-span-1 text-white font-bold text-4xl items-center flex float-left">
-                    {`Table ${editTable.id}`}
-                    <button type="submit" onClick={() => handleNameClick()} className="pl-2 justify-center items-center">
-                        <img src={`./icon-drag/edit.png`} width={40} height={40} alt="Pencil image, used as a meaning to say 'edit'" />
-                    </button>
-                </div>
-                {nameBool === true &&
-                    <input
-                    type="text"
-                    className="text-2xl text-black row-span-1 border-2 rounded-full focus:outline-none px-4 float-left mt-1 mb-1 w-full"
-                    placeholder="New name"
-                    value={nameValue}
-                    onChange={handleInputChange}
-                    maxLength={10}
-                    autoFocus
-                    />
-                }
-                </form>
-            </div>
-            <PlatesButton editTable={editTable} setEditTable={setEditTable} />
-            <button onClick={() => handleTableDelete()} className="w-full h-1/3 mt-4 text-white bg-kitchen-button-red font-bold text-3xl items-center justify-center self-center rounded-full">Supprimer</button>
-        </div>
-    )
+	return (
+		<div className="h-full">
+			<div
+				className={`w-full p-2 items-center border-b-4 border-b-kitchen-yellow`}
+			>
+				<form
+					onSubmit={handleFormSubmit}
+					className={`w-full h-full grid grid-flow-row ${nameBool ? "grid-rows-2" : "grid-rows-1"}`}
+				>
+					<div className="row-span-1 text-white font-bold text-4xl items-center flex float-left">
+						{`Table ${editTable.id}`}
+						<button
+							type="submit"
+							onClick={() => handleNameClick()}
+							className="pl-2 justify-center items-center"
+						>
+							<img
+								src={`./icon-drag/edit.png`}
+								width={40}
+								height={40}
+								alt="Pencil image, used as a meaning to say 'edit'"
+							/>
+						</button>
+					</div>
+					{nameBool === true && (
+						<input
+							type="text"
+							className="text-2xl text-black row-span-1 border-2 rounded-full focus:outline-none px-4 float-left mt-1 mb-1 w-full"
+							placeholder="New name"
+							value={nameValue}
+							onChange={handleInputChange}
+							maxLength={10}
+							autoFocus
+						/>
+					)}
+				</form>
+			</div>
+			<PlatesButton editTable={editTable} setEditTable={setEditTable} />
+			<button
+				onClick={() => handleTableDelete()}
+				className="w-full h-1/3 mt-4 text-white bg-kitchen-button-red font-bold text-3xl items-center justify-center self-center rounded-full"
+			>
+				Supprimer
+			</button>
+		</div>
+	);
 }
 
 /**
@@ -158,11 +176,31 @@ function EditPanel ({ editTable, setEditTable, setBoard, board }) {
  * @param {Function} setOrders state function used to update the current order
  * @returns {JSX.Element} The rendered TablesPanel component.
  */
-export default function TablesPanel({ setDataToBeSaved, orders, editTable, setEditTable, setBoard, board }) {
+export default function TablesPanel({
+	setDataToBeSaved,
+	orders,
+	editTable,
+	setEditTable,
+	setBoard,
+	board,
+}) {
+	const orderNumber = () => {
+		if (orders.channel === "Sur place" && orders.number !== "Direct") {
+			return `Table ${orders.number}`;
+		} else if (orders.channel === "Sur place" && orders.number === "Direct") {
+			return `Direct`;
+		} else if (orders.channel === "A emporter") {
+			return `N°${orders.number}`;
+		} else {
+			return `${orders.number}`;
+		}
+	};
 
-    const basicTable = (
-        <div className='w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex'>{`Table ${orders.number}`}</div>
-    )
+	const basicTable = (
+		<div className="w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex">
+			{orderNumber()}
+		</div>
+	);
 
 	useEffect(() => {
 		if (editTable.id !== -1) {
@@ -176,13 +214,25 @@ export default function TablesPanel({ setDataToBeSaved, orders, editTable, setEd
 		}
 	}, [editTable, setBoard]);
 
-    return (
-        <div className='h-full col-span-1 bg-kitchen-blue float-right flex flex-col justify-between'>
-            <div className={'w-full max-h-[80%] float-right px-2 gap-3 flex flex-col'}>
-                {editTable.id !== -1 ? <EditPanel board={board} setDataToBeSaved={setDataToBeSaved} editTable={editTable} setEditTable={setEditTable} setBoard={setBoard} /> : basicTable}
-            </div>
-        </div>
-    );
+	return (
+		<div className="h-full col-span-1 bg-kitchen-blue float-right flex flex-col justify-between">
+			<div
+				className={"w-full max-h-[80%] float-right px-2 gap-3 flex flex-col"}
+			>
+				{editTable.id !== -1 ? (
+					<EditPanel
+						board={board}
+						setDataToBeSaved={setDataToBeSaved}
+						editTable={editTable}
+						setEditTable={setEditTable}
+						setBoard={setBoard}
+					/>
+				) : (
+					basicTable
+				)}
+			</div>
+		</div>
+	);
 }
 
 PlatesButton.propTypes = {
