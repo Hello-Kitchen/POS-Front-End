@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,18 @@ import { useNavigate } from "react-router-dom";
 function ModalNewOrder({setModalOpen, setOrders, setConfig, setSelectedOrder}) {
 
     const navigate = useNavigate();
+    const modalRef = useRef(null);
+
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (modalRef.current && modalRef.current.contains(event.target)) return;
+        if (event.target.closest && event.target.closest('[data-testid="new-ticket"]')) return;
+        setModalOpen(false);
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [setModalOpen]);
 
     const clearOrder = (orderType) => {
         if (orderType === "direct") {
@@ -61,7 +73,7 @@ function ModalNewOrder({setModalOpen, setOrders, setConfig, setSelectedOrder}) {
 
     return (
         <div className="fixed  flex justify-center bottom-[97px] right-1/4">
-          <div className="bg-kitchen-blue rounded-tl-xl p-2 h-fit">
+          <div ref={modalRef} className="bg-kitchen-blue rounded-tl-xl p-2 h-fit">
             <div className="space-y-2">
               <div className="w-80 py-3 text-center bg-kitchen-yellow rounded-lg text-kitchen-blue text-xl font-bold" onClick={() => clearOrder("direct")}>
                 DIRECT
