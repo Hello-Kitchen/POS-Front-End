@@ -58,9 +58,9 @@ function Footer({ buttons, setConfig, setOrders, activeTab, updateActiveTab, set
     );
 }
 
-export function FooterMainButton({ price, config, setConfig, priceLess, setOrders, payDetail, setPriceLess, setPayList }) {
+export function FooterMainButton({ price, config, setConfig, priceLess, setOrders, payDetail, setPriceLess, setPayList, orderFoods }) {
     const navigate = useNavigate();
-    
+
     const handlePayement = async () => {
         const body = { value: payDetail, user: Number(JSON.parse(localStorage.getItem("userInfo")).id), discount: 0 };
         await fetch(`${process.env.REACT_APP_BACKEND_URL}:${process.env.REACT_APP_BACKEND_PORT}/api/${localStorage.getItem("restaurantID")}/orders/payment/${config.id_order}`, {
@@ -76,8 +76,8 @@ export function FooterMainButton({ price, config, setConfig, priceLess, setOrder
     return (
         <div className='w-full h-full'>
             {(priceLess > 0) || (!config.payement) ? (
-                <div className='w-full h-full bg-kitchen-yellow flex justify-center items-center p-3 shadow-[inset_0_10px_50px_-20px_rgba(0,0,0,0.7)]'>
-                    <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue cursor-pointer' onClick={() => { setConfig(prevConfig => ({ ...prevConfig, payement: !prevConfig.payement })); navigate(!config.payement ? '/dashboard/pay' : '/dashboard'); }}>
+                <div className={`w-full h-full ${orderFoods.length === 0 ? 'bg-kitchen-yellow-darker cursor-not-allowed' : 'bg-kitchen-yellow cursor-pointer shadow-[inset_0_10px_50px_-20px_rgba(0,0,0,0.7)]'} flex justify-center items-center p-3`}>
+                    <div className='w-full h-full flex justify-center items-center truncate text-4xl font-bold text-kitchen-blue' onClick={() => { if (orderFoods.length === 0) return;setConfig(prevConfig => ({ ...prevConfig, payement: !prevConfig.payement })); navigate(!config.payement ? '/dashboard/pay' : '/dashboard'); }}>
                         {!config.payement ? `Encaisser ${Number(price).toFixed(2).toString()}€` : 'Retour'}
                     </div>
                 </div>
@@ -111,6 +111,7 @@ FooterMainButton.propTypes = {
     payDetail: PropTypes.array.isRequired,
     setPriceLess: PropTypes.func.isRequired,
     setPayList: PropTypes.func.isRequired,
+    orderFoods: PropTypes.object.isRequired,
 }
 
 export default Footer;

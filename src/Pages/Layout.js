@@ -235,6 +235,7 @@ const Layout = ({
                 payDetail={payDetail}
                 setPriceLess={setPriceLess}
                 setPayList={setPayList}
+                orderFoods={orders.food}
               />
             </div>
           </div>
@@ -269,6 +270,7 @@ const Layout = ({
             payDetail={payDetail}
             setPriceLess={setPriceLess}
             setPayList={setPayList}
+            orderFoods={orders.food}
           />
         </div>
       </div>
