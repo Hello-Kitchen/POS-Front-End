@@ -44,48 +44,63 @@ export default function TablesView({
 	const [dataToBeSaved, setDataToBeSaved] = useState(false);
 	const [isFirstRender, setIsFirstRender] = useState(true);
 
-	const drop = useDrop(() => ({
-		accept: [ItemTypes.CIRCLE, ItemTypes.SQUARE, ItemTypes.RECTANGLE],
-		drop: (item, monitor) => {
-			const offset = monitor.getClientOffset();
-			if (!offset) return;
+    const drop = useDrop(() => ({
+        accept: [ItemTypes.CIRCLE, ItemTypes.SQUARE, ItemTypes.RECTANGLE],
+        drop: (item, monitor) => {
+            const dropArea = document.getElementById("drop-area");
+            if (!dropArea) return;
 
-			const container = document.getElementById("drop-area");
-			const containerRect = container.getBoundingClientRect();
-			const left = offset.x;
-			const top = offset.y;
+            if (item.table) {
+                const delta = monitor.getDifferenceFromInitialOffset();
+                if (!delta) return;
 
-			if (left > containerRect.left && top > containerRect.top) {
-				addTable(item.id, left, top, containerRect);
-			}
-		},
-		collect: (monitor) => ({
-			isOver: !!monitor.isOver(),
-		}),
-	}))[1];
+                const currentTable = board.find(t => t.id === item.id);
+                if (!currentTable) return;
 
-	const doesOverlap = (x, y, board) => {
-		let check = false;
-		board.forEach((table) => {
-			if (
-				x < table.left + table.w &&
-				x + table.w > table.left &&
-				y < table.top + table.h &&
-				y + table.h > table.top
-			) {
-				check = true;
-			}
-		});
-		return check;
-	};
+                const left = currentTable.left + delta.x;
+                const top = currentTable.top + delta.y;
 
-	const outOfBounds = (x, y, elem, containerRect) => {
-		let check = false;
-		if (x + elem.w > containerRect.width || y + elem.h > containerRect.height) {
-			check = true;
-		}
-		return check;
-	};
+                setBoard((prevBoard) =>
+                    prevBoard.map((table) =>
+                    table.id === item.id ? { ...table, left, top } : table
+                    )
+                );
+            } else {
+                const offset = monitor.getSourceClientOffset();
+                if (!offset) return;
+
+                const containerRect = dropArea.getBoundingClientRect();
+                const left = offset.x;
+                const top = offset.y;
+
+                if (left > containerRect.left && top > containerRect.top) {
+                    addTable(item.id, left, top, containerRect);
+                }
+            }
+            setDataToBeSaved(true);
+        },
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver(),
+        }),
+    }), [board])[1];
+
+    const doesOverlap = (x, y, board) => {
+        let check = false;
+        board.forEach((table) => {
+            if (x < table.left + table.w && x + table.w > table.left && y < table.top + table.h && y + table.h > table.top) {
+                check = true;
+            }
+        });
+        return check;
+    };
+
+    const outOfBounds = (x, y, elem, containerRect) => {
+        let check = false;
+        if (x + elem.w > containerRect.width || y + elem.h > containerRect.height) {
+            check = true;
+        }
+        return check;
+    };
 
 	function collectIds(board) {
 		const ids = new Set();

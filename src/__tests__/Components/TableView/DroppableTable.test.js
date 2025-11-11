@@ -2,6 +2,16 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import DroppableTable from "../../../Components/TablesView/DroppableTable";
+/* eslint-disable react/prop-types */
+jest.mock("react-dnd", () => ({
+    useDrag: () => [
+        { isDragging: false },
+        (el) => el,
+    ],
+    useDrop: () => [{}, (el) => el],
+    DndProvider: ({ children }) => <div>{children}</div>,
+}));
+/* eslint-enable react/prop-types */
 
 describe("DroppableTable Component", () => {
     const baseTable = {id: "1", type: "circle", w: 100, h: 100, left: 50, top: 50, plates: 2, time: "00:00"};

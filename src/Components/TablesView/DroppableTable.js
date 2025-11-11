@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useDrag } from "react-dnd";
 import React, { useEffect, useState } from "react";
 
 /**
@@ -22,11 +23,17 @@ function DroppableTable({
 	setOrders,
 	orderSelect,
 }) {
-	const [border, setBorder] = useState("border-black");
-	const [fuseBorder, setFuseBorder] = useState("border-kitchen-green");
-	const [currentTime, setCurrentTime] = useState(new Date());
-	const [tableSize, setTableSize] = useState(20);
-
+    const [border, setBorder] = useState("border-black")
+    const [fuseBorder, setFuseBorder] = useState("border-kitchen-green")
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [tableSize, setTableSize] = useState(20);
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: table.type,
+        item: { id: table.id, table },
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    }));
 	const onTableClick = (orderId) => {
 		if (inFuse.type !== "None") {
 			setInFuse((fused) => {
@@ -154,6 +161,7 @@ function DroppableTable({
 
 	return (
 		<div
+            ref={inEdit ? drag : null}
 			onClick={() => onTableClick(table.orderId)}
 			name={table.id}
 			className={`${table.type === "circle" ? "rounded-full" : ""} border-4 absolute col-span-1 grid grid-flow-row ${inEdit === true ? `bg-grey-bg ${border} grid-rows-2` : table.time === "00:00" ? `bg-kitchen-green ${fuseBorder} grid-rows-3` : `bg-kitchen-yellow ${fuseBorder} grid-rows-3`} justify-center justify-items-center`}
@@ -162,6 +170,7 @@ function DroppableTable({
 				width: `${table.w / tableSize}vw`,
 				top: table.top,
 				left: table.left,
+                opacity: isDragging ? 0.5 : 1
 			}}
 		>
 			<div
