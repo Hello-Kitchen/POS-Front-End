@@ -78,12 +78,15 @@ function PlatesButton({ editTable, setEditTable }) {
  * @param {Function} setBoard state function used to update the full table board
  * @returns {JSX.Element} The rendered EditPanel component.
  */
-function EditPanel({ editTable, setEditTable, setBoard }) {
+function EditPanel({ editTable, setEditTable, setBoard, board }) {
 	const [nameBool, setNameBool] = useState(false);
 	const [nameValue, setNameValue] = useState("");
 
 	const handleInputChange = (event) => {
-		setNameValue(event.target.value);
+		const nameExists = board.some(
+			(table) => String(table.id) === String(event.target.value),
+		);
+		if (!nameExists) setNameValue(event.target.value);
 	};
 
 	const handleInputSubmit = (name) => {
@@ -148,13 +151,14 @@ function EditPanel({ editTable, setEditTable, setBoard }) {
 							placeholder="New name"
 							value={nameValue}
 							onChange={handleInputChange}
+							maxLength={10}
+							autoFocus
 						/>
 					)}
 				</form>
 			</div>
 			<PlatesButton editTable={editTable} setEditTable={setEditTable} />
 			<button
-				type="button"
 				onClick={() => handleTableDelete()}
 				className="w-full h-1/3 mt-4 text-white bg-kitchen-button-red font-bold text-3xl items-center justify-center self-center rounded-full"
 			>
@@ -178,8 +182,8 @@ export default function TablesPanel({
 	editTable,
 	setEditTable,
 	setBoard,
+	board,
 }) {
-
 	const orderNumber = () => {
 		if (orders.channel === "Sur place" && orders.number !== "Direct") {
 			return `Table ${orders.number}`;
@@ -193,7 +197,9 @@ export default function TablesPanel({
 	};
 
 	const basicTable = (
-		<div className="w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex">{orderNumber()}</div>
+		<div className="w-full p-2 items-center text-white font-bold text-4xl border-b-4 border-b-kitchen-yellow flex">
+			{orderNumber()}
+		</div>
 	);
 
 	useEffect(() => {
@@ -215,6 +221,7 @@ export default function TablesPanel({
 			>
 				{editTable.id !== -1 ? (
 					<EditPanel
+						board={board}
 						setDataToBeSaved={setDataToBeSaved}
 						editTable={editTable}
 						setEditTable={setEditTable}
@@ -238,6 +245,7 @@ EditPanel.propTypes = {
 	editTable: PropTypes.object.isRequired,
 	setEditTable: PropTypes.func.isRequired,
 	setBoard: PropTypes.func.isRequired,
+	board: PropTypes.object.isRequired,
 };
 
 TablesPanel.propTypes = {
@@ -246,4 +254,5 @@ TablesPanel.propTypes = {
 	editTable: PropTypes.object.isRequired,
 	setEditTable: PropTypes.func.isRequired,
 	setBoard: PropTypes.func.isRequired,
+	board: PropTypes.object.isRequired,
 };
